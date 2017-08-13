@@ -37,7 +37,7 @@ to = 'myfriend@email.com';
 content = '<p>Hi,</p><p>Thanks for all your emails</p>';
 mail = new helpers.mail( from, subject, to, content );
 ```
-Note that for this API wrapper, the assumption when the `content` argument is passed in to `init()`, is that it is HTML, and that both html and plain text should be set and sent. 
+Note that for this API wrapper, the assumption when the `content` argument is passed in to `init()`, is that it is HTML, and that both html and plain text should be set and sent.
 
 The `from`, `subject`, `to`, and message content, whether plain or html, are minimum required fields for sending an email.
 
@@ -47,6 +47,7 @@ Here are the currently available public methods for building the mail object (un
 
 ### `from( required any email )`
 ### `subject( required string subject )`
+Sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
 ### `html( required string message )`
 Convenience method for adding the text/html content
 ### `plain( required string message )`
