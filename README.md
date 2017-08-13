@@ -64,6 +64,8 @@ Adds an additional 'to' recipient to the **current** personalization envelope
 Adds an additional 'cc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
 ### `addBCC( required any email )`
 Adds an additional 'bcc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
+### `build()`
+The function that puts it all together and builds the body for `/mail/send`
 
 
 ## Notes

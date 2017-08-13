@@ -169,7 +169,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint The function that puts it all together and build the JSON body for /mail/send
+  * @hint The function that puts it all together and builds the body for /mail/send
   */
   public struct function build() {
     var body = {
