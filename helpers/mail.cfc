@@ -156,21 +156,6 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds an additional cc/bcc receipients to the CURRENT personalization envelope
-  */
-  private any function addCarbonCopies( required any email, required string type ) {
-    var count = countPersonalizations();
-    if ( !count ) throw( "You must add a 'to' reciptient to this email before you can #type# additional recipients." );
-
-    if ( !variables.personalizations[ count ].keyExists( type ) )
-      variables.personalizations[ count ][ type ] = [];
-
-    variables.personalizations[ count ][ type ].append( parseEmail( email ) );
-
-    return this;
-  }
-
-  /**
   * @hint Creates and sets a new personalization envelope
   * Documentation about personalizations here: https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html
   * I find the easiest way to understand this is that each personalization object is an individual email. That it, all of its properties, even if there are multiple to/cc/bcc, refer to the same email. So if you're adding a second personalization object, you're basically referring to a separate email... except that the sender/content of the email is the same
@@ -220,6 +205,21 @@ component accessors="true" {
         }, ''
       );
     return mimeTypeContent;
+  }
+
+  /**
+  * @hint Adds an additional cc/bcc receipients to the CURRENT personalization envelope
+  */
+  private any function addCarbonCopies( required any email, required string type ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' reciptient to this email before you can #type# additional recipients." );
+
+    if ( !variables.personalizations[ count ].keyExists( type ) )
+      variables.personalizations[ count ][ type ] = [];
+
+    variables.personalizations[ count ][ type ].append( parseEmail( email ) );
+
+    return this;
   }
 
   /**
