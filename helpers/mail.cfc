@@ -156,6 +156,22 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the subject for the CURRENT personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
+  */
+  public any function personalizeSubject ( required string subject ) {
+    var count = countPersonalizations();
+
+    //not sure to what extent I should validate
+    //if ( !count ) throw( "The email needs to be sent 'to' someone before it can be personalized.");
+
+    variables.personalizations[ count ][ 'subject' ] = subject;
+
+    return this;
+  }
+
+
+
+  /**
   * @hint Creates and sets a new personalization envelope
   * Documentation about personalizations here: https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html
   * I find the easiest way to understand this is that each personalization object is an individual email. That it, all of its properties, even if there are multiple to/cc/bcc, refer to the same email. So if you're adding a second personalization object, you're basically referring to a separate email... except that the sender/content of the email is the same
