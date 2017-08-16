@@ -46,6 +46,7 @@ I've found two places where the `/mail/send` endpoint JSON body are explained, a
 Here are the currently available public methods for building the mail object (unless indicated, all methods are chainable):
 
 ### `from( required any email )`
+### `replyTo( required any email )`
 ### `subject( required string subject )`
 Sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
 ### `html( required string message )`

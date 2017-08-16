@@ -47,6 +47,11 @@ component accessors="true" {
     return this;
   }
 
+  public any function replyTo( required any email ) {
+    setReply_to( parseEmail( email ) );
+    return this;
+  }
+
   /**
   * @hint sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
   */
