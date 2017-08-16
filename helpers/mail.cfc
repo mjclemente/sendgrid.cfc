@@ -163,7 +163,7 @@ component accessors="true" {
   /**
   * @hint Sets the subject for the CURRENT personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
   */
-  public any function personalizeSubject ( required string subject ) {
+  public any function withSubject ( required string subject ) {
     var count = countPersonalizations();
 
     //not sure to what extent I should validate

@@ -65,7 +65,7 @@ Adds an additional 'to' recipient to the **current** personalization envelope
 Adds an additional 'cc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
 ### `addBCC( required any email )`
 Adds an additional 'bcc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
-### `personalizeSubject ( required string subject )`
+### `withSubject ( required string subject )`
 Sets the subject for the current personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
 ### `build()`
 The function that puts it all together and builds the body for `/mail/send`
