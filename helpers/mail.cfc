@@ -196,6 +196,7 @@ component accessors="true" {
     var body = {
       'personalizations' : getPersonalizations(),
       'from' : getFrom(),
+      'reply_to' : getReply_to(),
       'subject' : getSubject(),
       'content' : getContent()
     };
