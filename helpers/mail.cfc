@@ -220,20 +220,22 @@ component accessors="true" {
     variables.personalizations.append( personalization );
   }
 
-  /**
-  * @hint The function that puts it all together and builds the body for /mail/send
-  */
   public string function build() {
-    var body = '{' &
-      '"personalizations": ' & serializeJson( getPersonalizations() ) & ',' &
-      '"from": ' & serializeJson( getFrom() ) & ',' &
-      '"reply_to": ' &  serializeJson( getReply_to() ) & ',' &
-      '"subject": ' & serializeJson( getSubject() ) & ',' &
-      '"content": ' & serializeJson( getContent() ) & ',' &
-      '"headers": ' & serializeHeaders( getHeaders() ) &
-    '}';
 
-    return body;
+    var body = '';
+    var properties = getPropertyValues();
+    var count = properties.len();
+
+    properties.each(
+      function( property, index ) {
+
+        var serializeMethod = 'serialize#property.key#';
+        var value = { 'data': property.value };
+        body &= '"#property.key#": ' & invoke( this, serializeMethod, value ) & '#index NEQ count ? "," : ""#';
+      }
+    );
+
+    return '{' & body & '}';
   }
 
   private numeric function countPersonalizations() {
