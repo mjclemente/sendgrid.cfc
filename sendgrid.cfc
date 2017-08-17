@@ -160,6 +160,8 @@ component output="false" displayname="SendGrid.cfc"  {
   private string function parseBody( required any body ) {
     if ( isStruct( body ) )
       return serializeJson( body );
+    else if ( isJson( body ) )
+      return body;
     else
       return '';
   }
