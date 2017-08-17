@@ -283,6 +283,18 @@ component accessors="true" {
     }
   }
 
+  private string function serializeHeaders( required struct h ) {
+    var serializedData = h.reduce(
+      function( result, key, value ) {
+
+        if ( result.len() ) result &= ',';
+
+        return result & '"#key#": "#value#"';
+      }, ''
+    );
+    return '{' & serializedData & '}';
+  }
+
   /** This could probably go in a separate utils CFC, but it's here for now
   * Removes All HTML from a string removing tags, script blocks, style blocks, and replacing special character code.
   *
