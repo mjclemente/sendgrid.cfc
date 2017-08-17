@@ -372,4 +372,67 @@ component accessors="true" {
 
   }
 
+  /**
+  * @hint converts the array of properties to an array of their keys/values, while filtering those that have not been set
+  */
+  private array function getPropertyValues() {
+
+    var propertyValues = getProperties().map(
+      function( item, index ) {
+        return {
+          "key" : item.name,
+          "value" : getPropertyValue( item.name )
+        };
+      }
+    );
+
+    return propertyValues.filter(
+      function( item, index ) {
+        if ( isStruct( item.value ) )
+          return !item.value.isEmpty();
+        else
+          return item.value.len();
+      }
+    );
+  }
+
+  private array function getProperties() {
+
+    var metaData = getMetaData( this );
+    var properties = [];
+
+    for( var prop in metaData.properties ) {
+      properties.append( prop );
+    }
+
+    return properties;
+  }
+
+  private any function getPropertyValue( string key ){
+    var method = this["get#key#"];
+    var value = method();
+    return value;
+  }
+
+  /**
+  * @hint currently in place to provide a standard fallback when a custom serialization method isn't needed (i.e. most cases)
+  */
+  public any function onMissingMethod ( string missingMethodName, struct missingMethodArguments ) {
+    var action = missingMethodName.left( 9 );
+    var property = missingMethodName.right( missingMethodName.len() - 9 );
+
+    if ( action == 'serialize' ) {
+
+      if ( !missingMethodArguments.isEmpty() )
+        return serializeJson( missingMethodArguments.data );
+      else
+        throw "#missingMethodName#() called without an argument";
+
+    } else {
+      var message = "no such method (" & missingMethodName & ") in " & getMetadata( this ).name & "; [" & structKeyList( this ) & "]";
+      throw "#message#";
+    }
+
+  }
+
 }
