@@ -26,6 +26,7 @@ component accessors="true" {
 
     setPersonalizations( [] );
     setContent( [] );
+    setHeaders( {} );
 
     if ( arguments.keyExists( 'from' ) )
       this.from( from );
@@ -118,8 +119,20 @@ component accessors="true" {
   }
 
   /**
+  * @hint Adds a single header to the global message. This can be overridden by a personalized header. You can set a header by providing the header and value, or by passing in a struct.
+  * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternativaly, you can use this to pass in the name of the header, and provide the value as a second argument.
+  */
+  public any function header( any header, any value ) {
+    if ( isStruct( header ) )
+      variables.headers.append( header );
+    else
+      variables.headers[ header ] = value;
+
+    return this;
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
-  //TODO handle arrays?
   */
   public any function to( required any email ) {
     addPersonalization(
@@ -132,7 +145,6 @@ component accessors="true" {
 
   /**
   * @hint Adds an additional 'to' recipient to the CURRENT personalization envelope
-  //TODO handle arrays?
   */
   public any function addTo( required any email ) {
     var count = countPersonalizations();
