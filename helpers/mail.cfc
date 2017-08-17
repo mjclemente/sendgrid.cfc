@@ -305,8 +305,8 @@ component accessors="true" {
     }
   }
 
-  private string function serializeHeaders( required struct h ) {
-    var serializedData = h.reduce(
+  public string function serializeHeaders( required struct data ) {
+    var serializedData = data.reduce(
       function( result, key, value ) {
 
         if ( result.len() ) result &= ',';
