@@ -187,7 +187,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds a single header to the global message. This can be overridden by a personalized header. You can set a header by providing the header and value, or by passing in a struct.
+  * @hint functions like header(), except it adds the header to the CURRENT personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternativaly, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
   public any function withHeader( any header, any value ) {
