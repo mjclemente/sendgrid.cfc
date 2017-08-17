@@ -266,7 +266,6 @@ component accessors="true" {
   /**
   * @hint Adds an additional cc/bcc receipients to the CURRENT personalization envelope
   */
-  //TODO with?
   private any function addCarbonCopies( required any email, required string type ) {
     var count = countPersonalizations();
     if ( !count ) throw( "You must add a 'to' recipient to this email before you can #type# additional recipients." );
@@ -315,6 +314,31 @@ component accessors="true" {
       }, ''
     );
     return '{' & serializedData & '}';
+  }
+
+  public string function serializePersonalizations( required array data ) {
+
+    var serializedData = '';
+
+    data.each(
+      function( envelope, index ) {
+
+        var serializedEnvelope = envelope.reduce(
+          function( result, key, value ) {
+
+            if ( result.len() ) result &= ',';
+
+            if ( key == 'headers' )
+              return result & '"#key#": #serializeHeaders( value )#';
+            else
+              return result & '"#key#": #serializeJSON( value )#';
+          }, ''
+        );
+        serializedData &= '{' & serializedEnvelope & '}';
+      }
+    );
+
+    return '[' & serializedData & ']';
   }
 
   /** This could probably go in a separate utils CFC, but it's here for now
