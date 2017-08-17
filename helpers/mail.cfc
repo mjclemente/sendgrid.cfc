@@ -204,14 +204,15 @@ component accessors="true" {
   /**
   * @hint The function that puts it all together and builds the body for /mail/send
   */
-  public struct function build() {
-    var body = {
-      'personalizations' : getPersonalizations(),
-      'from' : getFrom(),
-      'reply_to' : getReply_to(),
-      'subject' : getSubject(),
-      'content' : getContent()
-    };
+  public string function build() {
+    var body = '{' &
+      '"personalizations": ' & serializeJson( getPersonalizations() ) & ',' &
+      '"from": ' & serializeJson( getFrom() ) & ',' &
+      '"reply_to": ' &  serializeJson( getReply_to() ) & ',' &
+      '"subject": ' & serializeJson( getSubject() ) & ',' &
+      '"content": ' & serializeJson( getContent() ) & ',' &
+      '"headers": ' & serializeHeaders( getHeaders() ) &
+    '}';
 
     return body;
   }
