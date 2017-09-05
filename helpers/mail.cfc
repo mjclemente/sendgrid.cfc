@@ -304,18 +304,16 @@ component accessors="true" {
     }
   }
 
+  /**
+  * @hint needs to be public because it is called via invoke()
+  */
   public string function serializeHeaders( required struct data ) {
-    var serializedData = data.reduce(
-      function( result, key, value ) {
-
-        if ( result.len() ) result &= ',';
-
-        return result & '"#key#": "#value#"';
-      }, ''
-    );
-    return '{' & serializedData & '}';
+    return serializeValuesAsString( data );
   }
 
+  /**
+  * @hint needs to be public because it is called via invoke()
+  */
   public string function serializePersonalizations( required array data ) {
 
     var serializedData = '';
@@ -339,6 +337,21 @@ component accessors="true" {
     );
 
     return '[' & serializedData & ']';
+  }
+
+  /**
+  * @hint helper that forces object value serialization to strings. This is needed in some cases, where CF's loose typing causes problems
+  */
+  private string function serializeValuesAsString( required struct data ) {
+    var serializedData = data.reduce(
+      function( result, key, value ) {
+
+        if ( result.len() ) result &= ',';
+
+        return result & '"#key#": "#value#"';
+      }, ''
+    );
+    return '{' & serializedData & '}';
   }
 
   /** This could probably go in a separate utils CFC, but it's here for now
