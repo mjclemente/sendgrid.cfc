@@ -345,8 +345,8 @@ component accessors="true" {
 
             if ( result.len() ) result &= ',';
 
-            if ( key == 'headers' )
-              return result & '"#key#": #serializeHeaders( value )#';
+            if ( arrayContains( [ 'headers', 'substitutions' ], key ) )
+              return result & '"#key#": #serializeValuesAsString( value )#';
             else
               return result & '"#key#": #serializeJSON( value )#';
           }, ''
