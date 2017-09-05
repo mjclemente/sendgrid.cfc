@@ -205,6 +205,25 @@ component accessors="true" {
     return this;
   }
 
+  /**
+  * @hint adds a substitution ( "substitution_tag":"value to substitute" ) to the CURRENT personalization envelope. You can add a personalization by providing the tag and value to substitute, or by passing in a struct.
+  * @substitution Facilitates two means of adding a substitution. You can pass in a struct with a tag/value for the substitution tag and value to substitute. Alternatively, you can use this argument to pass in the substitution tag, and provide the replacement value as a second argument.
+  */
+  public any function withSubstitution( any substitution, any value ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize substitutions" );
+
+    if ( !variables.personalizations[ count ].keyExists( 'substitutions' ) )
+      variables.personalizations[ count ][ 'substitutions' ] = {};
+
+    if ( isStruct( substitution ) )
+      variables.personalizations[ count ][ 'substitutions' ].append( substitution );
+    else
+      variables.personalizations[ count ][ 'substitutions' ][ substitution ] = value;
+
+    return this;
+  }
+
 
 
   /**
