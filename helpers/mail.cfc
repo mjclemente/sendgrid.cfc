@@ -27,6 +27,7 @@ component accessors="true" {
     setPersonalizations( [] );
     setContent( [] );
     setHeaders( {} );
+    setCategories( [] );
 
     if ( arguments.keyExists( 'from' ) )
       this.from( from );
