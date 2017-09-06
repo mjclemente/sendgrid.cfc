@@ -133,6 +133,28 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the category array for the message. If categories are already set, this overwrites them.
+  * @categories Can be passed in as an array or comma separated list. Lists will be converted to arrays
+  */
+  public any function categories( required any categories ) {
+    if ( isArray( categories ) )
+      variables.categories = categories;
+    else
+      variables.categories = categories.toArray();
+
+    return this;
+  }
+
+  /**
+  * @hint Appends a category to the message category array
+  */
+  public any function addCategory( required string category ) {
+    variables.categories.append( category );
+
+    return this;
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
