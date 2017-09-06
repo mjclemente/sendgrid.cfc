@@ -134,6 +134,16 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the headers for the global message. They can be overridden by a personalized header. If any headers are set, this overwrites them.
+  * @headers An object containing key/value pairs of header names and their value. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC
+  */
+  public any function headers( required struct headers ) {
+    variables.headers = headers;
+
+    return this;
+  }
+
+  /**
   * @hint Sets the category array for the message. If categories are already set, this overwrites them.
   * @categories Can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
