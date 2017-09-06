@@ -229,7 +229,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint adds a substitution ( "substitution_tag":"value to substitute" ) to the CURRENT personalization envelope. You can add a personalization by providing the tag and value to substitute, or by passing in a struct.
+  * @hint adds a substitution ( "substitution_tag":"value to substitute" ) to the CURRENT personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
   * @substitution Facilitates two means of adding a substitution. You can pass in a struct with a tag/value for the substitution tag and value to substitute. Alternatively, you can use this argument to pass in the substitution tag, and provide the replacement value as a second argument.
   */
   public any function withSubstitution( any substitution, any value ) {
