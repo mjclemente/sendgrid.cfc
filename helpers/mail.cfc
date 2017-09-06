@@ -201,7 +201,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds an additional 'to' recipient to the CURRENT personalization envelope
+  * @hint Adds an additional 'to' recipient to the **current** personalization envelope
   */
   public any function addTo( required any email ) {
     var count = countPersonalizations();
@@ -216,21 +216,21 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds an additional 'cc' recipient to the CURRENT personalization envelope
+  * @hint Adds an additional 'cc' recipient to the **current** personalization envelope
   */
   public any function addCC( required any email ) {
     return addCarbonCopies( email, 'cc' );
   }
 
   /**
-  * @hint Adds an additional 'bcc' recipient to the CURRENT personalization envelope
+  * @hint Adds an additional 'bcc' recipient to the **current** personalization envelope
   */
   public any function addBCC( required any email ) {
     return addCarbonCopies( email, 'bcc' );
   }
 
   /**
-  * @hint Sets the subject for the CURRENT personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
+  * @hint Sets the subject for the **current** personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
   */
   public any function withSubject ( required string subject ) {
     var count = countPersonalizations();
@@ -244,7 +244,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint functions like header(), except it adds the header to the CURRENT personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
+  * @hint functions like header(), except it adds the header to the **current** personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
   public any function withHeader( any header, any value ) {
@@ -263,7 +263,19 @@ component accessors="true" {
   }
 
   /**
-  * @hint adds a substitution ( "substitution_tag":"value to substitute" ) to the CURRENT personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
+  * @hint functions like `headers()`, except it sets the `headers` property for the **current** personalization envelope. If any personalized headers are set, this method overwrites them.
+  */
+  public any function withHeaders( required struct headers ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize headers" );
+
+    variables.personalizations[ count ][ 'headers' ] = headers;
+
+    return this;
+  }
+
+  /**
+  * @hint appends a substitution ( "substitution_tag":"value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
   * @substitution Facilitates two means of adding a substitution. You can pass in a struct with a tag/value for the substitution tag and value to substitute. Alternatively, you can use this argument to pass in the substitution tag, and provide the replacement value as a second argument.
   */
   public any function withSubstitution( any substitution, any value ) {
@@ -277,6 +289,19 @@ component accessors="true" {
       variables.personalizations[ count ][ 'substitutions' ].append( substitution );
     else
       variables.personalizations[ count ][ 'substitutions' ][ substitution ] = value;
+
+    return this;
+  }
+
+  /**
+  * @hint sets the `substitutions` property for the **current** personalization envelope. If any substitutions are set, this method overwrites them.
+  * @substitutions An object containing key/value pairs of substitution tags and their replacement values.
+  */
+  public any function withSubstitutions( required struct substitutions ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize substitutions" );
+
+    variables.personalizations[ count ][ 'substitutions' ] = substitutions;
 
     return this;
   }
