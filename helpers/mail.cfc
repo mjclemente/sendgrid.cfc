@@ -356,6 +356,21 @@ component accessors="true" {
   /**
   * @hint needs to be public because it is called via invoke()
   */
+  public string function serializeCategories( required array data ) {
+    var serializedData = data.reduce(
+      function( result, item, index ) {
+        if ( result.len() ) result &= ',';
+
+        return result & '"#item#"';
+      }, ''
+    );
+
+    return '[' & serializedData & ']';
+  }
+
+  /**
+  * @hint needs to be public because it is called via invoke()
+  */
   public string function serializePersonalizations( required array data ) {
 
     var serializedData = '';
