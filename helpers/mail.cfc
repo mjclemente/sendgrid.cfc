@@ -166,6 +166,29 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets a single custom_arg on the global message. This can be overridden by a personalized custom_arg. You can set a custom_arg by providing the custom_arg and value, or by passing in a struct.
+  * @arg Facilitates two means of setting a custom_arg. You can pass in a struct with a key/value pair for the custom_arg and value (For example, { "Team": "Engineering" } ). Alternatively, you can use this to pass in the name of the custom_arg, and provide the value as a second argument.
+  */
+  public any function customArg( required any arg, any value ) {
+    if ( isStruct( arg ) )
+      variables.custom_args.append( header );
+    else
+      variables.custom_args[ arg ] = value;
+
+    return this;
+  }
+
+  /**
+  * @hint Sets custom_args for the global message. They can be overridden by a personalized custom_arg.
+  * @args An object containing the key/value pairs of parameter names and their values. For example, { "Team": "Engineering", "Color": "Gray" }
+  */
+  public any function customArgs( required struct args ) {
+    variables.custom_args = args;
+
+    return this;
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
