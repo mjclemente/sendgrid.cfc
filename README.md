@@ -46,37 +46,63 @@ I've found two places where the `/mail/send` endpoint JSON body are explained, a
 Here are the currently available public methods for building the mail object (unless indicated, all methods are chainable):
 
 ### `from( required any email )`
+
 ### `replyTo( required any email )`
+
 ### `subject( required string subject )`
 Sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
+
 ### `html( required string message )`
 Convenience method for adding the text/html content
+
 ### `plain( required string message )`
 Convenience method for adding the text/plain content
+
 ### `emailContent( required struct content, boolean doAppend = true )`
 Method for setting any content mime-type. The default is that the new mime-type is appended to the Content array, but you can override this and have it prepended. This is used internally to ensure that `text/plain` precedes `text/html`, in accordance with the RFC specs, as enforced by SendGrid.
+
 ### `plainFromHtml( string message = '' )`
 Convenience method for setting both `text/html` and `text/plain` at the same time. You can either pass in the HTML content as the message argument, and both will be set from it (using an internal method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
-### `header( any header, any value )`
+
+### `header( required any header, any value )`
 Adds a single header to the global message. This can be overridden by a personalized header. You can set a header by providing the header and value, or by passing in a struct with a key/value pair for the name and value of the header.
+
+### `headers( required struct headers )`
+Sets the headers for the global message. They can be overridden by a personalized header. If any headers are set, this overwrites them.
+
 ### `categories( required any categories )`
 Sets the category array for the message. If categories are already set, this overwrites them. The argument can be passed in as an array or comma separated list. Lists will be converted to arrays
+
 ### `addCategory( required string category )`
 Appends a single category to the message category array
+
+### `customArg( required any arg, any value )`
+Sets a single custom\_arg on the global message. This can be overridden by a personalized custom\_arg. You can pass in a struct with a key/value pair for the custom\_arg and value (For example, `{ "Team": "Engineering" }` ). Alternatively, you can use the first argument to pass in the name of the custom\_arg, and provide the value as a second argument.
+
+### `customArgs( required struct args )`
+Sets custom\_args for the global message. They can be overridden by a personalized custom\_arg. If any custom\_args are set, this overwrites them.
+
 ### `to( required any email )`
 Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
+
 ### `addTo( required any email )`
 Adds an additional 'to' recipient to the **current** personalization envelope
+
 ### `addCC( required any email )`
 Adds an additional 'cc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
+
 ### `addBCC( required any email )`
 Adds an additional 'bcc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
+
 ### `withSubject ( required string subject )`
 Sets the subject for the current personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
+
 ### `withHeader ( any header, any value )`
 Functions like `header()`, except it adds the header to the **current** personalization envelope.
+
 ### `withSubstitution ( any substitution, any value )`
 Adds a substitution ( "substitution_tag" : "value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
+
 ### `build()`
 The function that puts it all together and builds the body for `/mail/send`
 
