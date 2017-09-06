@@ -28,6 +28,7 @@ component accessors="true" {
     setContent( [] );
     setHeaders( {} );
     setCategories( [] );
+    setCustom_args( {} );
 
     if ( arguments.keyExists( 'from' ) )
       this.from( from );
