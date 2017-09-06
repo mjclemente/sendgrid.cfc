@@ -107,8 +107,14 @@ Sets the subject for the current personalization envelope. This overrides the gl
 ### `withHeader ( any header, any value )`
 Functions like `header()`, except it adds the header to the **current** personalization envelope.
 
+### `withHeaders( required struct headers )`
+Functions like `headers()`, except it sets the `headers` property for the **current** personalization envelope. If any personalized headers are set, this method overwrites them.
+
 ### `withSubstitution ( any substitution, any value )`
-Adds a substitution ( "substitution_tag" : "value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
+Appends a substitution ( "substitution_tag" : "value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
+
+### `withSubstitutions( required struct substitutions )`
+Sets the `substitutions` property for the **current** personalization envelope. If any substitutions are set, this method overwrites them.
 
 ### `build()`
 The function that puts it all together and builds the body for `/mail/send`
