@@ -121,10 +121,10 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds a single header to the global message. This can be overridden by a personalized header. You can set a header by providing the header and value, or by passing in a struct.
+  * @hint Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
-  public any function header( any header, any value ) {
+  public any function header( required any header, any value ) {
     if ( isStruct( header ) )
       variables.headers.append( header );
     else
@@ -134,7 +134,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Sets the headers for the global message. They can be overridden by a personalized header. If any headers are set, this overwrites them.
+  * @hint Sets the `headers` property for the global message. Headers can be overridden by a personalized header. If any headers are set, this method overwrites them.
   * @headers An object containing key/value pairs of header names and their value. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC
   */
   public any function headers( required struct headers ) {
@@ -144,7 +144,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Sets the category array for the message. If categories are already set, this overwrites them.
+  * @hint Sets the category array for the global message. If categories are already set, this overwrites them.
   * @categories Can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
   public any function categories( required any categories ) {
@@ -157,7 +157,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Appends a category to the message category array
+  * @hint Appends a single category to the global message category array
   */
   public any function addCategory( required string category ) {
     variables.categories.append( category );
@@ -166,7 +166,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Sets a single custom_arg on the global message. This can be overridden by a personalized custom_arg. You can set a custom_arg by providing the custom_arg and value, or by passing in a struct.
+  * @hint Appends a single custom argument on the global message's `custom_args` property. This can be overridden by a personalized custom argument.
   * @arg Facilitates two means of setting a custom_arg. You can pass in a struct with a key/value pair for the custom_arg and value (For example, { "Team": "Engineering" } ). Alternatively, you can use this to pass in the name of the custom_arg, and provide the value as a second argument.
   */
   public any function customArg( required any arg, any value ) {
@@ -179,7 +179,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Sets custom_args for the global message. They can be overridden by a personalized custom_arg.
+  * @hint Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments are set, this overwrites them.
   * @args An object containing the key/value pairs of parameter names and their values. For example, { "Team": "Engineering", "Color": "Gray" }
   */
   public any function customArgs( required struct args ) {

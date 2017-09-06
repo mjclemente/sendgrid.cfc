@@ -43,14 +43,17 @@ The `from`, `subject`, `to`, and message content, whether plain or html, are min
 
 I've found two places where the `/mail/send` endpoint JSON body are explained, and the (77!) possible parameters outlined. Familiarizing yourself with these will be of great help when using the API: [V3 Mail Send API Overview](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html) and [Mail Send Endpoint Documentation](https://sendgrid.api-docs.io/v3.0/mail-send).
 
-Here are the currently available public methods for building the mail object (unless indicated, all methods are chainable):
+## `helpers.mail` Reference Manual
+This section documents every public method in the `helpers/mail.cfc` file.
+
+Unless indicated, all methods are chainable. Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations."
 
 ### `from( required any email )`
 
 ### `replyTo( required any email )`
 
 ### `subject( required string subject )`
-Sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
+Sets the global subject. This may be overridden by personalizations[x].subject.
 
 ### `html( required string message )`
 Convenience method for adding the text/html content
@@ -65,22 +68,26 @@ Method for setting any content mime-type. The default is that the new mime-type 
 Convenience method for setting both `text/html` and `text/plain` at the same time. You can either pass in the HTML content as the message argument, and both will be set from it (using an internal method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
 
 ### `header( required any header, any value )`
-Adds a single header to the global message. This can be overridden by a personalized header. You can set a header by providing the header and value, or by passing in a struct with a key/value pair for the name and value of the header.
+Appends a single header to the global message's `headers` property. This can be overridden by a personalized header. 
+
+You can set a header by providing the header and value separately, or by passing in a struct with a key/value pair; for example, `{ "X-my-application-name" : 'testing' }`.
 
 ### `headers( required struct headers )`
-Sets the headers for the global message. They can be overridden by a personalized header. If any headers are set, this overwrites them.
+Sets the `headers` property for the global message. Headers can be overridden by a personalized header. If any headers are set, this method overwrites them.
 
 ### `categories( required any categories )`
-Sets the category array for the message. If categories are already set, this overwrites them. The argument can be passed in as an array or comma separated list. Lists will be converted to arrays
+Sets the category array for the global message. If categories are already set, this overwrites them. The argument can be passed in as an array or comma separated list. Lists will be converted to arrays
 
 ### `addCategory( required string category )`
-Appends a single category to the message category array
+Appends a single category to the global message category array
 
 ### `customArg( required any arg, any value )`
-Sets a single custom\_arg on the global message. This can be overridden by a personalized custom\_arg. You can pass in a struct with a key/value pair for the custom\_arg and value (For example, `{ "Team": "Engineering" }` ). Alternatively, you can use the first argument to pass in the name of the custom\_arg, and provide the value as a second argument.
+Appends a single custom argument on the global message's `custom_args` property. This can be overridden by a personalized custom argument.
+
+You can set a custom argument by providing the argument's name and value separately, or by passing in a struct with a key/value pair; for example, `{ "Team": "Engineering" }`.
 
 ### `customArgs( required struct args )`
-Sets custom\_args for the global message. They can be overridden by a personalized custom\_arg. If any custom\_args are set, this overwrites them.
+Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments are set, this overwrites them.
 
 ### `to( required any email )`
 Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
