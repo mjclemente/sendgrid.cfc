@@ -167,7 +167,7 @@ component accessors="true" {
 
   /**
   * @hint Appends a single custom argument on the global message's `custom_args` property. This can be overridden by a personalized custom argument.
-  * @arg Facilitates two means of setting a custom_arg. You can pass in a struct with a key/value pair for the custom_arg and value (For example, { "Team": "Engineering" } ). Alternatively, you can use this to pass in the name of the custom_arg, and provide the value as a second argument.
+  * @arg Facilitates two means of setting a custom argument. You can pass in a struct with a key/value pair, for example, { "Team": "Engineering" }, or you can use this to pass in the custom argument's name, and provide the value as a second argument.
   */
   public any function customArg( required any arg, any value ) {
     if ( isStruct( arg ) )
