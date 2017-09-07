@@ -89,6 +89,9 @@ You can set a custom argument by providing the argument's name and value separat
 ### `customArgs( required struct args )`
 Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments are set, this overwrites them.
 
+### `sendAt( required date timeStamp )`
+Sets the global `send_at` property, which specifies when you want the email delivered. This may be overridden by the personalizations[x].send_at.
+
 ### `to( required any email )`
 Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
 
@@ -121,6 +124,9 @@ Functions like `customArg()`, except it adds the custom argument to the **curren
 
 ### `withCustomArgs( required struct args )`
 Functions like `customArgs()`, except it sets the `custom_args` property for the **current** personalization envelope. If any personalized custom arguments are set, this method overwrites them.
+
+### `withSendAt( required date timeStamp )`
+Functions like `sendAt()`, except it sets the desired send time for the **current** personalization envelope.
 
 ### `build()`
 The function that puts it all together and builds the body for `/mail/send`
