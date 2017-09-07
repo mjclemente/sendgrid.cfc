@@ -58,7 +58,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint sets the global, or "message level", subject. This may be overridden by personalizations[x].subject.
+  * @hint Sets the global subject. This may be overridden by personalizations[x].subject.
   */
   public any function subject( required string subject ) {
     setSubject( subject );
