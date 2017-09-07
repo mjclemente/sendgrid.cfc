@@ -444,6 +444,13 @@ component accessors="true" {
   /**
   * @hint needs to be public because it is called via invoke()
   */
+  public string function serializeCustom_args( required struct data ) {
+    return serializeValuesAsString( data );
+  }
+
+  /**
+  * @hint needs to be public because it is called via invoke()
+  */
   public string function serializeCategories( required array data ) {
     var serializedData = data.reduce(
       function( result, item, index ) {
@@ -471,7 +478,7 @@ component accessors="true" {
 
             if ( result.len() ) result &= ',';
 
-            if ( arrayContains( [ 'headers', 'substitutions' ], key ) )
+            if ( arrayContains( [ 'headers', 'substitutions', 'custom_args' ], key ) )
               return result & '"#key#": #serializeValuesAsString( value )#';
             else
               return result & '"#key#": #serializeJSON( value )#';
