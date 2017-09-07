@@ -68,7 +68,7 @@ Method for setting any content mime-type. The default is that the new mime-type 
 Convenience method for setting both `text/html` and `text/plain` at the same time. You can either pass in the HTML content as the message argument, and both will be set from it (using an internal method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
 
 ### `header( required any header, any value )`
-Appends a single header to the global message's `headers` property. This can be overridden by a personalized header. 
+Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
 
 You can set a header by providing the header and value separately, or by passing in a struct with a key/value pair; for example, `{ "X-my-application-name" : 'testing' }`.
 
@@ -115,6 +115,12 @@ Appends a substitution ( "substitution_tag" : "value to substitute" ) to the **c
 
 ### `withSubstitutions( required struct substitutions )`
 Sets the `substitutions` property for the **current** personalization envelope. If any substitutions are set, this method overwrites them.
+
+### `withCustomArg( required any arg, any value )`
+Functions like `customArg()`, except it adds the custom argument to the **current** personalization envelope.
+
+### `withCustomArgs( required struct args )`
+Functions like `customArgs()`, except it sets the `custom_args` property for the **current** personalization envelope. If any personalized custom arguments are set, this method overwrites them.
 
 ### `build()`
 The function that puts it all together and builds the body for `/mail/send`
