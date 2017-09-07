@@ -191,6 +191,15 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the global `send_at` property, which specifies when you want the email delivered. This may be overridden by the personalizations[x].send_at.
+  */
+  public any function sendAt( required date timeStamp ) {
+    setSend_at( getUTCTimestamp( timeStamp ) );
+
+    return this;
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
@@ -335,6 +344,18 @@ component accessors="true" {
     if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize custom arguments." );
 
     variables.personalizations[ count ][ 'custom_args' ] = args;
+
+    return this;
+  }
+
+  /**
+  * @hint functions like `sendAt()`, except it sets the desired send time for the **current** personalization envelope.
+  */
+  public any function withSendAt( required date timeStamp ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize when it is sent." );
+
+    variables.personalizations[ count ][ 'send_at' ] = getUTCTimestamp( timeStamp );
 
     return this;
   }
