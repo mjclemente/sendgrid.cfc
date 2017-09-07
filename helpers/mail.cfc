@@ -180,12 +180,11 @@ component accessors="true" {
   }
 
   /**
-  * @hint Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments are set, this overwrites them.
+  * @hint Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments were previously set, this overwrites them.
   * @args An object containing the key/value pairs of parameter names and their values. For example, { "Team": "Engineering", "Color": "Gray" }
   */
   public any function customArgs( required struct args ) {
-    variables.custom_args = args;
-
+    setCustom_args( args );
     return this;
   }
 
