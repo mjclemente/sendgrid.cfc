@@ -150,9 +150,9 @@ component accessors="true" {
   */
   public any function categories( required any categories ) {
     if ( isArray( categories ) )
-      variables.categories = categories;
+      setCategories( categories );
     else
-      variables.categories = categories.toArray();
+      setCategories( categories.listToArray() );
 
     return this;
   }
