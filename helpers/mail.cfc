@@ -299,14 +299,43 @@ component accessors="true" {
   */
   public any function withSubstitutions( required struct substitutions ) {
     var count = countPersonalizations();
-    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize substitutions" );
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize substitutions." );
 
     variables.personalizations[ count ][ 'substitutions' ] = substitutions;
 
     return this;
   }
 
+  /**
+  * @hint functions like customArg(), except it adds the custom argument to the **current** personalization envelope.
+  * @arg Facilitates two means of setting a custom argument. You can pass in a struct with a key/value pair, for example, { "Team": "Engineering" }, or you can use this to pass in the custom argument's name, and provide the value as a second argument.
+  */
+  public any function withCustomArg( required any arg, any value ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize custom arguments." );
 
+    if ( !variables.personalizations[ count ].keyExists( 'custom_args' ) )
+      variables.personalizations[ count ][ 'custom_args' ] = {};
+
+    if ( isStruct( arg ) )
+      variables.personalizations[ count ][ 'custom_args' ].append( arg );
+    else
+      variables.personalizations[ count ][ 'custom_args' ][ arg ] = value;
+
+    return this;
+  }
+
+  /**
+  * @hint functions like `customArgs()`, except it sets the `custom_args` property for the **current** personalization envelope. If any personalized custom arguments are set, this method overwrites them.
+  */
+  public any function withCustomArgs( required struct args ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize custom arguments." );
+
+    variables.personalizations[ count ][ 'custom_args' ] = args;
+
+    return this;
+  }
 
   /**
   * @hint Creates and sets a new personalization envelope
