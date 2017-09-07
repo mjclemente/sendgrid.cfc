@@ -232,7 +232,7 @@ component accessors="true" {
   /**
   * @hint Sets the subject for the **current** personalization envelope. This overrides the global email subject for these recipients. A basic personalization envelope (with a 'to' recipient) needs to be in place before this can be added.
   */
-  public any function withSubject ( required string subject ) {
+  public any function withSubject( required string subject ) {
     var count = countPersonalizations();
 
     //not sure to what extent I should validate
@@ -244,7 +244,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint functions like header(), except it adds the header to the **current** personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
+  * @hint functions like `header()`, except it adds the header to the **current** personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
   public any function withHeader( any header, any value ) {
@@ -307,7 +307,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint functions like customArg(), except it adds the custom argument to the **current** personalization envelope.
+  * @hint functions like `customArg()`, except it adds the custom argument to the **current** personalization envelope.
   * @arg Facilitates two means of setting a custom argument. You can pass in a struct with a key/value pair, for example, { "Team": "Engineering" }, or you can use this to pass in the custom argument's name, and provide the value as a second argument.
   */
   public any function withCustomArg( required any arg, any value ) {
