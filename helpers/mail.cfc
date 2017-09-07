@@ -272,7 +272,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint functions like `headers()`, except it sets the `headers` property for the **current** personalization envelope. If any personalized headers are set, this method overwrites them.
+  * @hint functions like `headers()`, except it sets the `headers` property for the **current** personalization envelope. If any personalized headers were previously set, this method overwrites them.
   */
   public any function withHeaders( required struct headers ) {
     var count = countPersonalizations();
@@ -303,7 +303,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint sets the `substitutions` property for the **current** personalization envelope. If any substitutions are set, this method overwrites them.
+  * @hint sets the `substitutions` property for the **current** personalization envelope. If any substitutions were previously set, this method overwrites them.
   * @substitutions An object containing key/value pairs of substitution tags and their replacement values.
   */
   public any function withSubstitutions( required struct substitutions ) {
@@ -335,7 +335,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint functions like `customArgs()`, except it sets the `custom_args` property for the **current** personalization envelope. If any personalized custom arguments are set, this method overwrites them.
+  * @hint functions like `customArgs()`, except it sets the `custom_args` property for the **current** personalization envelope. If any personalized custom arguments were previously set, this method overwrites them.
   */
   public any function withCustomArgs( required struct args ) {
     var count = countPersonalizations();
