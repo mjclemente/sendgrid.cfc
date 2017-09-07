@@ -42,6 +42,8 @@ component accessors="true" {
     if ( arguments.keyExists( 'content' ) )
       plainFromHtml( content );
 
+    variables.utcBaseDate = dateAdd( "l", createDate( 1970,1,1 ).getTime() * -1, createDate( 1970,1,1 ) );
+
     return this;
   }
 
@@ -504,6 +506,14 @@ component accessors="true" {
       }, ''
     );
     return '{' & serializedData & '}';
+  }
+
+  private numeric function getUTCTimestamp( required date dateToConvert ) {
+    return dateDiff( "s", variables.utcBaseDate, dateToConvert );
+  }
+
+  private date function parseUTCTimestamp( required numeric utcTimestamp ) {
+    return dateAdd( "s", utcTimestamp, variables.utcBaseDate );
   }
 
   /** This could probably go in a separate utils CFC, but it's here for now
