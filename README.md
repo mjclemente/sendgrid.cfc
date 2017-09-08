@@ -67,6 +67,12 @@ Method for setting any content mime-type. The default is that the new mime-type 
 ### `plainFromHtml( string message = '' )`
 Convenience method for setting both `text/html` and `text/plain` at the same time. You can either pass in the HTML content as the message argument, and both will be set from it (using an internal method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
 
+### `attachments( required array attachments )`
+Sets the `attachments` property for the global message. If any attachments were previously set, this method overwrites them.
+
+### `addAttachment( required struct attachment )`
+Appends a single attachment to the message. The attachment argument is struct with at minimum keys for `content` and `filename`. View the SendGrid docs for the full makeup and requirements of the object: https://sendgrid.api-docs.io/v3.0/mail-send
+
 ### `header( required any header, any value )`
 Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
 

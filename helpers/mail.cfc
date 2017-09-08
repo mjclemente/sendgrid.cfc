@@ -26,6 +26,7 @@ component accessors="true" {
 
     setPersonalizations( [] );
     setContent( [] );
+    setAttachments( [] );
     setHeaders( {} );
     setCategories( [] );
     setCustom_args( {} );
@@ -118,6 +119,24 @@ component accessors="true" {
       plain( removeHTML( message ) );
       html( message );
     }
+
+    return this;
+  }
+
+  /**
+  * @hint Sets the `attachments` property for the global message. If any attachments were previously set, this method overwrites them.
+  */
+  public any function attachments( required array attachments ) {
+    setAttachments( attachments );
+    return this;
+  }
+
+  /**
+  * @hint Appends a single attachment to the message.
+  * @attachment A struct with at minimum keys for `content` and `filename`. View the SendGrid docs for the full makeup of the object: https://sendgrid.api-docs.io/v3.0/mail-send
+  */
+  public any function addAttachment( required struct attachment ) {
+    variables.attachments.append( attachment );
 
     return this;
   }
