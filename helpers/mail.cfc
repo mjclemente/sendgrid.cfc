@@ -142,6 +142,31 @@ component accessors="true" {
   }
 
   /**
+  * @hint a convenience method for appending a single file attachment to the message
+  * @filePath The relative or absolute path to an on-disk file. Its properties are used if the additional arguments aren't provided
+  */
+  public any function attachFile( required string filePath, string fileName, string type, string disposition = 'attachment', string content_id ) {
+
+    var fullPath = expandPath( filePath );
+
+    var binaryFile = fileReadBinary( fullPath );
+    var encodedFile = binaryEncode( binaryFile, 'Base64' );
+
+    var attachment = {
+      'content': encodedFile,
+      'filename': fileName ?: getFileFromPath( fullPath ),
+      'type' : type ?: FileGetMimeType( fullPath ),
+      'disposition': disposition
+    };
+
+    if ( !isNull( content_id ) ) attachment[ 'content_id' ] = content_id;
+
+    addAttachment( attachment );
+
+    return this;
+  }
+
+  /**
   * @hint Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */

@@ -73,6 +73,9 @@ Sets the `attachments` property for the global message. If any attachments were 
 ### `addAttachment( required struct attachment )`
 Appends a single attachment to the message. The attachment argument is struct with at minimum keys for `content` and `filename`. View the SendGrid docs for the full makeup and requirements of the object: https://sendgrid.api-docs.io/v3.0/mail-send
 
+### `attachFile( required string filePath, string fileName, string type, string disposition = 'attachment', string content_id )`
+A convenience method for appending a single file attachment to the message. All that is required is the relative or absolute path to an on-disk file. Its properties are used if the additional arguments aren't provided.
+
 ### `header( required any header, any value )`
 Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
 
