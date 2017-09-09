@@ -76,6 +76,17 @@ Appends a single attachment to the message. The attachment argument is struct wi
 ### `attachFile( required string filePath, string fileName, string type, string disposition = 'attachment', string content_id )`
 A convenience method for appending a single file attachment to the message. All that is required is the relative or absolute path to an on-disk file. Its properties are used if the additional arguments aren't provided.
 
+### `templateId( required string templateId )`
+Sets the id of a template that you would like to use for the message
+
+### `section( required any section, any value )`
+Appends a single section block to the global message's `sections` property. I'd recommend reading up on the somewhat [limited](https://sendgrid.com/docs/Classroom/Build/Add_Content/substitution_and_section_tags.html) [documentation](https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html) SendGrid provides about sections and substitutions for more clarity on how they should be structured and used.
+
+You can set a section by providing the section tag and replacement value separately, or by passing in a struct with a key/value pair; for example, `{ "-greeting-" : 'Welcome -first_name- -last_name-,' }`.
+
+### `sections( required struct sections )`
+Sets the `sections` property for the global message. If any sections were previously set, this method overwrites them.
+
 ### `header( required any header, any value )`
 Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
 

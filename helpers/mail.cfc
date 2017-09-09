@@ -167,6 +167,39 @@ component accessors="true" {
   }
 
   /**
+  * https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html
+  * @hint Sets the id of a template that you would like to use for the message
+  */
+  public any function templateId( required string templateId ) {
+    setTemplate_id( templateId );
+    return this;
+  }
+
+  /**
+  * https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html (from SMTP API, but helpful for understanding use)
+  * https://sendgrid.com/docs/Classroom/Build/Add_Content/substitution_and_section_tags.html
+  * @hint Appends a single section block to the global message's `sections` property.
+  * @section Facilitates two means of adding a section. You can pass in a struct with a key/value pair for the section tag and code block to replace it with. Alternatively, you can use this to pass in the section tag, and provide the replacement value as a second argument.
+  */
+  public any function section( required any section, any value ) {
+    if ( isStruct( section ) )
+      variables.sections.append( section );
+    else
+      variables.sections[ section ] = value;
+
+    return this;
+  }
+
+  /**
+  * @hint Sets the `sections` property for the global message. If any sections were previously set, this method overwrites them.
+  * @sections An object containing key/value pairs of section tags and their replacement values.
+  */
+  public any function sections( required struct sections ) {
+    setSections( sections );
+    return this;
+  }
+
+  /**
   * @hint Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
   * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
