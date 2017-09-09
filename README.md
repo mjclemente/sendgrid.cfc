@@ -112,6 +112,9 @@ Sets the `custom_args` property for the global message. Custom arguments can be 
 ### `sendAt( required date timeStamp )`
 Sets the global `send_at` property, which specifies when you want the email delivered. This may be overridden by the personalizations[x].send_at.
 
+### `batchId( required string batchId )`
+Sets the global `batch_id` property, which represents a group of emails that are associated with each other. The sending of emails in a batch can be cancelled or paused. Note that you must generate the batchID value via the API.
+
 ### `to( required any email )`
 Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
 

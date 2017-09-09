@@ -275,6 +275,14 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the global `batch_id` property, which represents a group of emails that are associated with each other. The sending of emails in a batch can be cancelled or paused. Note that you must generate the batchID value via the API.
+  */
+  public any function batchId( required string batchId ) {
+    setBatch_id( batchId );
+    return this;
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
