@@ -28,6 +28,11 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
+  //Batches
+  public struct function generateBatchId() {
+    return apiCall( 'POST', "/mail/batch" );
+  }
+
   //Stats
   public struct function getStats( numeric limit, numeric offset, string aggregated_by, required string start_date, string end_date ) {
 
