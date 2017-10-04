@@ -27,6 +27,7 @@ component accessors="true" {
     setPersonalizations( [] );
     setContent( [] );
     setAttachments( [] );
+    setSections( {} );
     setHeaders( {} );
     setCategories( [] );
     setCustom_args( {} );
@@ -590,6 +591,8 @@ component accessors="true" {
               return result & '"#key#": #serializeJSON( value )#';
           }, ''
         );
+
+        if ( serializedData.len() ) serializedData &= ',';
         serializedData &= '{' & serializedEnvelope & '}';
       }
     );
