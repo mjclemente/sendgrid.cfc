@@ -311,6 +311,39 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the global `mail_settings.bcc` property, which allows you to have a blind carbon copy automatically sent to the specified email address for every email that is sent. Using the dedicated enable/disable bcc methods is usually preferable.
+  */
+  public any function bccSetting( required boolean enable, string email = '' ) {
+    var setting = {
+      'enable' : false
+    };
+    if ( enable ) {
+      setting = {
+        'enable' : true,
+        'email' : email
+      };
+    }
+
+    mailSetting( 'bcc', setting );
+
+    return this;
+  }
+
+  /**
+  * @hint convenience method for enabling the bcc mail setting and setting the address
+  */
+  public any function enableBcc( required string email ) {
+    return bccSetting( true, email );
+  }
+
+  /**
+  * @hint convenience method for disabling the bcc mail setting
+  */
+  public any function disableBcc() {
+    return bccSetting( false );
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
