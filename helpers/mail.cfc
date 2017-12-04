@@ -315,14 +315,11 @@ component accessors="true" {
   */
   public any function bccSetting( required boolean enable, string email = '' ) {
     var setting = {
-      'enable' : false
+      'enable' : enable
     };
-    if ( enable ) {
-      setting = {
-        'enable' : true,
-        'email' : email
-      };
-    }
+
+    if ( enable )
+      setting[ 'email' ] = email;
 
     mailSetting( 'bcc', setting );
 
@@ -330,14 +327,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the bcc mail setting and setting the address
+  * @hint convenience method for enabling the `bcc` mail setting and setting the address
   */
   public any function enableBcc( required string email ) {
     return bccSetting( true, email );
   }
 
   /**
-  * @hint convenience method for disabling the bcc mail setting
+  * @hint convenience method for disabling the `bcc` mail setting
   */
   public any function disableBcc() {
     return bccSetting( false );
