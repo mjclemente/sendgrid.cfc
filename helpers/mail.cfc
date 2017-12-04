@@ -341,6 +341,35 @@ component accessors="true" {
   }
 
   /**
+  * @hint Sets the global `mail_settings.bypass_list_management` property, which allows you to bypass all unsubscribe groups and suppressions to ensure that the email is delivered to every single recipient. According to SendGrid, this should only be used in emergencies when it is absolutely necessary that every recipient receives your email. Using the dedicated enable/disable methods is usually preferable to invoking this directly
+  */
+  public any function bypassListManagementSetting( required boolean enable ) {
+    var setting = {
+      'enable' : enable
+    };
+
+    mailSetting( 'bypass_list_management', setting );
+
+    return this;
+  }
+
+  /**
+  * @hint convenience method for enabling the `bypass_list_management` mail setting
+  */
+  public any function enableBypassListManagement() {
+    return bypassListManagementSetting( true );
+  }
+
+  /**
+  * @hint convenience method for disabling the `bypass_list_management` mail setting
+  */
+  public any function disableBypassListManagement() {
+    return bypassListManagementSetting( false );
+  }
+
+
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
