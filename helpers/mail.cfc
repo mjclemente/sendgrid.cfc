@@ -31,6 +31,7 @@ component accessors="true" {
     setHeaders( {} );
     setCategories( [] );
     setCustom_args( {} );
+    setMailSettings( {} );
 
     if ( arguments.keyExists( 'from' ) )
       this.from( from );
@@ -283,6 +284,32 @@ component accessors="true" {
     return this;
   }
 
+  //todo ASM
+
+  //todo IP Pool
+
+  /**
+  * @hint Sets the `mail_settings` property for the global message. If any mail settings were previously set, this method overwrites them.
+  * @settings An object containing key/value pairs of each defined mail setting and its value
+  */
+  public any function mailSettings ( required struct settings ) {
+    setMail_settings( settings );
+    return this;
+  }
+
+  /**
+  * @hint Generic method for defining individual mail settings. Using the dedicated methods for defining mail settings is usually preferable to invoking this directly.
+  * @setting Facilitates two means of defining a setting. You can pass in a struct with a key/value pair for the setting and its value. Alternatively, you can use this to pass in the setting key, and provide the value as a second argument.
+  */
+  public any function mailSetting( required any setting, any value ) {
+    if ( isStruct( setting ) )
+      variables.mail_settings.append( setting );
+    else
+      variables.mail_settings[ setting ] = value;
+
+    return this;
+  }
+
   /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
@@ -456,6 +483,8 @@ component accessors="true" {
 
     variables.personalizations.append( personalization );
   }
+
+
 
   public string function build() {
 
