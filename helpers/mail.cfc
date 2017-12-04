@@ -400,6 +400,34 @@ component accessors="true" {
   }
 
   /**
+  * https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
+  * @hint Sets the global `mail_settings.sandbox_mode` property, which allows allows you to send a test email to ensure that your request body is valid and formatted correctly. Sandbox mode is only used to validate your request. The email will never be delivered while this feature is enabled! Using the dedicated enable/disable methods is usually preferable to invoking this directly
+  */
+  public any function sandboxModeSetting( required boolean enable ) {
+    var setting = {
+      'enable' : enable
+    };
+
+    mailSetting( 'sandbox_mode', setting );
+
+    return this;
+  }
+
+  /**
+  * @hint convenience method for enabling the `sandbox_mode` mail setting
+  */
+  public any function enableSandboxMode() {
+    return sandboxModeSetting( true );
+  }
+
+  /**
+  * @hint convenience method for disabling the `sandbox_mode` mail setting
+  */
+  public any function disableSandboxMode() {
+    return sandboxModeSetting( false );
+  }
+
+  /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
   */
   public any function to( required any email ) {
