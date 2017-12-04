@@ -367,7 +367,37 @@ component accessors="true" {
     return bypassListManagementSetting( false );
   }
 
+  /**
+  * @hint Sets the global `mail_settings.footer` property, which provides the option for setting a default footer that you would like included on every email. Using the dedicated enable/disable methods is usually preferable.
+  */
+  public any function footerSetting( required boolean enable, string text = '', string html = '' ) {
+    var setting = {
+      'enable' : enable
+    };
 
+    if ( enable ) {
+      setting[ 'text' ] = text;
+      setting[ 'html' ] = html;
+    }
+
+    mailSetting( 'footer', setting );
+
+    return this;
+  }
+
+  /**
+  * @hint convenience method for enabling the `footer` mail setting and setting the text/html
+  */
+  public any function enableFooter( required string text, required string html ) {
+    return footerSetting( true, text, html );
+  }
+
+  /**
+  * @hint convenience method for disabling the `footer` mail setting
+  */
+  public any function disableFooter() {
+    return footerSetting( false );
+  }
 
   /**
   * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
