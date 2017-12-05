@@ -28,6 +28,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @mail must be an instance of the helpers.mail component
   */
   public struct function sendMail( required component mail ) {
+    if ( variables.forceTestMode ) mail.enableSandboxMode();
+
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
