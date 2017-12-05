@@ -23,8 +23,11 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   //Mail
-  public struct function sendMail( required helpers.mail mail ) {
-    //writeDump( var='#mail.build()#', format='html', abort='true' );
+
+  /**
+  * @mail must be an instance of the helpers.mail component
+  */
+  public struct function sendMail( required component mail ) {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
