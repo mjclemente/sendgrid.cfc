@@ -115,6 +115,59 @@ Sets the global `send_at` property, which specifies when you want the email deli
 ### `batchId( required string batchId )`
 Sets the global `batch_id` property, which represents a group of emails that are associated with each other. The sending of emails in a batch can be cancelled or paused. Note that you must generate the batchID value via the API.
 
+### `mailSettings( required struct settings )`
+Sets the `mail_settings` property for the global message. If any mail settings were previously set, this method overwrites them. While this makes it possible to pass in the fully constructed mail settings struct, the preferred method of setting mail settings is by using their dedicated methods.
+
+### `mailSetting( required any setting, any value )`
+Generic method for defining individual mail settings. Using the dedicated methods for defining mail settings is usually preferable to invoking this directly.
+
+You can define a setting by providing the setting key and its value separately, or by passing in a struct with a key/value pair; for example, `{ "sandbox_mode" : { "enable" : true } }`.
+
+### `bccSetting( required boolean enable, string email = '' )`
+Sets the global `mail_settings.bcc` property, which allows you to have a blind carbon copy automatically sent to the specified email address for every email that is sent. Using the dedicated enable/disable bcc methods is usually preferable.
+
+### `enableBcc( required string email )`
+Convenience method for enabling the `bcc` mail setting and setting the address
+
+### `disableBcc()`
+Convenience method for disabling the `bcc` mail setting
+
+### `bypassListManagementSetting( required boolean enable )`
+Sets the global `mail_settings.bypass_list_management` property, which allows you to bypass all unsubscribe groups and suppressions to ensure that the email is delivered to every single recipient. According to SendGrid, this should only be used in emergencies when it is absolutely necessary that every recipient receives your email. Using the dedicated enable/disable methods is usually preferable to invoking this directly
+
+### `enableBypassListManagement()`
+Convenience method for disabling the `bypass_list_management` mail setting
+
+### `disableBypassListManagement()`
+Convenience method for disabling the `bypass_list_management` mail setting
+
+### `footerSetting( required boolean enable, string text = '', string html = '' )`
+Sets the global `mail_settings.footer` property, which provides the option for setting a default footer that you would like included on every email. Using the dedicated enable/disable methods is usually preferable.
+
+### `enableFooter( required string text, required string html )`
+Convenience method for enabling the `footer` mail setting and setting the text/html
+
+### `disableFooter()`
+Convenience method for disabling the `footer` mail setting
+
+### `sandboxModeSetting( required boolean enable )`
+Sets the global `mail_settings.sandbox_mode` property, which allows allows you to send a test email to ensure that your request body is valid and formatted correctly. Sandbox mode is only used to validate your request. The email will never be delivered while this feature is enabled! Using the dedicated enable/disable methods is usually preferable to invoking this directly. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html).
+
+### `enableSandboxMode()`
+Convenience method for disabling the `sandbox_mode` mail setting
+
+### `disableSandboxMode()`
+Convenience method for disabling the `sandbox_mode` mail setting
+
+### `spamCheckSetting( required boolean enable, numeric threshold = 0, string post_to_url = '' )`
+Sets the global `mail_settings.spam_check` property, which allows you to test the content of your email for spam. Using the dedicated enable/disable methods is usually preferable.
+
+### `enableSpamCheck( required numeric threshold, required string post_to_url )`
+Convenience method for enabling the `spam_check` mail setting and setting the threshold and post_to_url
+
+### `disableSpamCheck()`
+Convenience method for disabling the `spam_check` mail setting
+
 ### `to( required any email )`
 Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
 
