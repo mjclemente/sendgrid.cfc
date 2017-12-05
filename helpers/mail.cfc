@@ -31,7 +31,7 @@ component accessors="true" {
     setHeaders( {} );
     setCategories( [] );
     setCustom_args( {} );
-    setMailSettings( {} );
+    setMail_settings( {} );
 
     if ( arguments.keyExists( 'from' ) )
       this.from( from );
