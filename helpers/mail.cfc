@@ -399,6 +399,41 @@ component accessors="true" {
     return footerSetting( false );
   }
 
+
+  /**
+  * @hint Sets the global `mail_settings.spam_check` property, which allows you to test the content of your email for spam. Using the dedicated enable/disable methods is usually preferable.
+  */
+  public any function spamCheckSetting( required boolean enable, numeric threshold = 0, string post_to_url = '' ) {
+    var setting = {
+      'enable' : enable
+    };
+
+    if ( enable ) {
+      setting[ 'threshold' ] = threshold;
+      setting[ 'post_to_url' ] = post_to_url;
+    }
+
+    mailSetting( 'spam_check', setting );
+
+    return this;
+  }
+
+  /**
+  * @hint convenience method for enabling the `spam_check` mail setting and setting the threshold and post_to_url
+  */
+  public any function enableSpamCheck( required numeric threshold, required string post_to_url ) {
+    return spamCheckSetting( true, threshold, post_to_url );
+  }
+
+  /**
+  * @hint convenience method for disabling the `spam_check` mail setting
+  */
+  public any function disableSpamCheck() {
+    return spamCheckSetting( false );
+  }
+
+
+
   /**
   * https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
   * @hint Sets the global `mail_settings.sandbox_mode` property, which allows allows you to send a test email to ensure that your request body is valid and formatted correctly. Sandbox mode is only used to validate your request. The email will never be delivered while this feature is enabled! Using the dedicated enable/disable methods is usually preferable to invoking this directly
