@@ -33,6 +33,40 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
+  /**
+  * Contacts API - Recipients
+  * https://sendgrid.com/docs/API_Reference/api_v3.html
+  */
+
+  /**
+  * @hint This endpoint allows you to add a Marketing Campaigns recipient.
+  * @recipient Facilitates two means of adding a recipient. You can pass in a struct with key/value pairs providing all relevant recipient information. Alternatively, you can use this to simply pass in the recipient's email address, which is all that is required.
+  * @customFields keys correspond to the custom field names, along with their assigned values
+  */
+  public struct function addRecipient( required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
+    var body = [];
+    var contact = {};
+
+    if ( isStruct( recipient ) )
+      contact.append( recipient );
+    else
+      contact[ 'email' ] = recipient;
+
+    if ( first_name.len() )
+      contact[ 'first_name' ] = first_name;
+
+    if ( last_name.len() )
+      contact[ 'last_name' ] = last_name;
+
+    if ( !customFields.isEmpty() )
+      contact.append( customFields, false );
+
+    body.append( contact );
+
+    return apiCall( 'POST', '/contactdb/recipients', {}, body );
+  }
+
+
   //Batches
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
