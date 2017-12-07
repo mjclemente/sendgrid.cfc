@@ -172,7 +172,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   private string function parseBody( required any body ) {
-    if ( isStruct( body ) )
+    if ( isStruct( body ) || isArray( body ) )
       return serializeJson( body );
     else if ( isJson( body ) )
       return body;
