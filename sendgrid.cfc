@@ -72,11 +72,6 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', "/mail/batch" );
   }
 
-  //Stats
-  public struct function getStats( numeric limit, numeric offset, string aggregated_by, required string start_date, string end_date ) {
-
-    return apiCall( "/stats", setupParams( arguments ), "get" );
-  }
 
   // PRIVATE FUNCTIONS
   private struct function apiCall(
