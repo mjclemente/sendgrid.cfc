@@ -35,7 +35,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Contacts API - Recipients
-  * https://sendgrid.com/docs/API_Reference/api_v3.html
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
   */
 
   /**
