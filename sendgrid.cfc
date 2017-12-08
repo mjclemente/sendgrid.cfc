@@ -40,7 +40,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
-  * @hint This endpoint allows you to add a Marketing Campaigns recipient.
+  * @hint This endpoint allows you to add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
   public struct function addRecipients( required array recipients ) {
