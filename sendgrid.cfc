@@ -84,6 +84,34 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/contactdb/custom_fields', {}, body );
   }
 
+  /**
+  * @hint This endpoint allows you to retrieve all custom fields.
+  */
+  public struct function listCustomFields() {
+    return apiCall( 'GET', "/contactdb/custom_fields" );
+  }
+
+  /**
+  * @hint This endpoint allows you to retrieve a custom field by ID.
+  */
+  public struct function getCustomField( required numeric id ) {
+    return apiCall( 'GET', "/contactdb/custom_fields/#id#" );
+  }
+
+  /**
+  * @hint This endpoint allows you to delete a custom field by ID.
+  */
+  public struct function deleteCustomField( required numeric id ) {
+    return apiCall( 'DELETE', "/contactdb/custom_fields/#id#" );
+  }
+
+  /**
+  * @hint This endpoint allows you to list all fields that are reserved and can't be used for custom field names.
+  */
+  public struct function listReservedFields() {
+    return apiCall( 'GET', "/contactdb/reserved_fields" );
+  }
+
   //Batches
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
