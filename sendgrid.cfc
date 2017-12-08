@@ -67,6 +67,23 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
 
+  /**
+  * Contacts API - Custom Fields
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-custom-fields/create-a-custom-field
+  */
+
+  /**
+  * @hint This endpoint allows you to create a custom field.
+  * @type allowed values are 'text', 'date', and 'number'
+  */
+  public struct function createCustomField( required string name, required string type ) {
+    var body = {
+      'name' : name,
+      'type' : type
+    };
+    return apiCall( 'POST', '/contactdb/custom_fields', {}, body );
+  }
+
   //Batches
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
