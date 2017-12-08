@@ -83,6 +83,15 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/contactdb/status" );
   }
 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
+  * @hint This endpoint allows you to update one or more recipients. Note that it will also add non-existing records.
+  * @recipients an array of objects, with at minimum, and 'email' key/value
+  */
+  public struct function updateRecipients( required array recipients ) {
+    return apiCall( 'PATCH', '/contactdb/recipients', {}, recipients );
+  }
+
 
   /**
   * Contacts API - Custom Fields
