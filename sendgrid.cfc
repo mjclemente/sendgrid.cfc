@@ -75,6 +75,14 @@ component output="false" displayname="SendGrid.cfc"  {
     return addRecipients( recipients );
   }
 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/get-recipient-upload-status
+  * @hint This endpoint allows you to check the upload status of a Marketing Campaigns recipient.
+  */
+  public struct function getRecipientUploadStatus() {
+    return apiCall( 'GET', "/contactdb/status" );
+  }
+
 
   /**
   * Contacts API - Custom Fields
