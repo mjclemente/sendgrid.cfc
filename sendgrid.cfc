@@ -177,6 +177,25 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients-matching-search-criteria
+  * @hint This endpoint allows you to perform a search on all of your Marketing Campaigns recipients.
+  * @fieldName the name of a custom field or reserved field
+  * @search the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
+  */
+  public struct function searchRecipients( required string fieldName, any search = '' ) {
+    var params = {
+      "#fieldName#" : !isValid( 'USdate', search ) ? search : returnUnixTimestamp( search )
+    };
+    return apiCall( 'GET', "/contactdb/recipients/search", params );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/Create_Search%20with%20conditions
+  * POST /contactdb/recipients/search
+  * Note that this endpoint exists, providing more robust, segmented search. However, I don't see support for it in any of the official libraries, so I'm not going to bother to put it together here, unless there's a need for it.
+  */
+
+  /**
   * Contacts API - Custom Fields
   * https://sendgrid.api-docs.io/v3.0/contacts-api-custom-fields/create-a-custom-field
   */
