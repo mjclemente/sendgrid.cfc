@@ -116,6 +116,35 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-recipient
+  * @hint This endpoint allows you to deletes one or more recipients. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/recipients`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the recipients through the individual delete method.
+  * @recipients An array of the recipient IDs you want to delete
+  */
+  public struct function deleteRecipients( required array recipients ) {
+    var result = {};
+    for ( var recipientId in recipients ) {
+      result = deleteRecipient( recipientId );
+    }
+    return result;
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
+  * @hint This endpoint allows you to delete a single recipient with the given ID from your contact database.
+  */
+  public struct function deleteRecipient( required string id ) {
+    return apiCall( 'DELETE', "/contactdb/recipients/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients
+  * @hint This endpoint allows you to retrieve all of your Marketing Campaigns recipients.
+  */
+  public struct function listRecipients() {
+    return apiCall( 'GET', "/contactdb/recipients" );
+  }
+
+  /**
   * Contacts API - Custom Fields
   * https://sendgrid.api-docs.io/v3.0/contacts-api-custom-fields/create-a-custom-field
   */
