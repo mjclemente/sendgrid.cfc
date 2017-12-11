@@ -244,7 +244,7 @@ component output="false" displayname="SendGrid.cfc"  {
         cfhttpparam( type = "header", name = header.name, value = header.value );
       }
 
-      if ( arrayFindNoCase( [ 'POST','PUT','PATCH' ], httpMethod ) && isJSON( requestBody ) )
+      if ( arrayFindNoCase( [ 'POST','PUT','PATCH','DELETE' ], httpMethod ) && isJSON( requestBody ) )
         cfhttpparam( type = "body", value = requestBody );
 
     }
