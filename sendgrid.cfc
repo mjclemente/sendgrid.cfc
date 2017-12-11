@@ -17,7 +17,7 @@
 component output="false" displayname="SendGrid.cfc"  {
 
   public any function init( required string apiKey, string baseUrl = "https://api.sendgrid.com/v3", boolean forceTestMode = false, numeric httpTimeout = 60, boolean includeRaw = true ) {
-
+    variables.utcBaseDate = dateAdd( "l", createDate( 1970,1,1 ).getTime() * -1, createDate( 1970,1,1 ) );
     structAppend( variables, arguments );
     return this;
   }
@@ -336,6 +336,10 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( !encodeSlash ) result = replace( result, '%2F', '/', 'all' );
 
     return result;
+  }
+
+  private numeric function returnUnixTimestamp( required any dateToConvert ) {
+    return dateDiff( "s", variables.utcBaseDate, dateToConvert );
   }
 
 }
