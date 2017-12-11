@@ -40,19 +40,44 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
-  * @hint This endpoint allows you to add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH
+  * @hint This endpoint allows you to add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH.
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
   public struct function addRecipients( required array recipients ) {
-    return apiCall( 'POST', '/contactdb/recipients', {}, recipients );
+    return upsertRecipients( 'POST', recipients );
   }
 
   /**
-  * @hint convenience method for adding a single recipient at a time. Delegates to addRecipients()
+  * @hint convenience method for adding a single recipient at a time.
   * @recipient Facilitates two means of adding a recipient. You can pass in a struct with key/value pairs providing all relevant recipient information. Alternatively, you can use this to simply pass in the recipient's email address, which is all that is required.
   * @customFields keys correspond to the custom field names, along with their assigned values
   */
   public struct function addRecipient( required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
+    upsertRecipient( 'POST', recipient, first_name, last_name, customFields );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
+  * @hint This endpoint allows you to update one or more recipients. Note that it will also add non-existing records.
+  * @recipients an array of objects, with at minimum, and 'email' key/value
+  */
+  public struct function updateRecipients( required array recipients ) {
+    return upsertRecipients( 'PATCH', recipients );
+  }
+
+  /**
+  * @hint convenience method for updating a single recipient at a time.
+  * @recipient Facilitates two means of updating a recipient. You can pass in a struct with key/value pairs providing all relevant recipient information. Alternatively, you can use this to simply pass in the recipient's email address, which is all that is required.
+  * @customFields keys correspond to the custom field names, along with their assigned values
+  */
+  public struct function updateRecipient( required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
+    upsertRecipient( 'PATCH', recipient, first_name, last_name, customFields );
+  }
+
+  /**
+  * @hint shared private method for handling insert/update requests for individual recipients. Deletegates to `upsertRecipients()`
+  */
+  private struct function upsertRecipient( required string method, required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
     var recipients = [];
     var contact = {};
 
@@ -72,7 +97,14 @@ component output="false" displayname="SendGrid.cfc"  {
 
     recipients.append( contact );
 
-    return addRecipients( recipients );
+    return upsertRecipients( method, recipients );
+  }
+
+  /**
+  * @hint shared private method for inserting/updating recipients
+  */
+  private struct function upsertRecipients( required string method, required array recipients ) {
+    return apiCall( method, '/contactdb/recipients', {}, recipients );
   }
 
   /**
@@ -82,16 +114,6 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getRecipientUploadStatus() {
     return apiCall( 'GET', "/contactdb/status" );
   }
-
-  /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
-  * @hint This endpoint allows you to update one or more recipients. Note that it will also add non-existing records.
-  * @recipients an array of objects, with at minimum, and 'email' key/value
-  */
-  public struct function updateRecipients( required array recipients ) {
-    return apiCall( 'PATCH', '/contactdb/recipients', {}, recipients );
-  }
-
 
   /**
   * Contacts API - Custom Fields
