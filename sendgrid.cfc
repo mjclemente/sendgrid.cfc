@@ -145,6 +145,38 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-single-recipient
+  * @hint This endpoint allows you to retrieve a single recipient by ID from your contact database.
+  */
+  public struct function getRecipient( required string id ) {
+    return apiCall( 'GET', "/contactdb/recipients/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-lists-that-a-recipient-is-on
+  * @hint This endpoint allows you to retrieve the lists that a given recipient belongs to.
+  */
+  public struct function getListsByRecipient( required string id ) {
+    return apiCall( 'GET', "/contactdb/recipients/#id#/lists" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-count-of-billable-recipients
+  * @hint This endpoint allows you to retrieve the number of Marketing Campaigns recipients that you will be billed for.
+  */
+  public struct function getBillableRecipientCount() {
+    return apiCall( 'GET', "/contactdb/recipients/billable_count" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-count-of-recipients
+  * @hint This endpoint allows you to retrieve the total number of Marketing Campaigns recipients.
+  */
+  public struct function getRecipientCount() {
+    return apiCall( 'GET', "/contactdb/recipients/count" );
+  }
+
+  /**
   * Contacts API - Custom Fields
   * https://sendgrid.api-docs.io/v3.0/contacts-api-custom-fields/create-a-custom-field
   */
