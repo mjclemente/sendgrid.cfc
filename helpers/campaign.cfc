@@ -11,7 +11,7 @@ component accessors="true" {
   property name="ip_pool" default="";
   property name="html_content" default="";
   property name="plain_content" default="";
-  property name="editor" default="code";
+  property name="editor" default="";
 
   /**
   * @hint You don't need to init the campaign with a title, but it's an option. The title is the only parameter required to create a campaign. More are required to send.
