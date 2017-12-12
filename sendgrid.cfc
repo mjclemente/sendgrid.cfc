@@ -74,7 +74,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Update a campaign by ID.
   * @campaign must be an instance of the helpers.campaign component
   */
-  public struct function updateCampaign( required component campaign ) {
+  public struct function updateCampaign( required numeric id, required component campaign ) {
     return apiCall( 'PATCH', '/campaigns/#id#', {}, campaign.build() );
   }
 
