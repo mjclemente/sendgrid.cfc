@@ -77,6 +77,7 @@ component accessors="true" {
   */
   public any function useList( required numeric id ) {
     variables.list_ids.append( id );
+    return this;
   }
 
   /**
