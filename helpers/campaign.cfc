@@ -198,15 +198,7 @@ component accessors="true" {
   * @hint Redundent, but included for consistency in naming the methods for setting attributes. Delegates to `plain()`
   */
   public any function plainContent( required string message ) {
-    return plain( message )
-  }
-
-  /**
-  * @hint The editor used in the UI. Because it defaults to `code`, it really only needs to be toggled to `design`
-  */
-  public any function useDesignEditor() {
-    setEditor( 'design' );
-    return this;
+    return plain( message );
   }
 
   /**
@@ -230,7 +222,13 @@ component accessors="true" {
     return this;
   }
 
-
+  /**
+  * @hint The editor used in the UI. Because it defaults to `code`, it really only needs to be toggled to `design`
+  */
+  public any function useDesignEditor() {
+    setEditor( 'design' );
+    return this;
+  }
 
   /**
   * @hint Because this helper is less complex than mail.cfc, the build method is more straightforward. Support for onMissingMethod is not required, and only the categories need to be handled via a custom method.
@@ -355,8 +353,7 @@ component accessors="true" {
 
     for( var prop in metaData.properties ) {
       properties.append( prop );
-    }}
-
+    }
 
     return properties;
   }
@@ -366,4 +363,4 @@ component accessors="true" {
     var value = method();
     return value;
   }
-
+}
