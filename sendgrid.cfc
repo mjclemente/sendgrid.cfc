@@ -414,6 +414,70 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', "/mail/batch" );
   }
 
+  /**
+  * Suppressions - Unsubscribe Groups
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/create-a-new-suppression-group
+  * @hint This endpoint allows you to create a new suppression group.
+  * @description Required. Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
+  */
+  public struct function createUnsubscribeGroup( required string name, required string description, boolean isDefault ) {
+    var body = {
+      'name' : name,
+      'description' : description
+    };
+    if ( arguments.keyExists( isDefault ) )
+      body[ 'is_default' ] = isDefault;
+
+    return apiCall( 'POST', '/asm/groups', {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/retrieve-all-suppression-groups-associated-with-the-user
+  * @hint This endpoint allows you to retrieve a list of all suppression groups created by this user.
+  */
+  public struct function listUnsubscribeGroups() {
+    return apiCall( 'GET', '/asm/groups' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/get-information-on-a-single-suppression-group
+  * @hint This endpoint allows you to retrieve a single suppression group.
+  */
+  public struct function getUnsubscribeGroup( required numeric id ) {
+    return apiCall( 'GET', '/asm/groups/#id#' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/update-a-suppression-group
+  * @hint This endpoint allows you to update a suppression group.
+  * @name Your recipients can see this on the unsubscribe landing page. 30 characters max. SendGrid will trim characters in excess.
+  * @description Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
+  * @isDefault Required by this library, to prevent confusion. Reason: if you don't supply it, SendGrid assumes false, which is confusing.
+  */
+  public struct function updateUnsubscribeGroup( required numeric id, string name = '', string description = '', required boolean isDefault ) {
+    var body = {
+      'is_default' : isDefault
+    };
+    if ( arguments.name.len() )
+      body[ 'name' ] = name;
+    if ( arguments.description.len() )
+      body[ 'description' ] = description;
+
+    return apiCall( 'PATCH', '/asm/groups/#id#', {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/delete-a-suppression-group
+  * @hint This endpoint allows you to delete a suppression group.
+  */
+  public struct function deleteUnsubscribeGroup( required numeric id ) {
+    return apiCall( 'DELETE', '/asm/groups/#id#' );
+  }
+
 
   // PRIVATE FUNCTIONS
   private struct function apiCall(
