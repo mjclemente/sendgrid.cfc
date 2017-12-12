@@ -34,6 +34,52 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * Campaigns API
+  * https://sendgrid.api-docs.io/v3.0/campaigns-api
+  */
+
+  /**
+  * @hint Allows you to create a marketing campaign.
+  * @campaign must be an instance of the helpers.campaign component
+  */
+  public struct function createCampaign( required component campaign ) {
+    return apiCall( 'POST', '/campaigns', {}, campaign.build() );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
+  */
+  public struct function listCampaigns() {
+    return apiCall( 'GET', "/campaigns" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-a-single-campaign
+  * @hint Retrieve a single campaign by ID.
+  */
+  public struct function getCampaign( required numeric id ) {
+    return apiCall( 'GET', "/campaigns/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/campaigns-api/delete-a-campaign
+  * @hint Delete a single campaign by ID.
+  */
+  public struct function deleteCampaign( required numeric id ) {
+    return apiCall( 'DELETE', "/campaigns/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/campaigns-api/update-a-campaign
+  * @hint Update a campaign by ID.
+  * @campaign must be an instance of the helpers.campaign component
+  */
+  public struct function updateCampaign( required component campaign ) {
+    return apiCall( 'PATCH', '/campaigns/#id#', {}, campaign.build() );
+  }
+
+
+  /**
   * Contacts API - Recipients
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
   */
