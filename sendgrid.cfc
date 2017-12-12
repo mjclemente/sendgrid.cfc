@@ -286,6 +286,113 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/contactdb/reserved_fields" );
   }
 
+
+  /**
+  * Contacts API - Lists
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/create-a-list
+  * @hint This endpoint allows you to create a list for your recipients.
+  */
+  public struct function createList( required string name ) {
+    var body = {
+      'name' : name
+    };
+    return apiCall( 'POST', '/contactdb/lists', {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-lists
+  * @hint This endpoint allows you to retrieve all of your recipient lists. If you don't have any lists, an empty array will be returned.
+  */
+  public struct function listLists() {
+    return apiCall( 'GET', '/contactdb/lists' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-multiple-lists
+  * @hint This endpoint allows you to delete multiple recipient lists. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/lists`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the lists through the individual delete method.
+  * @recipients An array of the list IDs you want to delete
+  */
+  public struct function deleteLists( required array lists ) {
+    var result = {};
+    for ( var listId in lists ) {
+      result = deleteList( listId );
+    }
+    return result;
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-list
+  * @hint This endpoint allows you to delete a single list with the given ID from your contact database.
+  */
+  public struct function deleteList( required numeric id ) {
+    return apiCall( 'DELETE', "/contactdb/lists/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-a-single-list
+  * @hint This endpoint allows you to retrieve a single recipient list by ID.
+  */
+  public struct function getList( required numeric id ) {
+    return apiCall( 'GET', "/contactdb/lists/#id#" );
+  }
+
+  /**
+  * @hint This endpoint allows you to update the name of one of your recipient lists.
+  */
+  public struct function updateList( required numeric id, required string name ) {
+    var body = {
+      'name' : name
+    };
+    return apiCall( 'PATCH', "/contactdb/lists/#id#", {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-recipients-on-a-list
+  * @hint This endpoint allows you to retrieve all recipients on the list with the given ID.
+  * @page Page index of first recipient to return (must be a positive integer)
+  * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
+  */
+  public struct function listRecipientsByList( required numeric id, numeric page = 0, numeric pageSize = 0 ) {
+    var params = {};
+
+    if ( page )
+      params[ 'page' ] = page;
+    if ( pageSize )
+      params[ 'page_size' ] = pageSize;
+
+    return apiCall( 'GET', "/contactdb/lists/#id#/recipients", params );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-a-single-recipient-to-a-list
+  * @hint This endpoint allows you to add a single recipient to a list.
+  */
+  public struct function addRecipientToList( required numeric listId, required string recipientId ) {
+    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients/#recipientId#' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-single-recipient-from-a-single-list
+  * @hint This endpoint allows you to delete a single recipient from a list.
+  */
+  public struct function deleteRecipientFromList( required numeric listId, required string recipientId ) {
+    return apiCall( 'DELETE', '/contactdb/lists/#listId#/recipients/#recipientId#' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-multiple-recipients-to-a-list
+  * @hint This endpoint allows you to add multiple recipients to a list.
+  * @recipients an array of recipient IDs
+  */
+  public struct function addRecipientsToList( required numeric listId, required array recipients ) {
+    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients', {}, recipients );
+  }
+
+
   //Batches
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
