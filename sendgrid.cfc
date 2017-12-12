@@ -22,9 +22,13 @@ component output="false" displayname="SendGrid.cfc"  {
     return this;
   }
 
-  //Mail
+  /**
+  * Mail Send
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html
+  */
 
   /**
+  * @hint Send email, using SendGrid's REST API
   * @mail must be an instance of the helpers.mail component
   */
   public struct function sendMail( required component mail ) {
@@ -35,7 +39,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Campaigns API
-  * https://sendgrid.api-docs.io/v3.0/campaigns-api
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html
   */
 
   /**
@@ -81,7 +85,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Contacts API - Recipients
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Recipients
   */
 
   /**
@@ -251,7 +255,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Contacts API - Custom Fields
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-custom-fields/create-a-custom-field
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Custom-Fields
   */
 
   /**
@@ -297,7 +301,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Contacts API - Lists
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Lists
   */
 
   /**
@@ -402,7 +406,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Cancel Scheduled Sends
-  * https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html
   */
 
 
