@@ -232,6 +232,14 @@ component accessors="true" {
   }
 
   /**
+  * @hint The editor used in the UI. It defaults to `code`, so this shouldn't be needed, but it's provided for consistency.
+  */
+  public any function useCodeEditor() {
+    setEditor( 'code' );
+    return this;
+  }
+
+  /**
   * @hint Because this helper is less complex than mail.cfc, the build method is more straightforward. Support for onMissingMethod is not required, and only the categories need to be handled via a custom method.
   */
   public string function build() {
