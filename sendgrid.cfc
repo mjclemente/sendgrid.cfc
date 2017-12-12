@@ -185,9 +185,17 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients
   * @hint This endpoint allows you to retrieve all of your Marketing Campaigns recipients.
+  * @page Page index of first recipients to return (must be a positive integer)
+  * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
   */
-  public struct function listRecipients() {
-    return apiCall( 'GET', "/contactdb/recipients" );
+  public struct function listRecipients( numeric page = 0, numeric pageSize = 0 ) {
+    var params = {};
+    if ( page )
+      params[ 'page' ] = page;
+    if ( pageSize )
+      params[ 'page_size' ] = pageSize;
+
+    return apiCall( 'GET', "/contactdb/recipients", params );
   }
 
   /**
