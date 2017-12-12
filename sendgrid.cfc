@@ -202,7 +202,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-lists-that-a-recipient-is-on
   * @hint This endpoint allows you to retrieve the lists that a given recipient belongs to.
   */
-  public struct function getListsByRecipient( required string id ) {
+  public struct function listListsByRecipient( required string id ) {
     return apiCall( 'GET', "/contactdb/recipients/#id#/lists" );
   }
 
