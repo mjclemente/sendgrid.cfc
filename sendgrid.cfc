@@ -400,8 +400,16 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/contactdb/lists/#listId#/recipients', {}, recipients );
   }
 
+  /**
+  * Cancel Scheduled Sends
+  * https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends
+  */
 
-  //Batches
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends/create-a-batch-id
+  * @hint This endpoint allows you to generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
+  */
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
   }
