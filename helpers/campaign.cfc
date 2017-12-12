@@ -136,7 +136,7 @@ component accessors="true" {
   /**
   * @hint Included in order to provide a more fluent interface; delegates to `suppressionGroupId()`
   */
-  public any function useSuppressionGroupId( required numeric id ) {
+  public any function useSuppressionGroup( required numeric id ) {
     return suppressionGroupId( id );
   }
 
