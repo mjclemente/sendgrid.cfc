@@ -44,10 +44,15 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @hint Allows you to create a marketing campaign.
-  * @campaign must be an instance of the helpers.campaign component
+  * @campaign this should be an instance of the helpers.campaign component. However, if you want to create the object and pass in the struct or json yourself, you can.
   */
-  public struct function createCampaign( required component campaign ) {
-    return apiCall( 'POST', '/campaigns', {}, campaign.build() );
+  public struct function createCampaign( required any campaign ) {
+    var body = {};
+    if ( isValid( 'component', campaign ) )
+      body = campaign.build();
+    else
+      body = campaign;
+    return apiCall( 'POST', '/campaigns', {}, body );
   }
 
   /**
@@ -76,10 +81,15 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/campaigns-api/update-a-campaign
   * @hint Update a campaign by ID.
-  * @campaign must be an instance of the helpers.campaign component
+  * @campaign this should be an instance of the helpers.campaign component. However, if you want to create the object and pass in the struct or json yourself, you can.
   */
-  public struct function updateCampaign( required numeric id, required component campaign ) {
-    return apiCall( 'PATCH', '/campaigns/#id#', {}, campaign.build() );
+  public struct function updateCampaign( required numeric id, required any campaign ) {
+    var body = {};
+    if ( isValid( 'component', campaign ) )
+      body = campaign.build();
+    else
+      body = campaign;
+    return apiCall( 'PATCH', '/campaigns/#id#', {}, body );
   }
 
 
