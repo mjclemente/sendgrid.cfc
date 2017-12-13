@@ -103,7 +103,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @customFields keys correspond to the custom field names, along with their assigned values
   */
   public struct function addRecipient( required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
-    upsertRecipient( 'POST', recipient, first_name, last_name, customFields );
+    return upsertRecipient( 'POST', recipient, first_name, last_name, customFields );
   }
 
   /**
@@ -121,7 +121,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @customFields keys correspond to the custom field names, along with their assigned values
   */
   public struct function updateRecipient( required any recipient, string first_name = '', string last_name = '', struct customFields = {} ) {
-    upsertRecipient( 'PATCH', recipient, first_name, last_name, customFields );
+    return upsertRecipient( 'PATCH', recipient, first_name, last_name, customFields );
   }
 
   /**
