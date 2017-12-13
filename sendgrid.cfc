@@ -168,7 +168,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-recipient
   * @hint This endpoint allows you to deletes one or more recipients. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/recipients`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the recipients through the individual delete method.
-  * @recipients An array of the recipient IDs you want to delete
+  * @recipients An array of the recipient IDs you want to delete. You can also provide their email addresses, and they will be converted to recipient IDs
   */
   public struct function deleteRecipients( required array recipients ) {
     var result = {};
@@ -181,9 +181,10 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
   * @hint This endpoint allows you to delete a single recipient with the given ID from your contact database.
+  * @id the recipient ID or email address (which will be converted to the recipient ID)
   */
   public struct function deleteRecipient( required string id ) {
-    return apiCall( 'DELETE', "/contactdb/recipients/#id#" );
+    return apiCall( 'DELETE', "/contactdb/recipients/#returnRecipientId( id )#" );
   }
 
   /**
@@ -205,9 +206,10 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-single-recipient
   * @hint This endpoint allows you to retrieve a single recipient by ID from your contact database.
+  * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
   public struct function getRecipient( required string id ) {
-    return apiCall( 'GET', "/contactdb/recipients/#id#" );
+    return apiCall( 'GET', "/contactdb/recipients/#returnRecipientId( id )#" );
   }
 
   /**
@@ -215,7 +217,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint This endpoint allows you to retrieve the lists that a given recipient belongs to.
   */
   public struct function listListsByRecipient( required string id ) {
-    return apiCall( 'GET', "/contactdb/recipients/#id#/lists" );
+    return apiCall( 'GET', "/contactdb/recipients/#returnRecipientId( id )#/lists" );
   }
 
   /**
@@ -252,6 +254,13 @@ component output="false" displayname="SendGrid.cfc"  {
   * POST /contactdb/recipients/search
   * Note that this endpoint exists, providing more robust, segmented search. However, I don't see support for it in any of the official libraries, so I'm not going to bother to put it together here, unless there's a need for it.
   */
+
+  /**
+  * @hint Helper method, which allows for passing in the recipient id or email address and returns the id, which is needed. The recipient Id is a URL-safe base64 encoding of the recipient's lower cased email address
+  */
+  private string function returnRecipientId( required string id ) {
+    return isValid( 'email', id ) ? toBase64( id ) : id;
+  }
 
   /**
   * Contacts API - Custom Fields
@@ -382,9 +391,10 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-a-single-recipient-to-a-list
   * @hint This endpoint allows you to add a single recipient to a list.
+  * @recipientId Either the recipient Id or email address
   */
   public struct function addRecipientToList( required numeric listId, required string recipientId ) {
-    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients/#recipientId#' );
+    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients/#returnRecipientId( recipientId )#' );
   }
 
   /**
@@ -392,16 +402,27 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint This endpoint allows you to delete a single recipient from a list.
   */
   public struct function deleteRecipientFromList( required numeric listId, required string recipientId ) {
-    return apiCall( 'DELETE', '/contactdb/lists/#listId#/recipients/#recipientId#' );
+    return apiCall( 'DELETE', '/contactdb/lists/#listId#/recipients/#returnRecipientId( recipientId )#' );
   }
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-multiple-recipients-to-a-list
   * @hint This endpoint allows you to add multiple recipients to a list.
-  * @recipients an array of recipient IDs
+  * @recipients an array of recipient IDs or email addresses
+  * @convertEmails flag to indicate if email addresses are included in the `recipients` argument that need to be converted to Ids
   */
-  public struct function addRecipientsToList( required numeric listId, required array recipients ) {
-    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients', {}, recipients );
+  public struct function addRecipientsToList( required numeric listId, required array recipients, boolean convertEmails = false ) {
+    var recipientIds = !convertEmails ? recipients : [];
+
+    if ( convertEmails ) {
+      recipientIds = recipients.map(
+        function( item, index ) {
+          return returnRecipientId( item );
+        }
+      );
+    }
+
+    return apiCall( 'POST', '/contactdb/lists/#listId#/recipients', {}, recipientIds );
   }
 
   /**
