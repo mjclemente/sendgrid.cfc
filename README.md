@@ -12,8 +12,9 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [Quick Start for Sending](#quick-start)
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
-	- [Mail Send](#mail-send-reference---docs) 
+	- [Mail Send](#mail-send-reference) 
 	- [Campaigns](#campaigns-api-reference) 
+	- [Contacts API - Recipients](#contacts-api---recipients-reference) 
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 
@@ -58,19 +59,28 @@ I've found two places where the `/mail/send` endpoint JSON body are explained, a
 
 ## `sendgrid.cfc` Reference Manual
 
-### Mail Send Reference - [docs](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)
+### Mail Send Reference
+*View SendGrid Docs for [Sending Mail](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)*
 
 #### `sendMail( required component mail )`
 Sends email, using SendGrid's REST API. The `mail` argument must be an instance of the `helpers.mail` component. See [the quick start for sending](#quick-start) and [how to build an email](#how-to-build-an-email) for more information on how this is used.
 
+===
+
 ### Campaigns API Reference
-*[View SendGrid Docs](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html)*
+*View SendGrid Docs for [Campaigns](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html)*
 
 #### `createCampaign( required any campaign )`
 Allows you to create a marketing campaign. The `campaign` argument should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
 
 #### `listCampaigns()`
 Retrieve a list of all of your campaigns.
+
+===
+
+### Contacts API - Recipients Reference
+*View SendGrid Docs for [Contacts API - Recipients](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Recipients)*
+
 
 ## Reference Manual for `helpers.mail`
 This section documents every public method in the `helpers/mail.cfc` file. A few notes about structure, data, and usage:
