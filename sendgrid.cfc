@@ -82,7 +82,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/campaigns-api/update-a-campaign
   * @hint Update a campaign by ID.
-  * @campaign this should be an instance of the helpers.campaign component. However, if you want to create the object and pass in the struct or json yourself, you can.
+  * @campaign this should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
   public struct function updateCampaign( required numeric id, required any campaign ) {
     var body = {};
@@ -101,7 +101,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
-  * @hint This endpoint allows you to add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH.
+  * @hint Add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH.
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
   public struct function addRecipients( required array recipients ) {
@@ -109,7 +109,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @hint convenience method for adding a single recipient at a time.
+  * @hint Convenience method for adding a single recipient at a time.
   * @recipient Facilitates two means of adding a recipient. You can pass in a struct with key/value pairs providing all relevant recipient information. Alternatively, you can use this to simply pass in the recipient's email address, which is all that is required.
   * @customFields keys correspond to the custom field names, along with their assigned values
   */
@@ -119,7 +119,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
-  * @hint This endpoint allows you to update one or more recipients. Note that it will also add non-existing records.
+  * @hint Update one or more Marketing Campaign recipients. Note that it will also add non-existing records.
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
   public struct function updateRecipients( required array recipients ) {
@@ -170,15 +170,24 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/get-recipient-upload-status
-  * @hint This endpoint allows you to check the upload status of a Marketing Campaigns recipient.
+  * @hint Check the upload status of a Marketing Campaigns recipient.
   */
   public struct function getRecipientUploadStatus() {
     return apiCall( 'GET', "/contactdb/status" );
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
+  * @hint Delete a single recipient with the given ID from your contact database.
+  * @id the recipient ID or email address (which will be converted to the recipient ID).
+  */
+  public struct function deleteRecipient( required string id ) {
+    return apiCall( 'DELETE', "/contactdb/recipients/#returnRecipientId( id )#" );
+  }
+
+  /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-recipient
-  * @hint This endpoint allows you to deletes one or more recipients. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/recipients`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the recipients through the individual delete method.
+  * @hint Deletes one or more recipients. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/recipients`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the recipients through the individual delete method.
   * @recipients An array of the recipient IDs you want to delete. You can also provide their email addresses, and they will be converted to recipient IDs
   */
   public struct function deleteRecipients( required array recipients ) {
@@ -190,17 +199,8 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
-  * @hint This endpoint allows you to delete a single recipient with the given ID from your contact database.
-  * @id the recipient ID or email address (which will be converted to the recipient ID)
-  */
-  public struct function deleteRecipient( required string id ) {
-    return apiCall( 'DELETE', "/contactdb/recipients/#returnRecipientId( id )#" );
-  }
-
-  /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients
-  * @hint This endpoint allows you to retrieve all of your Marketing Campaigns recipients.
+  * @hint Retrieve all of your Marketing Campaign recipients.
   * @page Page index of first recipients to return (must be a positive integer)
   * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
   */
@@ -216,7 +216,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-single-recipient
-  * @hint This endpoint allows you to retrieve a single recipient by ID from your contact database.
+  * @hint Retrieve a single recipient by ID from your contact database.
   * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
   public struct function getRecipient( required string id ) {
@@ -225,7 +225,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-lists-that-a-recipient-is-on
-  * @hint This endpoint allows you to retrieve the lists that a given recipient belongs to.
+  * @hint Retrieve the lists that a given recipient belongs to.
+  * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
   public struct function listListsByRecipient( required string id ) {
     return apiCall( 'GET', "/contactdb/recipients/#returnRecipientId( id )#/lists" );
@@ -233,7 +234,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-count-of-billable-recipients
-  * @hint This endpoint allows you to retrieve the number of Marketing Campaigns recipients that you will be billed for.
+  * @hint Retrieve the number of Marketing Campaigns recipients that you will be billed for.
   */
   public struct function getBillableRecipientCount() {
     return apiCall( 'GET', "/contactdb/recipients/billable_count" );
@@ -241,7 +242,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-count-of-recipients
-  * @hint This endpoint allows you to retrieve the total number of Marketing Campaigns recipients.
+  * @hint Retrieve the total number of Marketing Campaigns recipients.
   */
   public struct function getRecipientCount() {
     return apiCall( 'GET', "/contactdb/recipients/count" );
@@ -249,7 +250,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients-matching-search-criteria
-  * @hint This endpoint allows you to perform a search on all of your Marketing Campaigns recipients.
+  * @hint Perform a search on all of your Marketing Campaigns recipients.
   * @fieldName the name of a custom field or reserved field
   * @search the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
   */
@@ -279,7 +280,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * @hint This endpoint allows you to create a custom field.
+  * @hint Create a custom field.
   * @type allowed values are 'text', 'date', and 'number'
   */
   public struct function createCustomField( required string name, required string type ) {
@@ -291,28 +292,28 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @hint This endpoint allows you to retrieve all custom fields.
+  * @hint Retrieve all custom fields.
   */
   public struct function listCustomFields() {
     return apiCall( 'GET', "/contactdb/custom_fields" );
   }
 
   /**
-  * @hint This endpoint allows you to retrieve a custom field by ID.
+  * @hint Retrieve a custom field by ID.
   */
   public struct function getCustomField( required numeric id ) {
     return apiCall( 'GET', "/contactdb/custom_fields/#id#" );
   }
 
   /**
-  * @hint This endpoint allows you to delete a custom field by ID.
+  * @hint Delete a custom field by ID.
   */
   public struct function deleteCustomField( required numeric id ) {
     return apiCall( 'DELETE', "/contactdb/custom_fields/#id#" );
   }
 
   /**
-  * @hint This endpoint allows you to list all fields that are reserved and can't be used for custom field names.
+  * @hint List all fields that are reserved and can't be used for custom field names.
   */
   public struct function listReservedFields() {
     return apiCall( 'GET', "/contactdb/reserved_fields" );
@@ -326,7 +327,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/create-a-list
-  * @hint This endpoint allows you to create a list for your recipients.
+  * @hint Create a list for your recipients.
   */
   public struct function createList( required string name ) {
     var body = {
@@ -337,7 +338,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-lists
-  * @hint This endpoint allows you to retrieve all of your recipient lists. If you don't have any lists, an empty array will be returned.
+  * @hint Retrieve all of your recipient lists. If you don't have any lists, an empty array will be returned.
   */
   public struct function listLists() {
     return apiCall( 'GET', '/contactdb/lists' );
@@ -345,7 +346,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-multiple-lists
-  * @hint This endpoint allows you to delete multiple recipient lists. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/lists`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the lists through the individual delete method.
+  * @hint Delete multiple recipient lists. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/lists`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the lists through the individual delete method.
   * @recipients An array of the list IDs you want to delete
   */
   public struct function deleteLists( required array lists ) {
@@ -358,7 +359,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-list
-  * @hint This endpoint allows you to delete a single list with the given ID from your contact database.
+  * @hint Delete a single list with the given ID from your contact database.
   */
   public struct function deleteList( required numeric id ) {
     return apiCall( 'DELETE', "/contactdb/lists/#id#" );
@@ -366,14 +367,14 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-a-single-list
-  * @hint This endpoint allows you to retrieve a single recipient list by ID.
+  * @hint Retrieve a single recipient list by ID.
   */
   public struct function getList( required numeric id ) {
     return apiCall( 'GET', "/contactdb/lists/#id#" );
   }
 
   /**
-  * @hint This endpoint allows you to update the name of one of your recipient lists.
+  * @hint Update the name of one of your recipient lists.
   */
   public struct function updateList( required numeric id, required string name ) {
     var body = {
@@ -384,7 +385,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-recipients-on-a-list
-  * @hint This endpoint allows you to retrieve all recipients on the list with the given ID.
+  * @hint Retrieve all recipients on the list with the given ID.
   * @page Page index of first recipient to return (must be a positive integer)
   * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
   */
@@ -401,8 +402,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-a-single-recipient-to-a-list
-  * @hint This endpoint allows you to add a single recipient to a list.
-  * @recipientId Either the recipient Id or email address
+  * @hint Add a single recipient to a list.
+  * @recipientId The recipient ID or email address (which will be converted to the recipient ID)
   */
   public struct function addRecipientToList( required numeric listId, required string recipientId ) {
     return apiCall( 'POST', '/contactdb/lists/#listId#/recipients/#returnRecipientId( recipientId )#' );
@@ -410,7 +411,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-single-recipient-from-a-single-list
-  * @hint This endpoint allows you to delete a single recipient from a list.
+  * @hint Delete a single recipient from a list.
+  * @recipientId The recipient ID or email address (which will be converted to the recipient ID)
   */
   public struct function deleteRecipientFromList( required numeric listId, required string recipientId ) {
     return apiCall( 'DELETE', '/contactdb/lists/#listId#/recipients/#returnRecipientId( recipientId )#' );
@@ -418,14 +420,13 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-multiple-recipients-to-a-list
-  * @hint This endpoint allows you to add multiple recipients to a list.
+  * @hint Add multiple recipients to a list.
   * @recipients an array of recipient IDs or email addresses
-  * @convertEmails flag to indicate if email addresses are included in the `recipients` argument that need to be converted to Ids
   */
-  public struct function addRecipientsToList( required numeric listId, required array recipients, boolean convertEmails = false ) {
-    var recipientIds = !convertEmails ? recipients : [];
+  public struct function addRecipientsToList( required numeric listId, required array recipients ) {
+    var recipientIds = recipients;
 
-    if ( convertEmails ) {
+    if ( recipients.len() && isValid( 'email', recipients[1] ) ) {
       recipientIds = recipients.map(
         function( item, index ) {
           return returnRecipientId( item );
@@ -444,7 +445,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends/create-a-batch-id
-  * @hint This endpoint allows you to generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
+  * @hint Generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
   */
   public struct function generateBatchId() {
     return apiCall( 'POST', "/mail/batch" );
@@ -452,12 +453,12 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * Suppressions - Unsubscribe Groups
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/create-a-new-suppression-group
-  * @hint This endpoint allows you to create a new suppression group.
+  * @hint Create a new suppression group.
   * @description Required. Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
   */
   public struct function createUnsubscribeGroup( required string name, required string description, boolean isDefault ) {
@@ -473,7 +474,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/retrieve-all-suppression-groups-associated-with-the-user
-  * @hint This endpoint allows you to retrieve a list of all suppression groups created by this user.
+  * @hint Retrieve a list of all suppression groups created by this user.
   */
   public struct function listUnsubscribeGroups() {
     return apiCall( 'GET', '/asm/groups' );
@@ -481,7 +482,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/get-information-on-a-single-suppression-group
-  * @hint This endpoint allows you to retrieve a single suppression group.
+  * @hint Retrieve a single suppression group.
   */
   public struct function getUnsubscribeGroup( required numeric id ) {
     return apiCall( 'GET', '/asm/groups/#id#' );
@@ -489,7 +490,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/update-a-suppression-group
-  * @hint This endpoint allows you to update a suppression group.
+  * @hint Update a suppression group.
   * @name Your recipients can see this on the unsubscribe landing page. 30 characters max. SendGrid will trim characters in excess.
   * @description Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
   * @isDefault Required by this library, to prevent confusion. Reason: if you don't supply it, SendGrid assumes false, which is confusing.
@@ -508,7 +509,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/delete-a-suppression-group
-  * @hint This endpoint allows you to delete a suppression group.
+  * @hint Delete a suppression group.
   */
   public struct function deleteUnsubscribeGroup( required numeric id ) {
     return apiCall( 'DELETE', '/asm/groups/#id#' );
