@@ -1,11 +1,20 @@
 # sendgridcfc
-A CFML wrapper for the SendGrid API
+A CFML wrapper for the SendGrid's [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html). It currently supports building and sending transactional emails, as well as portions of the API related to marketing emails.
+
+*This is an early stage API wrapper. Feel free to use the issue tracker to report bugs or suggest improvements!*
+
+### Acknowledgements
 
 This project borrows heavily from the API frameworks built by [jcberquist](https://github.com/jcberquist), such as [stripecfc](https://github.com/jcberquist/stripecfc), [xero-cfml](https://github.com/jcberquist/xero-cfml), and [aws-cfml](https://github.com/jcberquist/aws-cfml).
 
-This is a very early stage API wrapper. Feel free to use the issue tracker to report bugs or suggest improvements!
+## Table of Contents
 
-# Quick Start (with helper)
+- [Quick Start for Sending](#quickstartforsending)
+- [How to build an email](#howtobuildanemail)
+- [Reference Manual for `helpers.mail`](#referencemanualforhelpersmail)
+
+## Quick Start
+The following is a minimal example of sending an email, using the `mail` helper object.
 
 ```cfc
 sg = new sendgrid( apiKey = 'xxx' );
@@ -43,7 +52,7 @@ The `from`, `subject`, `to`, and message content, whether plain or html, are min
 
 I've found two places where the `/mail/send` endpoint JSON body are explained, and the (77!) possible parameters outlined. Familiarizing yourself with these will be of great help when using the API: [V3 Mail Send API Overview](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html) and [Mail Send Endpoint Documentation](https://sendgrid.api-docs.io/v3.0/mail-send).
 
-## `helpers.mail` Reference Manual
+## Reference Manual for `helpers.mail`
 This section documents every public method in the `helpers/mail.cfc` file.
 
 Unless indicated, all methods are chainable. Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations."
