@@ -29,7 +29,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @hint Send email, using SendGrid's REST API
-  * @mail must be an instance of the helpers.mail component
+  * @mail must be an instance of the `helpers.mail` component
   */
   public struct function sendMail( required component mail ) {
     if ( variables.forceTestMode ) mail.enableSandboxMode();
@@ -43,8 +43,8 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * @hint Allows you to create a marketing campaign.
-  * @campaign this should be an instance of the helpers.campaign component. However, if you want to create the object and pass in the struct or json yourself, you can.
+  * @hint Create a marketing campaign.
+  * @campaign this should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
   public struct function createCampaign( required any campaign ) {
     var body = {};
@@ -57,6 +57,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
+  * Retrieve a list of all of your campaigns.
   */
   public struct function listCampaigns() {
     return apiCall( 'GET', "/campaigns" );
