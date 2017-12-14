@@ -1,4 +1,4 @@
-# sendgridcfc
+# sendgrid.cfc
 A CFML wrapper for the SendGrid's [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html). It currently supports building and sending transactional emails, as well as portions of the API related to marketing emails.
 
 *This is an early stage API wrapper. Feel free to use the issue tracker to report bugs or suggest improvements!*
@@ -9,9 +9,11 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 
 ## Table of Contents
 
-- [Quick Start for Sending](#quickstartforsending)
-- [How to build an email](#howtobuildanemail)
-- [Reference Manual for `helpers.mail`](#referencemanualforhelpersmail)
+- [Quick Start for Sending](#quick-start)
+- [How to build an email](#how-to-build-an-email)
+- [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
+- [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
+- [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 
 ## Quick Start
 The following is a minimal example of sending an email, using the `mail` helper object.
@@ -52,10 +54,29 @@ The `from`, `subject`, `to`, and message content, whether plain or html, are min
 
 I've found two places where the `/mail/send` endpoint JSON body are explained, and the (77!) possible parameters outlined. Familiarizing yourself with these will be of great help when using the API: [V3 Mail Send API Overview](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html) and [Mail Send Endpoint Documentation](https://sendgrid.api-docs.io/v3.0/mail-send).
 
-## Reference Manual for `helpers.mail`
-This section documents every public method in the `helpers/mail.cfc` file.
+## `sendgrid.cfc` Reference Manual
 
-Unless indicated, all methods are chainable. Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations."
+### [Mail Send Reference](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)
+
+#### `sendMail( required component mail )`
+Sends email, using SendGrid's REST API. The `mail` argument must be an instance of the `helpers.mail` component. See [the quick start for sending](#quick-start) and [how to build an email](#how-to-build-an-email) for more information on how this is used.
+
+### [Campaigns API Reference](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html)
+
+#### `createCampaign( required any campaign )`
+Create a marketing campaign. The `campaign` argument should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
+
+#### `listCampaigns()`
+Retrieve a list of all of your campaigns.
+
+## Reference Manual for `helpers.mail`
+This section documents every public method in the `helpers/mail.cfc` file. A few notes about structure, data, and usage:
+
+- Unless indicated, all methods are chainable. 
+- Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations." 
+- Email address parameters can be passed in either as strings or structs.
+  - When passed as a string, they can be in the format: Person \<name@email.com\>, in order to pass both name and email address.
+  - When passed as a struct, the keys should be `email` and `name`, respectively. Only email is required.
 
 ### `from( required any email )`
 
@@ -219,6 +240,3 @@ The function that puts it all together and builds the body for `/mail/send`
 
 ## Notes
 
-* Email address parameters can be passed in either as strings or structs.
-  * When passed as a string, they can be in the format: Person \<name@email.com\>, in order to pass both name and email address.
-  * When passed as a struct, the keys should be `email` and `name`, respectively. Only email is required.
