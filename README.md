@@ -65,7 +65,7 @@ I've found two places where the `/mail/send` endpoint JSON body are explained, a
 #### `sendMail( required component mail )`
 Sends email, using SendGrid's REST API. The `mail` argument must be an instance of the `helpers.mail` component. See [the quick start for sending](#quick-start) and [how to build an email](#how-to-build-an-email) for more information on how this is used.
 
-===
+---
 
 ### Campaigns API Reference
 *View SendGrid Docs for [Campaigns](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html)*
@@ -76,7 +76,7 @@ Allows you to create a marketing campaign. The `campaign` argument should be an 
 #### `listCampaigns()`
 Retrieve a list of all of your campaigns.
 
-===
+---
 
 ### Contacts API - Recipients Reference
 *View SendGrid Docs for [Contacts API - Recipients](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Recipients)*
