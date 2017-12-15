@@ -203,7 +203,19 @@ Generate a new batch ID. This batch ID can be associated with scheduled sends vi
 *View SendGrid Docs for [Suppressions - Unsubscribe Groups](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html)*
 
 #### `createUnsubscribeGroup( required string name, required string description, boolean isDefault )`
-Create a new suppression group.
+Create a new unsubscribe suppression group. The `name` and `description` arguments are both required. They can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length of these arguments by silently trimming their values to 30 and 100 characters, respectively.
+
+#### `listUnsubscribeGroups()`
+Retrieve a list of all suppression groups created by this user.
+
+#### `getUnsubscribeGroup( required numeric id )`
+Retrieve a single suppression group.
+
+#### `updateUnsubscribeGroup( required numeric id, string name = '', string description = '', required boolean isDefault )`
+Update an unsubscribe suppression group. The `name` and `description` arguments can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length of these arguments by silently trimming their values to 30 and 100 characters, respectively. For updates, the `isDefault` argument is required by this library, because if you don't supply it, SendGrid assumes false, which is confusing.
+
+#### `deleteUnsubscribeGroup( required numeric id )`
+Delete a suppression group.
 
 ---
 
