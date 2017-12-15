@@ -458,8 +458,9 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/create-a-new-suppression-group
-  * @hint Create a new suppression group.
-  * @description Required. Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
+  * @hint Create a new unsubscribe suppression group.
+  * @name Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (30) by silently trimming excess characters.
+  * @description Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (100) by silently trimming excess characters.
   */
   public struct function createUnsubscribeGroup( required string name, required string description, boolean isDefault ) {
     var body = {
@@ -490,10 +491,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/update-a-suppression-group
-  * @hint Update a suppression group.
-  * @name Your recipients can see this on the unsubscribe landing page. 30 characters max. SendGrid will trim characters in excess.
-  * @description Your recipients can see this on the unsubscribe landing page. 100 characters max. SendGrid will trim characters in excess.
-  * @isDefault Required by this library, to prevent confusion. Reason: if you don't supply it, SendGrid assumes false, which is confusing.
+  * @hint Update an unsubscribe suppression group.
+  * @name Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (30) by silently trimming excess characters.
+  * @description Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (100) by silently trimming excess characters.
+  * @isDefault Required by this library, because if you don't supply it, SendGrid assumes false, which is confusing.
   */
   public struct function updateUnsubscribeGroup( required numeric id, string name = '', string description = '', required boolean isDefault ) {
     var body = {
