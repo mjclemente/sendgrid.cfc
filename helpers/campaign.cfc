@@ -141,7 +141,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint This is the url of the custom unsubscribe page that you provide for customers to unsubscribe from mailings. Using this takes the place of having SendGrid manage your supression groups.
+  * @hint This is the url of the custom unsubscribe page that you provide for customers to unsubscribe from mailings. Using this takes the place of having SendGrid manage your suppression groups.
   * @uri the web address where you're hosting your custom unsubscribe page
   */
   public any function customUnsubscribeUrl( required string uri ) {
@@ -181,14 +181,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint Redundent, but included for consistency in naming the methods for setting attributes. Delegates to `html()`
+  * @hint Redundant, but included for consistency in naming the methods for setting attributes. Delegates to `html()`
   */
   public any function htmlContent( required string message ) {
     return html( message );
   }
 
   /**
-  * @hint convenience method for adding the text/html content
+  * @hint convenience method for adding the text/plain content
   */
   public any function plain( required string message ) {
     setPlain_content( message );
@@ -196,7 +196,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Redundent, but included for consistency in naming the methods for setting attributes. Delegates to `plain()`
+  * @hint Redundant, but included for consistency in naming the methods for setting attributes. Delegates to `plain()`
   */
   public any function plainContent( required string message ) {
     return plain( message );
