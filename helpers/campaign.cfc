@@ -251,8 +251,7 @@ component accessors="true" {
     properties.each(
       function( property, index ) {
 
-        var serializeMethod = 'serialize#property.key#';
-        var value = property.key != '' ? serializeJSON( property.value ) : serializeCategories( property.value );
+        var value = property.key != 'categories' ? serializeJSON( property.value ) : serializeCategories( property.value );
         body &= '"#property.key#": ' & value & '#index NEQ count ? "," : ""#';
       }
     );
