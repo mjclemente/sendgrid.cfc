@@ -57,7 +57,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
-  * Retrieve a list of all of your campaigns.
+  * @hint Retrieve a list of all of your campaigns.
   */
   public struct function listCampaigns() {
     return apiCall( 'GET', "/campaigns" );
