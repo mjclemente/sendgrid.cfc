@@ -438,6 +438,71 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * Sender Identities API
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/sender_identities.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/create-a-sender-identity
+  * @hint Create a new sender identity.
+  * @sender this should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can.
+  */
+  public struct function createSender( required any sender ) {
+    var body = {};
+    if ( isValid( 'component', sender ) )
+      body = sender.build();
+    else
+      body = sender;
+    return apiCall( 'POST', '/senders', {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/get-all-sender-identities
+  * @hint Retrieve a list of all sender identities that have been created for your account.
+  */
+  public struct function listSenders() {
+    return apiCall( 'GET', '/senders' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/update-a-sender-identity
+  * @hint Update a sender identity by ID.
+  * @sender this should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can.
+  */
+  public struct function updateSender( required numeric id, required any sender ) {
+    var body = {};
+    if ( isValid( 'component', sender ) )
+      body = sender.build();
+    else
+      body = sender;
+    return apiCall( 'PATCH', '/senders/#id#', {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/delete-a-sender-identity
+  * @hint Delete a single sender identity by ID.
+  */
+  public struct function deleteSender( required numeric id ) {
+    return apiCall( 'DELETE', "/senders/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/resend-sender-identity-verification
+  * @hint Resend a sender identity verification email.
+  */
+  public struct function resendSenderVerification( required string id ) {
+    return apiCall( 'POST', "/senders/#id#/resend_verification" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/view-a-sender-identity
+  * @hint Retrieve a single sender identity by ID.
+  */
+  public struct function getSender( required string id ) {
+    return apiCall( 'GET', "/senders/#id#" );
+  }
+
+  /**
   * Cancel Scheduled Sends
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html
   */
