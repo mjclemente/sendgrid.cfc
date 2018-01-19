@@ -12,13 +12,14 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [Quick Start for Sending](#quick-start)
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
-	- [Mail Send](#mail-send-reference) 
-	- [Campaigns](#campaigns-api-reference) 
-	- [Contacts API - Recipients](#contacts-api---recipients-reference) 
+	- [Mail Send](#mail-send-reference)
+	- [Campaigns](#campaigns-api-reference)
+	- [Contacts API - Recipients](#contacts-api---recipients-reference)
 	- [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
-	- [Contacts API - Lists](#contacts-api---lists-reference) 
-	- [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
+	- [Contacts API - Lists](#contacts-api---lists-reference)
+  - [Sender Identities API](#sender-identities-api-reference)
 	- [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
+  - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 
@@ -76,7 +77,6 @@ Sends email, using SendGrid's REST API. The `mail` argument must be an instance 
 
 #### `createCampaign( required any campaign )`
 Allows you to create a marketing campaign. The `campaign` argument should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can. See [the campaign helper reference manual](#reference-manual-for-helperscampaign) for more information on how this is used.
-
 
 #### `listCampaigns()`
 Retrieve a list of all of your campaigns.
@@ -191,11 +191,26 @@ Add multiple recipients to a list. The `recipients` argument is an array of reci
 
 ---
 
-### Cancel Scheduled Sends Reference
-*View SendGrid Docs for [Cancel Scheduled Sends](https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html)*
+### Sender Identities API Reference
+*View SendGrid Docs for [Sender Identities](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/sender_identities.html)*
 
-#### `generateBatchId()`
-Generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
+#### `createSender( required any sender )`
+Allows you to create a new sender identity. The `sender` argument should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can. See [the sender helper reference manual](#reference-manual-for-helperssender) for more information on how this is used.
+
+#### `listSenders()`
+Retrieve a list of all sender identities that have been created for your account.
+
+#### `updateSender( required numeric id, required any sender )`
+Update a sender identity by ID. The `sender` argument should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can. See [the sender helper reference manual](#reference-manual-for-helperssender) for more information on how this is used.
+
+#### `deleteSender( required numeric id )`
+Delete a single sender identity by ID.
+
+#### `resendSenderVerification( required numeric id )`
+Resend a sender identity verification email.
+
+#### `getSender( required numeric id )`
+Retrieve a single sender identity by ID.
 
 ---
 
@@ -219,12 +234,20 @@ Delete a suppression group.
 
 ---
 
+### Cancel Scheduled Sends Reference
+*View SendGrid Docs for [Cancel Scheduled Sends](https://sendgrid.com/docs/API_Reference/Web_API_v3/cancel_schedule_send.html)*
+
+#### `generateBatchId()`
+Generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
+
+---
+
 
 ## Reference Manual for `helpers.mail`
 This section documents every public method in the `helpers/mail.cfc` file. A few notes about structure, data, and usage:
 
-- Unless indicated, all methods are chainable. 
-- Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations." 
+- Unless indicated, all methods are chainable.
+- Top level parameters are referred to as "global" or "message level", as opposed to personalized parameters. As the SendGrid docs state: "Individual fields within the personalizations array will override any other global, or “message level”, parameters that are defined outside of personalizations."
 - Email address parameters can be passed in either as strings or structs.
   - When passed as a string, they can be in the format: Person \<name@email.com\>, in order to pass both name and email address.
   - When passed as a struct, the keys should be `email` and `name`, respectively. Only email is required.
@@ -392,7 +415,7 @@ The function that puts it all together and builds the body for `/mail/send`
 ## Reference Manual for `helpers.campaign`
 This section documents every public method in the `helpers/campaign.cfc` file. A few notes about structure, data, and usage:
 
-- Unless indicated, all methods are chainable. 
+- Unless indicated, all methods are chainable.
 
 #### `title( required string title )`
 Sets the display title of your campaign. This will be viewable by you in the Marketing Campaigns UI. This is the only required field for creating a campaign
@@ -464,4 +487,4 @@ The editor used in the UI. Because it defaults to `code`, it really only needs t
 The editor used in the UI. It defaults to `code`, so this shouldn't be needed, but it's provided for consistency.
 
 #### `build()`
-The function that puts it all together and builds the body for campaign related API operations. 
+The function that puts it all together and builds the body for campaign related API operations.
