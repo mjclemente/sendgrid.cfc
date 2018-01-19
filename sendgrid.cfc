@@ -438,6 +438,26 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * Contacts API - Segments
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Segments
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
+  * @hint Create a segment using search conditions.
+  * @conditions an array of structs - read SendGrid documentation
+  */
+  public struct function createSegment( required string name, required array conditions, numeric listId = 0 ) {
+    var body = {
+      'name' : name,
+      'conditions' : conditions
+    };
+    if ( listID )
+      body[ 'list_id' ] = listId;
+    return apiCall( 'POST', '/contactdb/segments', {}, body );
+  }
+
+  /**
   * Sender Identities API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/sender_identities.html
   */
