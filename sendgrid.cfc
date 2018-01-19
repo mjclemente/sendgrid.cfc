@@ -458,6 +458,22 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-all-segments
+  * @hint Retrieve all of your segments.
+  */
+  public struct function listSegments() {
+    return apiCall( 'GET', '/contactdb/segments' );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-a-segment
+  * @hint Retrieve a single segment with the given ID.
+  */
+  public struct function getSegment( required numeric id ) {
+    return apiCall( 'GET', "/contactdb/segments/#id#" );
+  }
+
+  /**
   * Sender Identities API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/sender_identities.html
   */
