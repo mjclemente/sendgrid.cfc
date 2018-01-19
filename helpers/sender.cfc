@@ -32,7 +32,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Set where the email will appear to originate from for your recipient.
+  * @hint Set where the email will appear to originate from for your recipients.
   * @email Facilitates two means of setting who the email is from. You can pass in a struct with keys for `name` and `email` (only email is required), or you can pass in the email as a string. Note that, despite what the documentation says, both email address and name need to be provided. If a string is passed in and the name is not provided, the email address will be used as the name as well.
   */
   public any function from( required any email ) {
@@ -41,8 +41,8 @@ component accessors="true" {
   }
 
   /**
-  * @hint Set where the email will appear to originate from for your recipient
-  * @email Facilitates two means of setting who the email is from. You can pass in a struct with keys for `name` and `email` (only email is required), or you can pass in the email as a string.
+  * @hint Set where your recipients will reply to.
+  * @email Facilitates two means of setting who the recipient replies to. You can pass in a struct with keys for `name` and `email` (only email is required), or you can pass in the email as a string. If a string is passed in and the name is not provided, the email address will be used as the name as well.
   */
   public any function replyTo( required any email ) {
     setReply_to( parseEmail( email ) );
