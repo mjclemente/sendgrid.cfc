@@ -445,7 +445,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
   * @hint Create a segment using search conditions.
-  * @conditions an array of structs - read SendGrid documentation
+  * @conditions an array of structs. Limited to 15 conditions. - read SendGrid documentation for specifics
   */
   public struct function createSegment( required string name, required array conditions, numeric listId = 0 ) {
     var body = {
