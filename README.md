@@ -22,6 +22,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
+- [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
 
 ## Quick Start
 The following is a minimal example of sending an email, using the `mail` helper object.
@@ -488,3 +489,39 @@ The editor used in the UI. It defaults to `code`, so this shouldn't be needed, b
 
 #### `build()`
 The function that puts it all together and builds the body for campaign related API operations.
+
+## Reference Manual for `helpers.sender`
+This section documents every public method in the `helpers/sender.cfc` file. A few notes about structure, data, and usage:
+
+- Unless indicated, all methods are chainable.
+- Email address parameters can be passed in either as strings or structs.
+  - When passed as a string, they can be in the format: Person \<name@email.com\>, in order to pass both name and email address.
+  - When passed as a struct, the keys should be `email` and `name`, respectively.
+
+#### `nickname( required string nickname )`
+Sets the nickname for the sender identity. Not used for sending, but required.
+
+#### `from( required any email )`
+Set where the email will appear to originate from for your recipients. Note that, despite what the documentation says, both email address and name need to be provided. If a string is passed in and the name is not provided, the email address will be used as the name as well.
+
+#### `replyTo( required any email )`
+Set where your recipients will reply to. If a string is passed in and the name is not provided, the email address will be used as the name as well.
+
+#### `address( required string address )`
+Required. Sets the physical address of the sender identity.
+
+#### `address2( required string address )`
+Provides additional sender identity address information.
+
+#### `city( required string city )`
+Required.
+
+#### `state( required string state )`
+
+#### `zip( required string zip )`
+
+#### `country( required string country )`
+Required.
+
+#### `build()`
+The function that puts it all together and builds the body for sender related API operations.
