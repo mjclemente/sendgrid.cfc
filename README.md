@@ -18,7 +18,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 	- [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
 	- [Contacts API - Lists](#contacts-api---lists-reference)
   - [Sender Identities API](#sender-identities-api-reference)
-	- [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
+  - [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
