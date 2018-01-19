@@ -490,7 +490,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/sender-identities-api/resend-sender-identity-verification
   * @hint Resend a sender identity verification email.
   */
-  public struct function resendSenderVerification( required string id ) {
+  public struct function resendSenderVerification( required numeric id ) {
     return apiCall( 'POST', "/senders/#id#/resend_verification" );
   }
 
@@ -498,7 +498,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/sender-identities-api/view-a-sender-identity
   * @hint Retrieve a single sender identity by ID.
   */
-  public struct function getSender( required string id ) {
+  public struct function getSender( required numeric id ) {
     return apiCall( 'GET', "/senders/#id#" );
   }
 
