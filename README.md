@@ -146,7 +146,7 @@ Create a segment using search conditions.
 
 The `conditions` argument is an array of structs making up the search conditions that define this segment. Read [SendGrid documentation](https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment) for specifics on how to segment contacts.
 
-The `listId` arguments indicates the list from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
+The `listId` argument indicates the list from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
 
 #### `listSegments()`
 Retrieve all of your segments.
