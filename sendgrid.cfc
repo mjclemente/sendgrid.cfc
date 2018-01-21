@@ -445,7 +445,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
   * @hint Create a segment using search conditions.
-  * @conditions an array of structs. Limited to 15 conditions. - read SendGrid documentation for specifics
+  * @conditions an array of structs making up the search conditions that define this segment. Read SendGrid documentation for specifics on how to segment contacts.
   * @listId The list id from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
   */
   public struct function createSegment( required string name, required array conditions, numeric listId = 0 ) {
@@ -475,7 +475,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @hint Update a segment
+  * @hint Update a segment. Functions similarly to `createSegment()`, but you only need to include the parameters you are updating.
   * @listId The list id from which to make this segment. Note that this can be used to change the list for this segment, but once a list has been set, the segment cannot be returned to the main contactdb
   */
   public struct function updateSegment( required numeric id, string name = '', array conditions = [], numeric listId = 0 ) {
