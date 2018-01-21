@@ -15,6 +15,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 	- [Mail Send](#mail-send-reference)
 	- [Campaigns](#campaigns-api-reference)
 	- [Contacts API - Recipients](#contacts-api---recipients-reference)
+  - [Contacts API - Segments](#contacts-api---segments-reference)
 	- [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
 	- [Contacts API - Lists](#contacts-api---lists-reference)
   - [Sender Identities API](#sender-identities-api-reference)
@@ -134,6 +135,35 @@ Retrieve the total number of Marketing Campaigns recipients.
 
 #### `searchRecipients( required string fieldName, any search = '' )`
 Perform a search on all of your Marketing Campaigns recipients. The `fieldName` argument is the name of a custom field or reserved field. The `search` argument is the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
+
+---
+
+### Contacts API - Segments Reference
+*View SendGrid Docs for [Contacts API - Segments](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#-Segments)*
+
+#### `createSegment( required string name, required array conditions, numeric listId = 0 )`
+Create a segment using search conditions.
+
+The `conditions` argument is an array of structs making up the search conditions that define this segment. Read [SendGrid documentation](https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment) for specifics on how to segment contacts.
+
+The `listId` arguments indicates the list from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
+
+#### `listSegments()`
+Retrieve all of your segments.
+
+#### `getSegment( required numeric id )`
+Retrieve a single segment with the given ID.
+
+#### `updateSegment( required numeric id, string name = '', array conditions = [], numeric listId = 0 )`
+Update a segment. Functions similarly to `createSegment()`, but you only need to include the parameters you are updating.
+
+Note that the `listId` argument can be used to change the list for this segment, but once a list has been set, the segment cannot be returned to the main contactdb.
+
+#### `deleteSegment( required numeric id )`
+Delete a segment from your recipients database.
+
+#### `listRecipientsBySegment( required numeric id )`
+Retrieve all of the recipients in a segment with the given ID.
 
 ---
 
