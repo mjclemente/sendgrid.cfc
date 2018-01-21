@@ -446,6 +446,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
   * @hint Create a segment using search conditions.
   * @conditions an array of structs. Limited to 15 conditions. - read SendGrid documentation for specifics
+  * @listId The list id from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
   */
   public struct function createSegment( required string name, required array conditions, numeric listId = 0 ) {
     var body = {
@@ -471,6 +472,37 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSegment( required numeric id ) {
     return apiCall( 'GET', "/contactdb/segments/#id#" );
+  }
+
+  /**
+  * @hint Update a segment
+  * @listId The list id from which to make this segment. Note that this can be used to change the list for this segment, but once a list has been set, the segment cannot be returned to the main contactdb
+  */
+  public struct function updateSegment( required numeric id, string name = '', array conditions = [], numeric listId = 0 ) {
+    var body = {};
+    if ( name.len() )
+      body[ 'name' ] = name;
+    if ( conditions.len() )
+      body[ 'conditions' ] = conditions;
+    if ( listID )
+      body[ 'list_id' ] = listId;
+    return apiCall( 'PATCH', "/contactdb/segments/#id#", {}, body );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/delete-a-segment
+  * @hint Delete a segment from your recipients database.
+  */
+  public struct function deleteSegment( required numeric id ) {
+    return apiCall( 'DELETE', "/contactdb/segments/#id#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-recipients-on-a-segment
+  * @hint Retrieve all of the recipients in a segment with the given ID.
+  */
+  public struct function listRecipientsBySegment( required numeric id ) {
+    return apiCall( 'GET', "/contactdb/segments/#id#/recipients" );
   }
 
   /**
