@@ -1,6 +1,6 @@
 /*
   Copyright (c) 2018, Matthew Clemente, John Berquist
-  v0.5.1
+  v0.5.4
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
