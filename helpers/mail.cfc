@@ -38,6 +38,8 @@ component accessors="true" {
 
     if ( arguments.keyExists( 'subject' ) )
       setSubject( subject );
+    else
+      setSubject( '' );
 
     if ( arguments.keyExists( 'to' ) )
       this.to( to );
