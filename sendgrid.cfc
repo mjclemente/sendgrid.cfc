@@ -633,6 +633,14 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppression-groups-for-an-email-address
+  * @hint Appears to slightly differ from the documentation. Returns all supressions groups, with an indication if the email address is supressed or not.
+  */
+  public struct function listUnsubscribeGroupsByEmail( required string email ) {
+    return apiCall( 'GET', "/asm/suppressions/#email#" );
+  }
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
