@@ -605,7 +605,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Convenience method for adding a single email to an unsubscribe group. Delegates to addEmailsToUnsubscribeGroup()
   */
   public struct function addEmailToUnsubscribeGroup( required numeric groupId, required string email ) {
-    return addRecipientsToUnsubscribeGroup( groupId, [ email ] );
+    return addEmailsToUnsubscribeGroup( groupId, [ email ] );
   }
 
 
