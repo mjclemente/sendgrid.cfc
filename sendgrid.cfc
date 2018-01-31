@@ -602,7 +602,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @hint Convenience method for adding a single email to an unsubscribe group. Delegates to addEmailsToUnsubscribeGroup()
+  * @hint Convenience method for adding a single email address to an unsubscribe group. Delegates to `addEmailsToUnsubscribeGroup()`
   */
   public struct function addEmailToUnsubscribeGroup( required numeric id, required string email ) {
     return addEmailsToUnsubscribeGroup( id, [ email ] );
@@ -652,7 +652,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @hint Convenience method for searching for a single email within an unsubscribe group. Delegates to searchUnsubscribeGroupForEmails()
+  * @hint Convenience method for searching for a single email within an unsubscribe group. Delegates to `searchUnsubscribeGroupForEmails()`
   */
   public struct function searchUnsubscribeGroupForEmail( required numeric id, required string email ) {
     return searchUnsubscribeGroupForEmails( id, [ email ] );
