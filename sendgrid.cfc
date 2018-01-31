@@ -594,10 +594,19 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Add email addresses to an unsubscribe group. If you attempt to add suppressions to a group that has been deleted or does not exist, the suppressions will be added to the global suppressions list.
   * @emails an array of email addresses
   */
-  public struct function addRecipientsToUnsubscribeGroup( required numeric groupId, required array emails ) {
-    return apiCall( 'POST', '/asm/groups/#groupId#/suppressions', {}, emails );
+  public struct function addEmailsToUnsubscribeGroup( required numeric groupId, required array emails ) {
+    var recipientEmails = {
+      'recipient_emails' : emails
+    };
+    return apiCall( 'POST', '/asm/groups/#groupId#/suppressions', {}, recipientEmails );
   }
 
+  /**
+  * @hint Convenience method for adding a single email to an unsubscribe group. Delegates to addEmailsToUnsubscribeGroup()
+  */
+  public struct function addEmailToUnsubscribeGroup( required numeric groupId, required string email ) {
+    return addRecipientsToUnsubscribeGroup( groupId, [ email ] );
+  }
 
 
 
