@@ -609,6 +609,14 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions-for-a-suppression-group
+  * @hint Retrieve all suppressed email addresses belonging to the given group.
+  */
+  public struct function listEmailsByUnsubscribeGroup( required numeric id ) {
+    return apiCall( 'GET', "/asm/groups/#id#/suppressions" );
+  }
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
