@@ -246,7 +246,7 @@ Retrieve a single sender identity by ID.
 
 ---
 
-### Suppressions - Suppressions
+### Suppressions - Suppressions Reference
 *View SendGrid Docs for [Suppressions - Suppressions](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html)*
 
 #### `addEmailsToUnsubscribeGroup( required numeric id, required array emails )`
