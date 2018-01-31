@@ -625,6 +625,14 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions
+  * @hint Retrieve a list of all suppressions.
+  */
+  public struct function listAllSupressions() {
+    return apiCall( 'GET', "/asm/suppressions" );
+  }
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
