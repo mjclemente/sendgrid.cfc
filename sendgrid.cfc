@@ -585,6 +585,23 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * Suppressions - Suppressions
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/add-suppressions-to-a-suppression-group
+  * @hint Add email addresses to an unsubscribe group. If you attempt to add suppressions to a group that has been deleted or does not exist, the suppressions will be added to the global suppressions list.
+  * @emails an array of email addresses
+  */
+  public struct function addRecipientsToUnsubscribeGroup( required numeric groupId, required array emails ) {
+    return apiCall( 'POST', '/asm/groups/#groupId#/suppressions', {}, emails );
+  }
+
+
+
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
