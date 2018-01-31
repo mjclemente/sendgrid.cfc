@@ -641,6 +641,24 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/search-for-suppressions-within-a-group
+  * @hint Search a suppression group for multiple suppressions.
+  */
+  public struct function searchUnsubscribeGroupForEmails( required numeric id, required array emails ) {
+    var recipientEmails = {
+      'recipient_emails' : emails
+    };
+    return apiCall( 'POST', "/asm/groups/#id#/suppressions/search", {}, recipientEmails );
+  }
+
+  /**
+  * @hint Convenience method for searching for a single email within an unsubscribe group. Delegates to searchUnsubscribeGroupForEmails()
+  */
+  public struct function searchUnsubscribeGroupForEmail( required numeric id, required string email ) {
+    return searchUnsubscribeGroupForEmails( id, [ email ] );
+  }
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
