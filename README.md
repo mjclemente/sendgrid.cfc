@@ -19,6 +19,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
   - [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
   - [Contacts API - Lists](#contacts-api---lists-reference)
   - [Sender Identities API](#sender-identities-api-reference)
+  - [Suppressions - Suppressions](#suppressions---suppressions-reference)
   - [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
@@ -242,6 +243,35 @@ Resend a sender identity verification email.
 
 #### `getSender( required numeric id )`
 Retrieve a single sender identity by ID.
+
+---
+
+### Suppressions - Suppressions
+*View SendGrid Docs for [Suppressions - Suppressions](https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/suppressions.html)*
+
+#### `addEmailsToUnsubscribeGroup( required numeric id, required array emails )`
+Add email addresses to an unsubscribe group. If you attempt to add suppressions to a group that has been deleted or does not exist, the suppressions will be added to the global suppressions list.
+
+#### `addEmailToUnsubscribeGroup( required numeric id, required string email )`
+Convenience method for adding a single email address to an unsubscribe group. Delegates to `addEmailsToUnsubscribeGroup()`
+
+#### `listEmailsByUnsubscribeGroup( required numeric id )`
+Retrieve all suppressed email addresses belonging to the given group.
+
+#### `deleteEmailFromUnsubscribeGroup( required numeric id, required string email )`
+Remove a suppressed email address from the given suppression group.
+
+#### `listAllSupressions()`
+Retrieve a list of all suppressions.
+
+#### `listUnsubscribeGroupsByEmail( required string email )`
+Appears to slightly differ from the documentation. Returns all supressions groups, with an indication if the email address is supressed or not.
+
+#### `searchUnsubscribeGroupForEmails( required numeric id, required array emails )`
+Search a suppression group for multiple suppressions.
+
+#### `searchUnsubscribeGroupForEmail( required numeric id, required string email )`
+Convenience method for searching for a single email within an unsubscribe group. Delegates to `searchUnsubscribeGroupForEmails()`
 
 ---
 
