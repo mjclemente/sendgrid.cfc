@@ -617,6 +617,14 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/delete-a-suppression-from-a-suppression-group
+  * @hint Remove a suppressed email address from the given suppression group.
+  */
+  public struct function deleteEmailFromUnsubscribeGroup( required numeric id, required string email ) {
+    return apiCall( 'DELETE', '/asm/groups/#id#/suppressions/#email#' );
+  }
+
+  /**
   * Suppressions - Unsubscribe Groups
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Suppression_Management/groups.html
   */
