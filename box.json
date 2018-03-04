@@ -1,0 +1,56 @@
+{
+    "name":"SendGrid.cfc",
+    "version":"0.5.6",
+    "author":"Matthew Clemente <mjclemente@gmail.com>",
+    "location":"mjclemente/sendgrid.cfc#v0.5.6",
+    "homepage":"https://github.com/mjclemente/sendgrid.cfc",
+    "documentation":"",
+    "repository":{
+        "type":"",
+        "URL":""
+    },
+    "bugs":"",
+    "slug":"sendgridcfc",
+    "shortDescription":"A CFML wrapper for the SendGrid API",
+    "description":"",
+    "instructions":"",
+    "changelog":"",
+    "type":"modules",
+    "keywords":"sendgrid, api, email",
+    "private":false,
+    "projectURL":"",
+    "license":[
+        {
+            "type":"",
+            "URL":""
+        }
+    ],
+    "contributors":[],
+    "dependencies":{},
+    "devDependencies":{},
+    "installPaths":{},
+    "scripts":{},
+    "ignore":[
+        "**/.*",
+        "test",
+        "tests"
+    ],
+    "testbox":{
+        "runner":[
+            {
+                "default":""
+            }
+        ],
+        "labels":"",
+        "reporter":"",
+        "bundles":"",
+        "recurse":true,
+        "directory":"tests.specs",
+        "testBundles":"",
+        "testSuites":"",
+        "testSpecs":"",
+        "verbose":true,
+        "watchDelay":500,
+        "watchPaths":"**.cfc"
+    }
+}
