@@ -5,7 +5,7 @@ A CFML wrapper for the SendGrid's [Web API v3](https://sendgrid.com/docs/API_Ref
 
 ### Acknowledgements
 
-This project borrows heavily from the API frameworks built by [jcberquist](https://github.com/jcberquist), such as [stripecfc](https://github.com/jcberquist/stripecfc), [xero-cfml](https://github.com/jcberquist/xero-cfml), and [aws-cfml](https://github.com/jcberquist/aws-cfml).
+This project borrows heavily from the API frameworks built by [jcberquist](https://github.com/jcberquist), such as [xero-cfml](https://github.com/jcberquist/xero-cfml) and [aws-cfml](https://github.com/jcberquist/aws-cfml). Because it draws on those projects, it is also licensed under the terms of the MIT license.
 
 ## Table of Contents
 

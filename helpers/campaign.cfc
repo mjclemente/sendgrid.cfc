@@ -1,3 +1,8 @@
+/**
+* sendgrid.cfc v0.5.6
+* Copyright 2017-2018 Matthew Clemente, John Berquist
+* Licensed under MIT (https://github.com/mjclemente/sendgrid.cfc/blob/master/LICENSE)
+*/
 component accessors="true" {
 
   property name="title" default="";
