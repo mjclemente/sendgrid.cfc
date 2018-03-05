@@ -21,8 +21,8 @@
     "projectURL":"",
     "license":[
         {
-            "type":"",
-            "URL":""
+            "type":"MIT",
+            "URL":"https://github.com/mjclemente/sendgrid.cfc/blob/master/LICENSE"
         }
     ],
     "contributors":[],
