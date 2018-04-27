@@ -54,7 +54,11 @@ sendGrid = {
 }
 ```
 
-You can then leverage the CFC via the injection DSL: `sendGrid@sendGrid`
+You can then leverage the CFC via the injection DSL: `sendGrid@sendGrid`:
+
+```
+property name="sendGrid" inject="sendGrid@sendGrid";
+```
 
 ## Quick Start
 The following is a minimal example of sending an email, using the `mail` helper object.
