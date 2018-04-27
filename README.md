@@ -40,7 +40,11 @@ This component will be installed into a directory called `sendgridcfc` in whiche
 
 ```
 new sendgridcfc.sendgrid(
-  apiKey = '' // Where you place your API key value
+  apiKey        = '', // Required
+  baseUrl       = 'https://api.sendgrid.com/v3', // Default value in init
+  forceTestMode = false, // Default value in init
+  httpTimeout   = 60, // Default value in init
+  includeRaw    = true // Default value in init
 );
 ```
 
