@@ -9,6 +9,9 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 
 ## Table of Contents
 
+- [Installation](#installation)
+  - [Standalone](#standalone)
+  - [ColdBox Module](#coldbox-module)
 - [Quick Start for Sending](#quick-start)
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
@@ -25,6 +28,33 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 - [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
+
+## Installation
+This wrapper can be installed as standalone or as a ColdBox Module. Either approach requires a simple CommandBox command:
+
+`box install sendgridcfc`
+
+### Standalone
+
+This component will be installed into a directory called `sendgridcfc` in whichever directory you have chosen and can then be instantiated directly like so:
+
+```
+new sendgridcfc.sendgrid(
+  apiKey = '' // Where you place your API key value
+);
+```
+
+### ColdBox Module
+
+To use the component as a ColdBox Module you will need to create a configuration object in your applications configuration file: `config/Coldbox.cfc` with the following settings:
+
+```
+sendGrid = {
+  apiKey = '' // Where you place your API key value
+}
+```
+
+You can then leverage the CFC via the injection DSL: `sendGrid@sendGrid`
 
 ## Quick Start
 The following is a minimal example of sending an email, using the `mail` helper object.
