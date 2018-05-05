@@ -1,16 +1,9 @@
 component {
 
 	this.title = "SendGrid Web API v3";
-	this.author = "Matthew Clemente";
-	this.webURL = "";
-	this.description = "This module will provide you with connectivity to the SendGrid Web API v3 for any ColdFusion (CFML) application.";
-	this.version = "@version.number@+@build.number@";
-	this.viewParentLookup = true;
-	this.layoutParentLookup = true;
-	this.entryPoint = 'sendGrid';
-	this.modelNamespace = 'sendGrid';
-	this.cfmapping = 'sendGrid';
-	this.autoMapModels = false;
+	this.author = "Matthew J. Clemente";
+	this.webURL = "https://github.com/mjclemente/sendgrid.cfc";
+	this.description = "A wrapper for the SendGrid Web API v3";
 
 	function configure(){
 		settings = {
