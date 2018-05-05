@@ -16,28 +16,16 @@ component {
 	}
 
 	function onLoad(){
-		parseParentSettings();
-		var sendGridAPISettings = controller.getConfigSettings().sendGrid;
-
 		binder.map( "sendGrid@sendGrid" )
 			.to( "#moduleMapping#.sendgrid" )
-			.initArg( name="apiKey", value=sendGridAPISettings.apiKey )
-			.initArg( name="baseUrl", value=sendGridAPISettings.baseUrl )
-			.initArg( name="forceTestMode", value=sendGridAPISettings.forceTestMode )
-			.initArg( name="httpTimeout", value=sendGridAPISettings.httpTimeout )
-			.initArg( name="includeRaw", value=sendGridAPISettings.includeRaw );
-	}
-
-	private function parseParentSettings(){
-		var oConfig      = controller.getSetting( "ColdBoxConfig" );
-		var configStruct = controller.getConfigSettings();
-		var sendGridDSL  = oConfig.getPropertyMixin( "sendGrid", "variables", structnew() );
-
-		//defaults
-		configStruct.sendGrid = variables.settings;
-
-		// incorporate settings
-		structAppend( configStruct.sendGrid, sendGridDSL, true );
+      .asSingleton()
+      .initWith(
+        apiKey = settings.apiKey,
+        baseUrl = settings.baseUrl,
+        forceTestMode = settings.forceTestMode,
+        httpTimeout = settings.httpTimeout,
+        includeRaw = settings.includeRaw
+      );
 	}
 
 }
