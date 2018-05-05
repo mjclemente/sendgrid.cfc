@@ -8,8 +8,8 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 ## Table of Contents
 
 - [Installation](#installation)
-  - [Standalone](#standalone)
-  - [ColdBox Module](#coldbox-module)
+  - [Standalone Usage](#standalone-usage)
+  - [Use as a ColdBox Module](#use-as-a-coldbox-module)
 - [Quick Start for Sending](#quick-start)
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
@@ -26,40 +26,45 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 - [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
+- [Questions](#questions)
+- [Contributing](#contributing)
 
 ## Installation
-This wrapper can be installed as standalone or as a ColdBox Module. Either approach requires a simple CommandBox command:
+This wrapper can be installed as standalone component or as a ColdBox Module. Either approach requires a simple CommandBox command:
 
-`box install sendgridcfc`
+```
+$ box install sendgridcfc
+```
 
-### Standalone
+If you can't use CommandBox, all you need to use this wrapper as a standalone component is the `sendgrid.cfc` file and the helper components, located in `/helpers`; add them to your application wherever you store cfcs. But you should really be using CommandBox.
+
+### Standalone Usage
 
 This component will be installed into a directory called `sendgridcfc` in whichever directory you have chosen and can then be instantiated directly like so:
 
-```
-new sendgridcfc.sendgrid(
-  apiKey        = '', // Required
-  baseUrl       = 'https://api.sendgrid.com/v3', // Default value in init
-  forceTestMode = false, // Default value in init
-  httpTimeout   = 60, // Default value in init
-  includeRaw    = true // Default value in init
-);
+```cfc
+sendgrid = new sendgridcfc.sendgrid( apiKey = 'xxx' );
 ```
 
-### ColdBox Module
+### Use as a ColdBox Module
 
-To use the component as a ColdBox Module you will need to create a configuration object in your applications configuration file: `config/Coldbox.cfc` with the following settings:
+To use the wrapper as a ColdBox Module you will need to pass the configuration settings in from your `config/Coldbox.cfc`. This is done within the `moduleSettings` struct:
+
+```cfc
+moduleSettings = {
+  sendgridcfc = {
+    apiKey = 'xxx'
+  }
+};
+```
+
+You can then leverage the CFC via the injection DSL: `sendgrid@sendgridcfc`; the helper components follow the same pattern:
 
 ```
-sendGrid = {
-  apiKey = '' // Where you place your API key value
-}
-```
-
-You can then leverage the CFC via the injection DSL: `sendGrid@sendGrid`:
-
-```
-property name="sendGrid" inject="sendGrid@sendGrid";
+property name="sendgrid" inject="sendgrid@sendgridcfc";
+property name="mail" inject="mail@sendgridcfc";
+property name="campaign" inject="campaign@sendgridcfc";
+property name="sender" inject="sender@sendgridcfc";
 ```
 
 ## Quick Start
@@ -620,4 +625,14 @@ Required.
 Required.
 
 #### `build()`
-The function that puts it all together and builds the body for sender related API operations.
+The function that puts it all together and builds the body for sender related API operations
+
+# Questions
+For questions that aren't about bugs, feel free to hit me up on the [CFML Slack Channel](http://cfml-slack.herokuapp.com); I'm @mjclemente. You'll likely get a much faster response than creating an issue here.
+
+# Contributing
+:+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
+
+Before putting the work into creating a PR, I'd appreciate it if you opened an issue. That way we can discuss the best way to implement changes/features, before work is done.
+
+Changes should be submitted as Pull Requests on the `develop` branch.
