@@ -26,6 +26,10 @@ component {
         httpTimeout = settings.httpTimeout,
         includeRaw = settings.includeRaw
       );
+    binder.mapDirectory(
+      packagePath = "#moduleMapping#/helpers",
+      namespace = "@sendgridcfc"
+    );
 	}
 
 }
