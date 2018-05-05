@@ -28,9 +28,6 @@ component {
 			.initArg( name="includeRaw", value=sendGridAPISettings.includeRaw );
 	}
 
-	function onUnload(){
-	}
-
 	private function parseParentSettings(){
 		var oConfig      = controller.getSetting( "ColdBoxConfig" );
 		var configStruct = controller.getConfigSettings();
