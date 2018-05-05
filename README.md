@@ -1,8 +1,6 @@
 # sendgrid.cfc
 A CFML wrapper for the SendGrid's [Web API v3](https://sendgrid.com/docs/API_Reference/api_v3.html). It currently supports building and sending transactional emails, as well as portions of the API related to marketing emails.
 
-*This is an early stage API wrapper. Feel free to use the issue tracker to report bugs or suggest improvements!*
-
 ### Acknowledgements
 
 This project borrows heavily from the API frameworks built by [jcberquist](https://github.com/jcberquist), such as [xero-cfml](https://github.com/jcberquist/xero-cfml) and [aws-cfml](https://github.com/jcberquist/aws-cfml). Because it draws on those projects, it is also licensed under the terms of the MIT license.
