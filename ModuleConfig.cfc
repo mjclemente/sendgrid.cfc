@@ -16,7 +16,7 @@ component {
 	}
 
 	function onLoad(){
-		binder.map( "sendGrid@sendGrid" )
+		binder.map( "sendgrid@sendgridcfc" )
 			.to( "#moduleMapping#.sendgrid" )
       .asSingleton()
       .initWith(
