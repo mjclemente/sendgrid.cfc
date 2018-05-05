@@ -1,19 +1,19 @@
 component {
 
 	// Module Properties
-	this.title              = "SendGrid Web API v3";
-	this.author             = "Matthew Clemente";
-	this.webURL             = "";
-	this.description        = "This module will provide you with connectivity to the SendGrid Web API v3 for any ColdFusion (CFML) application.";
-	this.version            = "@version.number@+@build.number@";
+	this.title = "SendGrid Web API v3";
+	this.author = "Matthew Clemente";
+	this.webURL = "";
+	this.description = "This module will provide you with connectivity to the SendGrid Web API v3 for any ColdFusion (CFML) application.";
+	this.version = "@version.number@+@build.number@";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
-	this.viewParentLookup   = true;
+	this.viewParentLookup = true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	this.entryPoint         = 'sendGrid';
-	this.modelNamespace     = 'sendGrid';
-	this.cfmapping          = 'sendGrid';
-	this.autoMapModels      = false;
+	this.entryPoint = 'sendGrid';
+	this.modelNamespace = 'sendGrid';
+	this.cfmapping = 'sendGrid';
+	this.autoMapModels = false;
 
 	/**
 	 * Configure
@@ -22,11 +22,11 @@ component {
 
 		// Settings
 		settings = {
-			apiKey        = '', // Required
-			baseUrl       = 'https://api.sendgrid.com/v3', // Default value in init
+			apiKey = '', // Required
+			baseUrl = 'https://api.sendgrid.com/v3', // Default value in init
 			forceTestMode = false, // Default value in init
-			httpTimeout   = 60, // Default value in init
-			includeRaw    = true // Default value in init
+			httpTimeout = 60, // Default value in init
+			includeRaw = true // Default value in init
 		};
 	}
 
