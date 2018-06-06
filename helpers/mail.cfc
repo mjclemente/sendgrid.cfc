@@ -786,7 +786,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint helper that forces object value serialization to strings. This is needed in some cases, where CF's loose typing causes problems
+  * @hint helper that forces object value serialization to strings. This is needed in some cases, where CF's loose typing causes problems. When this function is used it is because SendGrid doesn't want a boolean/numeric value - it's asking for a string
   */
   private string function serializeValuesAsString( required struct data ) {
     var serializedData = data.reduce(
@@ -794,7 +794,20 @@ component accessors="true" {
 
         if ( result.len() ) result &= ',';
 
-        return result & '"#key#": "#value#"';
+        //contents of string are serialized and forced into quotes
+        var str = '"#serializeJSON( value )#"';
+
+        //if the value wasn't blank (it will always be at least 2 characters long because of the quotes)
+        if ( str.len() > 2 ) {
+
+          if ( str.left( 2 ) == '""' )
+            str = str.replace( '""', '"' );
+
+          if ( str.right( 2 ) == '""' )
+            str = str.left( str.len() - 1 );
+        }
+
+        return result & '"#key#": #str#';
       }, ''
     );
     return '{' & serializedData & '}';
