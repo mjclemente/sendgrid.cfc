@@ -69,6 +69,35 @@ component output="false" displayname="SendGrid.cfc"  {
   // }
 
   /**
+  * Bounces API
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-all-bounces
+  * @hint Retrieve a list of bounces that are currently on your bounces list.
+  * @start_time Start of the time range when the bounce was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  * @end_time End of the time range when the bounce was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  */
+  public struct function listBounces( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    if ( !isValid( 'integer', start_time ) )
+      params[ 'start_time' ] = returnUnixTimestamp( start_time );
+    else if ( start_time )
+      params[ 'start_time' ] = start_time;
+
+    if ( !isValid( 'integer', end_time ) )
+      params[ 'end_time' ] = returnUnixTimestamp( end_time );
+    else if ( end_time )
+      params[ 'end_time' ] = end_time;
+
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
+
+    return apiCall( 'GET', "/suppression/bounces", params );
+  }
+
+  /**
   * Campaigns API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html
   */
