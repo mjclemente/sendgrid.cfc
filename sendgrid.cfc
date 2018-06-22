@@ -27,6 +27,48 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * Blocks API
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/blocks.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-all-blocks
+  * @hint Retrieve a list of all email addresses that are currently on your blocks list.
+  * @start_time Start of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  * @end_time End of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  */
+  public struct function listBlocks( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    if ( !isValid( 'integer', start_time ) )
+      params[ 'start_time' ] = returnUnixTimestamp( start_time );
+    else if ( start_time )
+      params[ 'start_time' ] = start_time;
+
+    if ( !isValid( 'integer', end_time ) )
+      params[ 'end_time' ] = returnUnixTimestamp( end_time );
+    else if ( end_time )
+      params[ 'end_time' ] = end_time;
+
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
+
+    return apiCall( 'GET', "/suppression/blocks", params );
+  }
+
+  /**
+  * @todo Look into workaround, as CF doesn't send the request body for DELETE
+  * https://sendgrid.api-docs.io/v3.0/blocks-api/delete-blocks
+  * @hint Delete email addresses on your blocks list
+  */
+  // public struct function deleteBlocks( boolean delete_all = false, array emails = [] ) {
+  //   var body = {
+  //     'delete_all' : delete_all,
+  //     'emails' : emails
+  //   };
+  //   return apiCall( 'DELETE', "/suppression/blocks", {}, body );
+  // }
+
+  /**
   * Campaigns API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html
   */
