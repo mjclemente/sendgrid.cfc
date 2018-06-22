@@ -69,6 +69,14 @@ component output="false" displayname="SendGrid.cfc"  {
   // }
 
   /**
+  * https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-a-specific-block
+  * @hint Retrieve a specific email address from your blocks list.
+  */
+  public struct function getBlock( required string email ) {
+    return apiCall( 'GET', "/suppression/blocks/#email#" );
+  }
+
+  /**
   * Bounces API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html
   */
@@ -95,6 +103,14 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/suppression/bounces", params );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-a-bounce
+  * @hint Retrieve a specific bounce for a given email address.
+  */
+  public struct function getBounce( required string email ) {
+    return apiCall( 'GET', "/suppression/bounces/#email#" );
   }
 
   /**
@@ -594,6 +610,13 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/suppression/invalid_emails", params );
   }
 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-a-specific-invalid-email
+  * @hint Retrieve a specific invalid email address.
+  */
+  public struct function getInvalidEmail( required string email ) {
+    return apiCall( 'GET', "/suppression/invalid_emails/#email#" );
+  }
 
   /**
   * Sender Identities API
@@ -701,6 +724,14 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/suppression/spam_reports", params );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/spam-reports-api/retrieve-a-specific-spam-report
+  * @hint Retrieve a specific spam report by email address
+  */
+  public struct function getSpamReport( required string email ) {
+    return apiCall( 'GET', "/suppression/spam_reports/#email#" );
   }
 
   /**
