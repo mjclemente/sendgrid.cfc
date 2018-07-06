@@ -107,7 +107,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-a-bounce
-  * @hint Retrieve a specific bounce for a given email address.
+  * @hint Retrieve specific bounce information for a given email address.
   */
   public struct function getBounce( required string email ) {
     return apiCall( 'GET', "/suppression/bounces/#email#" );
@@ -612,7 +612,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-a-specific-invalid-email
-  * @hint Retrieve a specific invalid email address.
+  * @hint Retrieve information about a specific invalid email address.
   */
   public struct function getInvalidEmail( required string email ) {
     return apiCall( 'GET', "/suppression/invalid_emails/#email#" );
