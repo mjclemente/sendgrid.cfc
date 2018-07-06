@@ -14,15 +14,19 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
 	- [Mail Send](#mail-send-reference)
+  - [Blocks](#blocks-api-reference)
+  - [Bounces](#bounces-api-reference)
   - [Campaigns](#campaigns-api-reference)
   - [Contacts API - Recipients](#contacts-api---recipients-reference)
   - [Contacts API - Segments](#contacts-api---segments-reference)
   - [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
   - [Contacts API - Lists](#contacts-api---lists-reference)
+  - [Invalid Emails](#invalid-emails-api-reference)
   - [Sender Identities API](#sender-identities-api-reference)
   - [Suppressions - Suppressions](#suppressions---suppressions-reference)
   - [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
+  - [Spam Reports](#spam-reports-api-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 - [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
@@ -113,6 +117,28 @@ I've found two places where the `/mail/send` endpoint JSON body are explained, a
 
 #### `sendMail( required component mail )`
 Sends email, using SendGrid's REST API. The `mail` argument must be an instance of the `helpers.mail` component. See [the quick start for sending](#quick-start) and [how to build an email](#how-to-build-an-email) for more information on how this is used.
+
+---
+
+### Blocks API Reference
+*View SendGrid Docs for [Blocks](https://sendgrid.com/docs/API_Reference/Web_API_v3/blocks.htmll)*
+
+#### `listBlocks( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 )`
+Retrieve a list of all email addresses that are currently on your blocks list. The `start_time` and `end_time` arguments, if numeric, are assumed to be unix timestamps. Otherwise, they are presumed to be a valid date that will be converted to unix timestamps automatically.
+
+#### `getBlock( required string email )`
+Retrieve a specific email address from your blocks list.
+
+---
+
+### Bounces API Reference
+*View SendGrid Docs for [Bounces](https://sendgrid.com/docs/API_Reference/Web_API_v3/bounces.html)*
+
+#### `listBounces( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 )`
+Retrieve a list of bounces that are currently on your bounces list. The `start_time` and `end_time` arguments, if numeric, are assumed to be unix timestamps. Otherwise, they are presumed to be a valid date that will be converted to unix timestamps automatically.
+
+#### `getBounce( required string email )`
+Retrieve specific bounce information for a given email address.
 
 ---
 
@@ -264,6 +290,17 @@ Add multiple recipients to a list. The `recipients` argument is an array of reci
 
 ---
 
+### Invalid Emails API Reference
+*View SendGrid Docs for [Invalid Emails](https://sendgrid.com/docs/API_Reference/Web_API_v3/invalid_emails.html)*
+
+#### `listInvalidEmails( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 )`
+Retrieve a list of invalid emails that are currently on your invalid emails list. The `start_time` and `end_time` arguments, if numeric, are assumed to be unix timestamps. Otherwise, they are presumed to be a valid date that will be converted to unix timestamps automatically.
+
+#### `getInvalidEmail( required string email )`
+Retrieve information about a specific invalid email address.
+
+---
+
 ### Sender Identities API Reference
 *View SendGrid Docs for [Sender Identities](https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/sender_identities.html)*
 
@@ -341,6 +378,17 @@ Delete a suppression group.
 
 #### `generateBatchId()`
 Generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
+
+---
+
+### Spam Reports API Reference
+*View SendGrid Docs for [Spam Reports](https://sendgrid.com/docs/API_Reference/Web_API_v3/spam_reports.html)*
+
+#### `listSpamReports( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 )`
+Retrieve a list of spam reports that are currently on your spam reports list. The `start_time` and `end_time` arguments, if numeric, are assumed to be unix timestamps. Otherwise, they are presumed to be a valid date that will be converted to unix timestamps automatically.
+
+#### `getSpamReport( required string email )`
+Retrieve a specific spam report by email address.
 
 ---
 
