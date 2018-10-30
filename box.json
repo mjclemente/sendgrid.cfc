@@ -6,10 +6,10 @@
     "homepage":"https://github.com/mjclemente/sendgrid.cfc",
     "documentation":"",
     "repository":{
-        "type":"",
-        "URL":""
+        "type":"git",
+        "URL":"https://github.com/mjclemente/sendgrid.cfc"
     },
-    "bugs":"",
+    "bugs":"https://github.com/mjclemente/sendgrid.cfc/issues",
     "slug":"sendgridcfc",
     "shortDescription":"A CFML wrapper for the SendGrid API",
     "description":"",
