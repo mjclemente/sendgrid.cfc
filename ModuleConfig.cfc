@@ -27,7 +27,7 @@ component {
         includeRaw = settings.includeRaw
       );
     binder.mapDirectory(
-      packagePath = "#moduleMapping#/helpers",
+      packagePath = "#REreplace( moduleMapping, '^/', '' )#/helpers",
       namespace = "@sendgridcfc"
     );
 	}
