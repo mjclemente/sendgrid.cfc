@@ -158,6 +158,10 @@ component accessors="true" {
 
     var fullPath = expandPath( filePath );
 
+    //account for ACF incorrectly expanding some absolute paths
+    if ( !fileExists( fullPath ) )
+      fullPath = filePath;
+
     var binaryFile = fileReadBinary( fullPath );
     var encodedFile = binaryEncode( binaryFile, 'Base64' );
 
