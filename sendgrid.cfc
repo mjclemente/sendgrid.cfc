@@ -874,6 +874,21 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email
+  * @hint Validates an email
+  * @email Email address to validate
+  * @source One word classifier for the validation
+  */
+  public struct function validateEmail( required string email, string source = '' ) {
+    var body = {
+      'email': arguments.email,
+      'source': arguments.source
+    }
+    return apiCall( 'POST', '/validations/email', {}, body );
+  }
+
+
   // PRIVATE FUNCTIONS
   private struct function apiCall(
     required string httpMethod,
