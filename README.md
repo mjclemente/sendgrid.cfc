@@ -27,6 +27,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
   - [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
   - [Spam Reports](#spam-reports-api-reference)
+  - [Validate Email](#validate-email)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 - [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
@@ -392,6 +393,13 @@ Retrieve a specific spam report by email address.
 
 ---
 
+### Validate Email
+*View SendGrid Docs for [Validate Email](https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email)
+
+#### `validateEmail( string email, string source = '' )`
+Retrive a validation information about an email address. The source param is just an one word classifier for the validation call.
+
+---
 
 ## Reference Manual for `helpers.mail`
 This section documents every public method in the `helpers/mail.cfc` file. A few notes about structure, data, and usage:
