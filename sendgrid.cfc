@@ -10,7 +10,7 @@ component output="false" displayname="SendGrid.cfc"  {
     string baseUrl = "https://api.sendgrid.com/v3",
     boolean forceTestMode = false,
     numeric httpTimeout = 60,
-    boolean includeRaw = true ) {
+    boolean includeRaw = false ) {
 
     structAppend( variables, arguments );
 
