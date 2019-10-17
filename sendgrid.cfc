@@ -971,6 +971,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   private struct function getBaseHttpHeaders() {
     return {
+      'Accept' : 'application/json',
       'Content-Type' : 'application/json',
       'User-Agent' : 'sendgrid.cfc',
       'Authorization' : 'Bearer #variables.apiKey#'
