@@ -6,13 +6,37 @@
 component output="false" displayname="SendGrid.cfc"  {
 
   public any function init(
-    required string apiKey,
+    string apiKey = '',
     string baseUrl = "https://api.sendgrid.com/v3",
     boolean forceTestMode = false,
     numeric httpTimeout = 60,
     boolean includeRaw = true ) {
 
     structAppend( variables, arguments );
+
+    //map sensitive args to env variables or java system props
+    var secrets = {
+      'apiKey': 'SENDGRID_API_KEY'
+    };
+    var system = createObject( 'java', 'java.lang.System' );
+
+    for ( var key in secrets ) {
+      //arguments are top priority
+      if ( variables[ key ].len() ) continue;
+
+      //check environment variables
+      var envValue = system.getenv( secrets[ key ] );
+      if ( !isNull( envValue ) && envValue.len() ) {
+        variables[ key ] = envValue;
+        continue;
+      }
+
+      //check java system properties
+      var propValue = system.getProperty( secrets[ key ] );
+      if ( !isNull( propValue ) && propValue.len() ) {
+        variables[ key ] = propValue;
+      }
+    }
 
     variables.utcBaseDate = dateAdd( "l", createDate( 1970,1,1 ).getTime() * -1, createDate( 1970,1,1 ) );
 
