@@ -912,6 +912,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email
+  * https://sendgrid.com/docs/ui/managing-contacts/email-address-validation/
   * @hint Validates an email
   * @email Email address to validate
   * @source One word classifier for the validation
