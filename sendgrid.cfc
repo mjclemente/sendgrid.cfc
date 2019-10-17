@@ -9,6 +9,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   public any function init(
     string apiKey = '',
+    string emailValidationApiKey = '',
     string baseUrl = "https://api.sendgrid.com/v3",
     boolean forceTestMode = false,
     numeric httpTimeout = 60,
@@ -18,7 +19,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
     //map sensitive args to env variables or java system props
     var secrets = {
-      'apiKey': 'SENDGRID_API_KEY'
+      'apiKey': 'SENDGRID_API_KEY',
+      'emailValidationApiKey': 'SENDGRID_EMAIL_VALIDATION_API_KEY'
     };
     var system = createObject( 'java', 'java.lang.System' );
 

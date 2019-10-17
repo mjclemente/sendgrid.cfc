@@ -7,7 +7,8 @@ component {
 
 	function configure(){
 		settings = {
-			apiKey = '', // Required
+      apiKey = '', // Required
+      emailValidationApiKey = '', // Optional
 			baseUrl = 'https://api.sendgrid.com/v3', // Default value in init
 			forceTestMode = false, // Default value in init
 			httpTimeout = 60, // Default value in init
@@ -21,6 +22,7 @@ component {
       .asSingleton()
       .initWith(
         apiKey = settings.apiKey,
+        emailValidationApiKey = settings.emailValidationApiKey,
         baseUrl = settings.baseUrl,
         forceTestMode = settings.forceTestMode,
         httpTimeout = settings.httpTimeout,
