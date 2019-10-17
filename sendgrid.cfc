@@ -977,7 +977,7 @@ component output="false" displayname="SendGrid.cfc"  {
     return {
       'Accept' : 'application/json',
       'Content-Type' : 'application/json',
-      'User-Agent' : 'sendgrid.cfc/#variables._sendgridcfc_version# (ColdFusion)'
+      'User-Agent' : 'sendgrid.cfc/#variables._sendgridcfc_version# (ColdFusion)',
       'Authorization' : 'Bearer #variables.apiKey#'
     };
   }
