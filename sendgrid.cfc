@@ -922,7 +922,15 @@ component output="false" displayname="SendGrid.cfc"  {
       'email': arguments.email,
       'source': arguments.source
     }
-    return apiCall( 'POST', '/validations/email', {}, body );
+
+    if( !len( variables.emailValidationApiKey ) ) {
+      throw( "Use of email validation endpoint requires a separate API key. ");
+    }
+
+    var headers = {
+      'Authorization' : 'Bearer #variables.emailValidationApiKey#'
+    };
+    return apiCall( 'POST', '/validations/email', {}, body, headers );
   }
 
 
