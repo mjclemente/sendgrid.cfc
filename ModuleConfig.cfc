@@ -12,7 +12,7 @@ component {
 			baseUrl = 'https://api.sendgrid.com/v3', // Default value in init
 			forceTestMode = false, // Default value in init
 			httpTimeout = 60, // Default value in init
-			includeRaw = true // Default value in init
+			includeRaw = false // Default value in init
 		};
 	}
 
