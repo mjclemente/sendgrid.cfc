@@ -5,9 +5,17 @@
 */
 component output="false" displayname="SendGrid.cfc"  {
 
-  public any function init( required string apiKey, string baseUrl = "https://api.sendgrid.com/v3", boolean forceTestMode = false, numeric httpTimeout = 60, boolean includeRaw = true ) {
-    variables.utcBaseDate = dateAdd( "l", createDate( 1970,1,1 ).getTime() * -1, createDate( 1970,1,1 ) );
+  public any function init(
+    required string apiKey,
+    string baseUrl = "https://api.sendgrid.com/v3",
+    boolean forceTestMode = false,
+    numeric httpTimeout = 60,
+    boolean includeRaw = true ) {
+
     structAppend( variables, arguments );
+
+    variables.utcBaseDate = dateAdd( "l", createDate( 1970,1,1 ).getTime() * -1, createDate( 1970,1,1 ) );
+
     return this;
   }
 
