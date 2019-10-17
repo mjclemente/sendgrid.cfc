@@ -5,6 +5,8 @@
 */
 component output="false" displayname="SendGrid.cfc"  {
 
+  variables._sendgridcfc_version = '0.8.1';
+
   public any function init(
     string apiKey = '',
     string baseUrl = "https://api.sendgrid.com/v3",
