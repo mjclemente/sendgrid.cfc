@@ -924,7 +924,7 @@ component output="false" displayname="SendGrid.cfc"  {
     }
 
     if( !len( variables.emailValidationApiKey ) ) {
-      throw( "Use of email validation endpoint requires a separate API key. ");
+      throw( "Use of email validation endpoint requires a separate API key. Please read the documentation for further details.");
     }
 
     var headers = {
