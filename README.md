@@ -394,10 +394,12 @@ Retrieve a specific spam report by email address.
 ---
 
 ### Validate Email
-*View SendGrid Docs for [Validate Email](https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email)
+*View SendGrid Docs for [Validate Email](https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email)*
 
 #### `validateEmail( string email, string source = '' )`
 Retrive a validation information about an email address. The source param is just an one word classifier for the validation call.
+
+**Important**: SendGrid's email validation endpoint requires a separate API key from their primary email API. Additionally, this service is only available on their "Pro" tier, or higher. For a bit more information about SendGrid's email validation, you can read their [documentation](https://sendgrid.com/docs/ui/managing-contacts/email-address-validation/) and [product page](https://sendgrid.com/solutions/email-validation-api/).
 
 ---
 
