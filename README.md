@@ -11,6 +11,8 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
   - [Standalone Usage](#standalone-usage)
   - [Use as a ColdBox Module](#use-as-a-coldbox-module)
 - [Quick Start for Sending](#quick-start)
+- [Setup and Authentication](#setup-and-authentication)
+	- [A Note on Email Validation](#a-note-on-email-validation)
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
 	- [Mail Send](#mail-send-reference)
@@ -73,6 +75,7 @@ property name="sender" inject="sender@sendgridcfc";
 ```
 
 ## Quick Start
+
 The following is a minimal example of sending an email, using the `mail` helper object.
 
 ```cfc
@@ -86,6 +89,26 @@ mail = new helpers.mail()
 
 sg.sendMail( mail );
 ```
+
+## Setup and Authentication
+
+To get started with SendGrid, you'll need an API key. First, you'll need to [create an account with SendGrid](https://signup.sendgrid.com/); then follow the instructions in the docs for [creating an API key](https://sendgrid.com/docs/ui/account-and-settings/api-keys/#creating-an-api-key). The relevant section is located in your account within **Settings > API Keys > Create API Key**.
+
+Once you have an API key, you can provide it to this wrapper manually when creating the component, as in the Quick Start example above, or via an environment variable named `SENDGRID_API_KEY`, which will get picked up automatically. This latter approach is generally preferable, as it keeps hardcoded credentials out of your codebase.
+
+### A Note on Email Validation
+
+For reasons unclear to me, if you want to use SendGrid's email validation endpoint, you're required to set up a second, separate API key. Note that the email validation service is only available to users of SendGrid's "Pro" tier or higher. If you have a "Pro" account, you can generate a dedicated Email Validation API key in the same manner as the standard API key outlined above, and as [explained in their documentation](https://sendgrid.com/docs/ui/managing-contacts/email-address-validation/).
+
+To provide the Email Validation API key to the wrapper, you can include it manually when creating the component:
+
+```cfc
+sg = new sendgrid( apiKey = 'xxx', emailValidationApiKey = 'zzz' );
+```
+
+Alternatively, it will automatically be picked up via an environment variable named `SENDGRID_EMAIL_VALIDATION_API_KEY`. It will then be used automatically for requests to the email validation endpoint.
+
+If you don't have a SendGrid "Pro" account and/or don't want to use SendGrid's email validation service, you can ignore this - there's no need to provide the `emailValidationApiKey` for using the other methods in the wrapper.
 
 ## How to build an email
 
