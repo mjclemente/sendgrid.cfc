@@ -12,7 +12,7 @@ component output="false" displayname="SendGrid.cfc"  {
     string emailValidationApiKey = '',
     string baseUrl = "https://api.sendgrid.com/v3",
     boolean forceTestMode = false,
-    numeric httpTimeout = 60,
+    numeric httpTimeout = 50,
     boolean includeRaw = false ) {
 
     structAppend( variables, arguments );
@@ -1007,7 +1007,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var requestHeaders = parseHeaders( headers );
     var requestBody = parseBody( body );
 
-    cfhttp( url = fullPath, method = httpMethod, result = 'result' ) {
+    cfhttp( url = fullPath, method = httpMethod, result = 'result', timeout = variables.httpTimeout ) {
 
       for ( var header in requestHeaders ) {
         cfhttpparam( type = "header", name = header.name, value = header.value );
