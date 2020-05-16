@@ -53,6 +53,8 @@ This component will be installed into a directory called `sendgridcfc` in whiche
 sendgrid = new sendgridcfc.sendgrid( apiKey = 'xxx' );
 ```
 
+Note that this wrapper was not designed to be placed within the shared CustomTags directory. If implemented as a CustomTag, it will conflict with the older `mail()` [function syntax](https://helpx.adobe.com/coldfusion/cfml-reference/script-functions-implemented-as-cfcs/mail.html), as discussed in [this issue](https://github.com/mjclemente/sendgrid.cfc/issues/4).
+
 ### Use as a ColdBox Module
 
 To use the wrapper as a ColdBox Module you will need to pass the configuration settings in from your `config/Coldbox.cfc`. This is done within the `moduleSettings` struct:
