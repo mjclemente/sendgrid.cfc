@@ -556,6 +556,25 @@ component accessors="true" {
     return this;
   }
 
+  // Considering adding a method to append individual elements to the dynamic template data. Not sure it's needed though.
+  // public any function addDynamicData( any dynamicData, any value ) {
+
+  // }
+
+  /**
+  * https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
+  * @hint sets the `dynamic_template_data` property for the **current** personalization envelope. If any dynamic template data had been previously set, this method overwrites it. Note that dynamic template data is not compatible with Legacy Dynamic Templates.
+  * @dynamicTemplateData An object containing key/value pairs of the dynamic template data. Basically, the Handlebars input object that provides the actual values for the dynamic template.
+  */
+  public any function withDynamicTemplateData( required struct dynamicTemplateData ) {
+    var count = countPersonalizations();
+    if ( !count ) throw( "You must add a 'to' recipient to this email before you can personalize the dynamic template data." );
+
+    variables.personalizations[ count ][ 'dynamic_template_data' ] = dynamicTemplateData;
+
+    return this;
+  }
+
   /**
   * @hint appends a substitution ( "substitution_tag":"value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
   * @substitution Facilitates two means of adding a substitution. You can pass in a struct with a tag/value for the substitution tag and value to substitute. Alternatively, you can use this argument to pass in the substitution tag, and provide the replacement value as a second argument.
