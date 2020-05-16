@@ -576,6 +576,13 @@ Functions like `header()`, except it adds the header to the **current** personal
 #### `withHeaders( required struct headers )`
 Functions like `headers()`, except it sets the `headers` property for the **current** personalization envelope. If any personalized headers are set, this method overwrites them.
 
+#### `withDynamicTemplateData( required struct dynamicTemplateData )`
+Sets the `dynamic_template_data` property for the **current** personalization envelope. If any dynamic template data had been previously set, this method overwrites it.
+
+Note that dynamic template data is not compatible with Legacy Dynamic Templates. For more on Dynamic Templates, [read the docs here](https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/).
+
+The `dynamicTemplateData`  argument is an object containing key/value pairs of the dynamic template data. Basically, the Handlebars input object that provides the actual values for the dynamic template.
+
 #### `withSubstitution ( any substitution, any value )`
 Appends a substitution ( "substitution_tag" : "value to substitute" ) to the **current** personalization envelope. You can add a substitution by providing the tag and value to substitute, or by passing in a struct.
 
