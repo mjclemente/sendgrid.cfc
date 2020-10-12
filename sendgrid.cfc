@@ -62,6 +62,1317 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
+    
+  /**
+  * API Keys API
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-all-api-keys-belonging-to-the-authenticated-user
+  * @hint Retrieve all API Keys belonging to the authenticated user
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function listKeys( string on_behalf_of = '', numeric limit = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( limit ) params[ 'limit' ] = limit;
+
+    return apiCall( 'GET', "/api_keys", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
+  * @hint Retrieve an existing API Key
+  * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  */
+  public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/api_keys/#api_key_id#", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
+  * @hint Create API keys
+  * @name this should be an the name of your new key
+  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization 
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  */
+  public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    // Build JSON body
+    body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';
+
+    return apiCall( 'POST', '/api_keys', params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
+  * @hint Delete API keys
+  * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  */
+  public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'DELETE', "/api_keys/#api_key_id#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
+  * @hint This endpoint allows you to update the name of an existing API Key.
+  * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @name The new name for the API Key for which you are updating. 
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  */
+  public struct function updateAPIKeyName( required string api_key_id, required string name,  string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    
+    // Build JSON body
+    body = '{"name":"#arguments.name#"}';
+
+    return apiCall( 'PATCH', "/api_keys/#api_key_id#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
+  * @hint This endpoint allows you to update the name and scopes of a given API key.
+  * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send 
+  * @name The updated name for the API Key for which you are updating.  (required)
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  */
+  public struct function updateAPIKey( required string api_key_id, required string name, array scopes = ['mail.send'],  string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    // Build JSON body
+    body = '{"scopes":#serializeJSON(arguments.scopes)#}';
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( len(arguments.name) gt 0)  body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';;
+
+    return apiCall( 'PUT', "/api_keys/#api_key_id#", params, body, headerparams );
+  }
+
+
+    
+  /**
+  * Subusers API
+  * https://sendgrid.com/docs/ui/account-and-settings/subusers/
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/list-all-subusers
+  * @hint Retrieve all API Keys belonging to the authenticated user
+  * @username The username of the subuser to return.  (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)
+  */
+  public struct function listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;    
+
+    return apiCall( 'GET', "/subusers", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monitor-settings-for-a-subuser
+  * @hint Retrieve monitor settings for a subuser
+  * @subuser_name The name of the subuser to return.
+  */
+  public struct function getSubuserMonitorSettings( required string subuser_name ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/monitor", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
+  * @hint Retrieve Subuser Reputations
+  * @username The name of the subuser which you are obtaining the reputation score.
+  */
+  public struct function getSubuserReputations( required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'usernames' ] = arguments.username;
+
+    return apiCall( 'GET', "/subusers/reputations", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-monthly-email-statistics-for-a-single-subuser
+  * @hint Retrieve the monthly email statistics for a single subuser
+  * @subuser_name The name of the subuser to return.
+  * @date The date the stastics were gathered.   Format: YYYY-MM-DD
+  * @sort_by_metric The metric that you want to sort by.  (Optional)
+  * @sort_by_direction The direction you want to sort. (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)  
+  */
+  public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
+    else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+
+    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
+    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/stats/monthly", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monthly-stats-for-all-subusers
+  * @hint Retrieve monthly stats for all subusers
+  * @date The date the stastics were gathered.   Format: YYYY-MM-DD
+  * @subuser A substring search of your subusers.  (Optional)
+  * @sort_by_metric The metric that you want to sort by.  (Optional)
+  * @sort_by_direction The direction you want to sort. (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)  
+  */
+  public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
+    else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+
+    if ( len(arguments.subuser) gt 0 ) params[ 'subuser' ] = arguments.subuser;
+    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
+    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/subusers/stats/monthly", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-totals-for-each-email-statistic-metric-for-all-subusers
+  * @hint Retrieve the totals for each email statistic metric for all subusers.
+  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
+  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
+  * @sort_by_metric The metric that you want to sort by.  (Optional)
+  * @sort_by_direction The direction you want to sort. (Optional)
+  * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)  
+  */
+  public struct function getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    params[ 'start_date' ] = arguments.start_date;
+
+    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
+    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
+    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
+    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/subusers/stats/sums", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-email-statistics-for-your-subusers
+  * @hint Retrieve email statistics for your subusers.
+  * @subusers The subuser you want to retrieve statistics for. You may include this parameter up to 10 times to retrieve statistics for multiple subusers.  (Optional)
+  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
+  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
+  * @sort_by_metric The metric that you want to sort by.  (Optional)
+  * @sort_by_direction The direction you want to sort. (Optional)
+  * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)  
+  */
+  public struct function getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    params[ 'subusers' ] = arguments.subusers;
+    params[ 'start_date' ] = arguments.start_date;
+
+    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
+    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
+    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
+    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/subusers/stats", params, body, headerparams );
+  }  
+  
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
+  * @hint Create API keysCreate Subuser
+  * @username this should be an the name of your new key
+  * @email this should be an the name of your new key
+  * @password this should be an the name of your new key
+  * @ips The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization 
+  */
+  public struct function createSubuser( required string username, required string email, required string password, required array ips = [] ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    // Build JSON body
+    /*
+    {
+      "username": "John@example.com",
+      "email": "John@example.com",
+      "password": "johns_password",
+      "ips": [
+        "1.1.1.1",
+        "2.2.2.2"
+      ]
+    }
+    */    
+    body = '{"username":"#arguments.username#","email":"#arguments.email#","password":"#arguments.password#","ips":#serializeJSON(arguments.ips)#}';
+
+    return apiCall( 'POST', '/subusers', params, body, headerparams );
+  }
+ 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/delete-a-subuser
+  * @hint Delete a subuser
+  * @subuser_name The subuser name to delete
+  */
+  public struct function deleteSubuser( required string subuser_name ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    return apiCall( 'DELETE', "/subusers/#arguments.subuser_name#", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/subusers-api/update-ips-assigned-to-a-subuser
+  * @hint Update IPs assigned to a subuser
+  * @subuser_name The subuser to update
+  * @ips The IP addresses that are assigned to the subuser.
+  */
+  public struct function updateSubuserIPs( required string subuser_name, required array ips = [] ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    body = '#serializeJSON(arguments.ips)#';
+
+    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", params, body, headerparams );
+  }
+
+
+  /**
+  * Link branding
+  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
+  */
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
+  * @hint Retrieve all branded links
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function listBrandedLinks( string on_behalf_of = '', numeric limit = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( limit ) params[ 'limit' ] = limit;
+
+    return apiCall( 'GET', "/whitelabel/links", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-branded-link
+  * @hint Retrieve a branded link
+  * @id The id of the branded link you want to retrieve.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( limit ) params[ 'limit' ] = limit;
+
+    return apiCall( 'GET', "/whitelabel/links/#arguments.id#", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-the-default-branded-link
+  * @hint Retrieve the default branded link
+  * @domain The domain to match against when finding a corresponding branded link.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '', numeric limit = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+
+    return apiCall( 'GET', "/whitelabel/links/default", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-a-subusers-branded-link
+  * @hint Retrieve a subusers branded link
+  * @username The username of the subuser to retrieve associated branded links for.
+  */
+  public struct function getSubuserBrandedLink( required string username = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+
+    return apiCall( 'GET', "/whitelabel/links/subuser", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/create-a-link-branding
+  * @hint Create a branded link
+  * @domain The root domain for your subdomain that you are creating the link branding for. This should match your FROM email address.
+  * @subdomain The subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
+  * @default Indicates if you want to use this link branding as the fallback, or as the default.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function createLinkBranding( required string domain = '', string subdomain = '', string default = 'false', string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    /*
+      {
+        "domain": "example.com",
+        "subdomain": "mail",
+        "default": true
+      }
+    */
+
+    // Build JSON body
+    body = '{"domain":"#arguments.domain#","subdomain":"#arguments.subdomain#","default":#arguments.default#}';
+
+    return apiCall( 'POST', "/whitelabel/links", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/delete-a-branded-link
+  * @hint Delete a branded link
+  * @id The id of the branded link you want to delete.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function deleteBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( limit ) params[ 'limit' ] = limit;
+
+    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/validate-a-branded-link
+  * @hint Validate a branded link
+  * @id The id of the branded link you want to delete.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/validate", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/associate-a-branded-link-with-a-subuser
+  * @hint Associate a branded link with a subuser
+  * @id The id of the branded link you want to delete.
+  * @username The username of the subuser account that you want to associate the branded link with.
+  */
+  public struct function associateLinkBranding( required numeric link_id = 0, required string username = '') {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    /*
+    {
+      "username": "jane@example.com"
+    }
+    */
+    // Build JSON body
+    body = '{"username":"#arguments.username#"}';
+
+    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/subuser", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/link-branding/disassociate-link-branding-from-a-subuser
+  * @hint Disassociate link branding from a subuser
+  * @id The id of the branded link you want to delete.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  */
+  public struct function disassociateBrandedLink( required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+
+    return apiCall( 'DELETE', "/whitelabel/links/subuser", params, body, headerparams );
+  }
+
+
+
+  /**
+  * Domain Authentication
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
+  */
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
+  * @hint List all authenticated domains
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limit the number of rows returned.
+  * @offset Paging offset.
+  * @exclude_subusers Exclude subuser domains from the result.
+  * @username The username associated with an authenticated domain.
+  * @domain Search for authenticated domains.
+  */
+  public struct function listAllDomains( string on_behalf_of = '', numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    params[ 'exclude_subusers' ] = arguments.exclude_subusers;
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+    if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
+
+    return apiCall( 'GET', "/whitelabel/domains", params, body, headerparams );
+  }
+  
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
+  * @hint Retrieve an authenticated domain
+  * @domain_id The id of the branded link you want to retrieve.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/whitelabel/domains/#arguments.domain_id#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
+  * @hint Authenticate a domain
+  * @domain Domain being authenticated.
+  * @subdomain The subdomain to use for this authenticated domain
+  * @username The username associated with this domain.
+  * @ips The IP addresses that will be included in the custom SPF record for this authenticated domain.
+  * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
+  * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
+  * @automatic_security Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
+  * @custom_dkim_selector Add a custom DKIM selector. Accepts three letters or numbers.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  */
+  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], 
+                                                    boolean custom_spf = false, boolean default = false, boolean automatic_security = false, 
+                                                    string custom_dkim_selector = '', string on_behalf_of = '') {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    /*
+      {
+        "domain": "example.com",
+        "subdomain": "news",
+        "username": "john@example.com",
+        "ips": [
+          "192.168.1.1",
+          "192.168.1.2"
+        ],
+        "custom_spf": true,
+        "default": true,
+        "automatic_security": false,
+        "custom_dkim_selector": "tes"
+      }
+    */
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+
+    // Build JSON body 
+    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=arguments.domain, subdomain=arguments.subdomain, username=arguments.username, ips=arguments.ips, 
+                                                                            custom_spf=arguments.custom_spf, default=arguments.default, automatic_security=arguments.automatic_security,
+                                                                            custom_dkim_selector=arguments.custom_dkim_selector );
+
+    body = local.domain.build();
+    return apiCall( 'POST', "/whitelabel/domains", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/update-an-authenticated-domain
+  * @hint Update an authenticated domain
+  * @domain_id Domain ID to be updated.
+  * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
+  * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  */
+  public struct function updateAuthenticatedDomain( required numeric domain_id = 0, boolean custom_spf = false, boolean default = false, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    /*
+      {
+        "default": false,
+        "custom_spf": true
+      }
+    */
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    // Build JSON body  -  May create a helper later  ****** NEED to finish
+    body = '{"default":#arguments.default#, "custom_spf":#arguments.custom_spf#}';
+
+    return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", params, body, headerparams );
+  }  
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
+  * @hint Delete an authenticated domain.
+  * @domain_id The id of the branded link you want to delete.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/get-the-default-authentication
+  * @hint Get the default authentication
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getDefaultAuthenticatedDomain( string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/whitelabel/domains/default", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/add-an-ip-to-an-authenticated-domain
+  * @hint Add an IP to an authenticated domain
+  * @domain_id Domain ID to be updated.
+  * @ip IP to associate with the domain. Used for manually specifying IPs for custom SPF.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  */
+  public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+    /*
+      {
+        "ip": "192.168.0.1"
+      }
+    */
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    // Build JSON body 
+    body = '{"ip":"#arguments.ip#"}';
+
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/ips", params, body, headerparams );
+  }  
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/remove-an-ip-from-an-authenticated-domain
+  * @hint Remove an IP from an authenticated domain.
+  * @domain_id 	ID of the domain to delete the IP from.
+  * @ip IP to remove from the domain.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#/ips/#arguments.ip#", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
+  * @hint Validate a domain authentication.
+  * @domain_id ID of the domain to validate.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  */
+  public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", params, body, headerparams );
+  }  
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-the-authenticated-domain-associated-with-the-given-user
+  * @hint List the authenticated domain associated with the given user.
+  * @username Username for the subuser to find associated authenticated domain.
+  */
+  public struct function listSubuserAuthenticatedDomain( required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+
+    return apiCall( 'GET', "/whitelabel/domains/subuser", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/disassociate-an-authenticated-domain-from-a-given-user
+  * @hint Disassociate a authenticated domain from a given user.
+  * @username Username for the subuser to find associated authenticated domain.
+  */
+  public struct function disassociateSubuserAuthenticatedDomain( required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+
+    return apiCall( 'DELETE', "/whitelabel/domains/subuser", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/domain-authentication/associate-an-authenticated-domain-with-a-given-user
+  * @hint Validate a domain authentication.
+  * @domain_id 	ID of the authenticated domain to associate with the subuser.
+  * @username Username to associate with the authenticated domain.
+  */
+  public struct function associateSubuserWithAuthenticatedDomain( required numeric domain_id, required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    /*
+    {
+      "username": "jane@example.com"
+    }
+    */
+    // Build JSON body
+    body = '{"username":"#arguments.username#"}';
+
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/subuser", params, body, headerparams );
+  }  
+
+
+
+  
+  /**
+  * IP Addresses
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses
+  */
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-add
+  * @hint Validate a domain authentication.
+  * @count 	The amount of IPs to add to the account.
+  * @subusers Array of usernames to be assigned a send IP.
+  * @warmpup Whether or not to warmup the IPs being added.
+  */
+  public struct function addIPs( required numeric count = 0, array subusers = [], boolean warmpup = false ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+    /*
+      {
+        "count": 90323478,
+        "subusers": [
+          "subuser1",
+          "subuser2"
+        ],
+        "warmup": true
+      }
+    */
+    // Build JSON body
+    body = '{"count":#arguments.count#,"subusers":#serializeJSON(arguments.subusers)#,"warmup":#arguments.warmup#}';
+
+    return apiCall( 'POST', "/ips", params, body, headerparams );
+  }  
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-remaining
+  * @hint Get remaining IPs count
+  */
+  public struct function getIPsRemaining( ) {
+    return apiCall( 'GET', "/ips/remaining");
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-addresses
+  * @hint Retrieve all IP addresses
+  * @ip The IP address to get
+  * @subuser The subuser you are requesting for.
+  * @exclude_whitelabels Should we exclude reverse DNS records (whitelabels)?
+  * @sort_by_direction The direction to sort the results.  (desc, asc)
+  * @limit limit the number of rows returned.
+  * @offset Paging offset.
+  */
+  public struct function listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.ip) gt 0 ) params[ 'ip' ] = arguments.ip;
+    if ( len(arguments.subuser) gt 0 ) params[ 'subuser' ] = arguments.subuser;
+    params[ 'exclude_whitelabels' ] = arguments.exclude_whitelabels;
+    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/ips", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-assigned-ips
+  * @hint Retrieve all assigned IPs  (Throws internal error even on sendgrids sample)
+  */
+  public struct function getIPsAssigned( ) {
+    return apiCall( 'GET', "/ips/assigned");
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-pools-an-ip-address-belongs-to
+  * @hint Retrieve all IP pools an IP address belongs to
+  * @ip The IP address to get
+  */
+  public struct function getIPPools( required string ip = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    return apiCall( 'GET', "/ips/#arguments.ip#", params, body, headerparams );
+  }
+
+    
+  /**
+  * IP Pools
+  * https://sendgrid.api-docs.io/v3.0/ip-pools
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/create-an-ip-pool
+  * @hint Create an IP pool.
+  * @name   * @name 	The amount of IPs to add to the account.
+  */
+  public struct function createIPPool( required string name ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+    /*
+      {
+        "name": "marketing"
+      }
+    */
+    // Build JSON body
+    body = '{"name":"#arguments.name#"}';
+
+    return apiCall( 'POST', "/ips/pools", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ip-pools
+  * @hint Retrieve all assigned IPs  
+  */
+  public struct function listAllIPPools( ) {
+    return apiCall( 'GET', "/ips/pools");
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ips-in-a-specified-pool
+  * @hint Retrieve all IPs in a specified pool.
+  * @ippool The IP address to get
+  */
+  public struct function getPoolIPs( required string ippool = '' ) {
+    return apiCall( 'GET', "/ips/pools/#arguments.ippool#");
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/update-an-ip-pool-s-name
+  * @hint Update an IP pool’s name.
+  * @name   The name of the IP pool that you want to rename.
+  * @new_pool_name The new name for your IP pool.
+  */
+  public struct function updatePoolName( required string name, required string new_pool_name ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+    /*
+      {
+        "name": "new_pool_name"
+      }
+    */
+    // Build JSON body
+    body = '{"name":"#arguments.new_pool_name#"}';
+
+    return apiCall( 'PUT', "/ips/pools/#arguments.name#", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/delete-an-ip-pool
+  * @hint Delete an IP pool.
+  * @name The name of the IP pool that you want to delete.
+  */
+  public struct function deleteIPPool( required string name ) {
+    return apiCall( 'DELETE', "/ips/pools/#arguments.name#" );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/add-an-ip-address-to-a-pool
+  * @hint Add an IP address to a pool
+  * @name   The name of the IP pool that you want to add the IP to.
+  * @ip The IP address that you want to add to an IP pool.
+  */
+  public struct function addIPToPool( required string name, required string ip ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+    /*
+      {
+        "ip": "0.0.0.0"
+      }
+    */
+    // Build JSON body
+    body = '{"ip":"#arguments.ip#"}';
+
+    return apiCall( 'POST', "/ips/pools/#arguments.name#/ips", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/ip-pools/remove-an-ip-address-from-a-pool
+  * @hint Remove an IP address from a pool.
+  * @name The name of the IP pool that you want to delete.
+  * @ip The IP address that you are removing.
+  */
+  public struct function deleteIPFromPool( required string name, required string ip ) {
+    return apiCall( 'DELETE', "/ips/pools/#arguments.name#/ips/#arguments.ip#" );
+  }
+
+
+  /**
+  * Users API
+  * https://sendgrid.api-docs.io/v3.0/users-api
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
+  * @hint Get a user's profile
+  * @username Username for the subuser to find associated authenticated domain.
+  */
+  public struct function getUserProfile( required string username ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.username) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.username;
+
+    return apiCall( 'GET', "/user/profile", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/update-a-user-s-profile
+  * @hint Update a user's profile
+  * @firstName  The first name of the user. 
+  * @lastName   The last name of the user.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function updateUserProfile( required string firstName, required string lastName, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    /*
+      {
+        "first_name": "Example",
+        "last_name": "User",
+        "city": "Orange"
+      }
+    */
+    // Build JSON body
+    body = '{"first_name":"#arguments.firstName#","last_name":"#arguments.lastName#"}';
+
+    return apiCall( 'PATCH', "/user/profile", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-account-information
+  * @hint Get a user's account information.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getUserAccount( string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/account", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-account-email-address
+  * @hint Retrieve your account email address
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getUserEmail( string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/email", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-account-email-address
+  * @hint Update your account email address
+  * @email The new email address that you would like to use for your account.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function updateUserEmail( required string email, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    
+    /*
+      {
+        "email": "example@example.com"
+      }
+    */
+    // Build JSON body
+    body = '{"email":"#arguments.email#"}';    
+
+    return apiCall( 'PUT', "/user/email", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-username
+  * @hint Retrieve your username
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getUserUsername( string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/username", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-username
+  * @hint Update your username
+  * @username The new username you would like to use for your account.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function updateUserUsername( required string username, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    
+    /*
+      {
+        "username": "test_username"
+      }
+    */
+    // Build JSON body
+    body = '{"username":"#arguments.username#"}';    
+
+    return apiCall( 'PUT', "/user/username", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-password
+  * @hint Update your password
+  * @oldpassword The old password for your account.
+  * @newpassword The new password you would like to use for your account.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    
+    /*
+      {
+        "new_password": "new_password",
+        "old_password": "old_password"
+      }
+    */
+    // Build JSON body
+    body = '{"old_password":"#arguments.oldpassword#","new_password":"#arguments.newpassword#"}';    
+
+    return apiCall( 'PUT', "/user/password", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-credit-balance
+  * @hint Retrieve your credit balance
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getUserCreditBalance( string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/credits", params, body, headerparams );
+  }
+
+  /**
+  * Webhooks API
+  * https://sendgrid.com/docs/API_Reference/Web_API_v3/Webhooks/event.html
+  */
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-event-webhook-settings
+  * @hint Retrieve Event Webhook settings
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getEventWebhookSettings( string on_behalf_of = '') {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/webhooks/event/settings", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
+  * @hint Update Event Notification Settings
+  * @webhook The webhook helper component 
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    
+    // Build JSON body
+    body = arguments.webhook.build();
+
+    return apiCall( 'PATCH', "/user/webhooks/event/settings", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
+  * @hint Test Event Notification Settings
+  * @webhook The webhook helper component 
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    /*
+      {
+        "url": "mollit non ipsum magna",
+        "oauth_client_id": "nisi",
+        "oauth_client_secret": "veniam commodo ex sunt",
+        "oauth_token_url": "dolor Duis"
+      }
+    */
+    // Build JSON body
+    body = arguments.webhook.buildTest();
+
+    return apiCall( 'POST', "/user/webhooks/event/test", params, body, headerparams );
+  }
+
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-signed-webhook-public-key
+  * @hint Retrieve Signed Webhook Public Key
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getEventWebhookSignedPublicKey( string on_behalf_of = '') {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/webhooks/event/settings/signed", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/enable-disable-signed
+  * @hint Enable/Disable Signed Webhook
+  * @enabled You may either enable or disable signing of the Event Webhook using this endpoint.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+    /*
+    {
+      "enabled": true
+    }
+    */
+    // Build JSON body
+    body = '{"enabled":#arguments.enabled#}';    
+
+    return apiCall( 'PATCH', "/user/webhooks/event/settings/signed", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-parse-webhook-settings
+  * @hint Retrieve Parse Webhook settings
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  */
+  public struct function getEventWebhookParseSettings( string on_behalf_of = '') {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
+
+    return apiCall( 'GET', "/user/webhooks/parse/settings", params, body, headerparams );
+  }
+
+  /**
+  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieves-inbound-parse-webhook-statistics
+  * @hint Retrieves Inbound Parse Webhook statistics.
+  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
+  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
+  * @aggregated_by How you would like the statistics to by grouped.   Allowed Values: day, week, month (Optional)
+  * @limit The number of results you would like to get in each request. (Optional)
+  * @offset The number of subusers to skip (Optional)  
+  */
+  public struct function getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
+    var params = {};
+    var body = {};
+    var headerparams = {};
+
+    params[ 'start_date' ] = arguments.start_date;
+
+    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
+    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
+    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+
+    return apiCall( 'GET', "/user/webhooks/parse/stats", params, body, headerparams );
+  }
+
+
   /**
   * Blocks API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/blocks.html
@@ -111,6 +1422,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getBlock( required string email ) {
     return apiCall( 'GET', "/suppression/blocks/#email#" );
   }
+
 
   /**
   * Bounces API
@@ -975,7 +2287,8 @@ component output="false" displayname="SendGrid.cfc"  {
         'path' : fullApiPath,
         'params' : serializeJSON( queryParams ),
         'response' : apiResponse.fileContent,
-        'responseHeaders' : apiResponse.responseheader
+        'responseHeaders' : apiResponse.responseheader,
+        'arguments' : arguments
       };
     }
 
