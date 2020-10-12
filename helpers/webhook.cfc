@@ -19,7 +19,7 @@ component accessors="true" {
 
   
     /**
-    * @hint Allow all values to be set by the init.   The domain name is the only required key needed to create an authenticated domain.
+    * @hint Allow all values to be set by the init.   The URL is the only required key needed to create a webhook.
     */
     public any function init( required string url ) {
 
@@ -30,7 +30,7 @@ component accessors="true" {
     }
   
     /**
-    * @hint  Sets the url being authenticated.
+    * @hint The URL that you want the event webhook to POST to.
     */
     public any function url( required string url ) {
       setUrl( arguments.url );
