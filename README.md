@@ -16,6 +16,7 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
 - [How to build an email](#how-to-build-an-email)
 - [`sendgrid.cfc` Reference Manual](#sendgridcfc-reference-manual)
 	- [Mail Send](#mail-send-reference)
+  - [API Keys](#api-keys-api-reference)
   - [Blocks](#blocks-api-reference)
   - [Bounces](#bounces-api-reference)
   - [Campaigns](#campaigns-api-reference)
@@ -23,16 +24,25 @@ This project borrows heavily from the API frameworks built by [jcberquist](https
   - [Contacts API - Segments](#contacts-api---segments-reference)
   - [Contacts API - Custom Fields](#contacts-api---custom-fields-reference)
   - [Contacts API - Lists](#contacts-api---lists-reference)
+  - [Domain Authentication](#domain-authentication-api-reference)
   - [Invalid Emails](#invalid-emails-api-reference)
+  - [IP Addresses](#ip-addresses-api-reference)
+  - [IP Pools](#ip-pools-api-reference)
+  - [Link Branding](#link-branding-api-reference)
   - [Sender Identities API](#sender-identities-api-reference)
+  - [Subusers](#subusers-api-reference)
   - [Suppressions - Suppressions](#suppressions---suppressions-reference)
   - [Suppressions - Unsubscribe Groups](#suppressions---unsubscribe-groups-reference)
   - [Cancel Scheduled Sends](#cancel-scheduled-sends-reference)
   - [Spam Reports](#spam-reports-api-reference)
+  - [Users](#users-api-reference)
   - [Validate Email](#validate-email)
+  - [Webhooks](#webhooks-api-reference)
 - [Reference Manual for `helpers.mail`](#reference-manual-for-helpersmail)
 - [Reference Manual for `helpers.campaign`](#reference-manual-for-helperscampaign)
 - [Reference Manual for `helpers.sender`](#reference-manual-for-helperssender)
+- [Reference Manual for `helpers.domain`](#reference-manual-for-helpersdomain)
+- [Reference Manual for `helpers.webhook`](#reference-manual-for-helperswebhook)
 - [Questions](#questions)
 - [Contributing](#contributing)
 
@@ -146,8 +156,28 @@ Sends email, using SendGrid's REST API. The `mail` argument must be an instance 
 
 ---
 
+### API Keys API Reference
+*View SendGrid Docs for [API Keys](https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html)*
+
+#### `listKeys( string on_behalf_of = '', numeric limit = 0 )`
+Retrieve all API Keys belonging to the authenticated user.
+
+#### `getAPIKey( required string api_key_id, string on_behalf_of = '' )`
+Retrieve an existing API Key.  The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+
+#### `createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' )`
+Create an API key. This endpoint allows you to create a new API Key for the user.
+
+#### `deleteAPIKey( required string api_key_id, string on_behalf_of = '' )`
+Delete API keys
+
+#### `updateAPIKeyName( required string api_key_id, required string name,  string on_behalf_of = '' )`
+This endpoint allows you to update the name of an existing API Key.
+
+---
+
 ### Blocks API Reference
-*View SendGrid Docs for [Blocks](https://sendgrid.com/docs/API_Reference/Web_API_v3/blocks.htmll)*
+*View SendGrid Docs for [Blocks](https://sendgrid.com/docs/API_Reference/Web_API_v3/blocks.html)*
 
 #### `listBlocks( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 )`
 Retrieve a list of all email addresses that are currently on your blocks list. The `start_time` and `end_time` arguments, if numeric, are assumed to be unix timestamps. Otherwise, they are presumed to be a valid date that will be converted to unix timestamps automatically.
@@ -316,6 +346,56 @@ Add multiple recipients to a list. The `recipients` argument is an array of reci
 
 ---
 
+### Domain Authentication API Reference
+*View SendGrid Docs for [Domains](https://sendgrid.com/docs/API_Reference/Web_API_v3/Whitelabel/domains.html)*
+
+#### `listAllDomains( string on_behalf_of = '', numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '' )`
+List all authenticated domains.   
+
+An authenticated domain allows you to remove the “via” or “sent on behalf of” message that your recipients see when they read your emails. Authenticating a domain allows you to replace sendgrid.net with your personal sending domain. You will be required to create a subdomain so that SendGrid can generate the DNS records which you must give to your host provider. If you choose to use Automated Security, SendGrid will provide you with 3 CNAME records. If you turn Automated Security off, you will get 2 TXT records and 1 MX record.
+
+#### `getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' )`
+Retrieve an authenticated domain
+
+#### `createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], boolean custom_spf = false, boolean default = false, boolean automatic_security = false, string custom_dkim_selector = '', string on_behalf_of = '') `
+Authenticate a domain
+
+If you are authenticating a domain for a subuser, you have two options:
+
+- Use the "username" parameter. This allows you to authenticate a domain on behalf of your subuser. This means the subuser is able to see and modify the authenticated domain.
+- Use the Association workflow (see Associate Domain section). This allows you to authenticate a domain created by the parent to a subuser. This means the subuser will default to the assigned domain, but will not be able to see or modify that authenticated domain. However, if the subuser authenticates their own domain it will overwrite the assigned domain.
+
+An authenticated domain allows you to remove the “via” or “sent on behalf of” message that your recipients see when they read your emails. It replaces sendgrid.net with your personal sending domain. If you choose to use Automated Security, SendGrid provids 3 CNAME records. If you turn Automated Security off, you will be given 2 TXT records and 1 MX record. You need to enter these records into your DNS provider.
+
+#### `updateAuthenticatedDomain( required numeric domain_id = 0, boolean custom_spf = false, boolean default = false, string on_behalf_of = '' )`
+Update an authenticated domain 
+
+#### `deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' )`
+Delete an authenticated domain.
+
+#### `getDefaultAuthenticatedDomain( string on_behalf_of = '' )`
+Get the default authentication
+
+#### `addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' )`
+Add an IP to an authenticated domain
+
+#### `deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' )`
+Remove an IP from an authenticated domain.
+
+#### `validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' )`
+Validate a domain authentication.
+
+#### `listSubuserAuthenticatedDomain( required string username )`
+List the authenticated domain associated with the given user.
+
+#### `disassociateSubuserAuthenticatedDomain( required string username ))`
+Disassociate a authenticated domain from a given user.
+
+#### `associateSubuserWithAuthenticatedDomain( required numeric domain_id, required string username )`
+Associate a authenticated domain with a given user.
+
+---
+
 ### Invalid Emails API Reference
 *View SendGrid Docs for [Invalid Emails](https://sendgrid.com/docs/API_Reference/Web_API_v3/invalid_emails.html)*
 
@@ -324,6 +404,86 @@ Retrieve a list of invalid emails that are currently on your invalid emails list
 
 #### `getInvalidEmail( required string email )`
 Retrieve information about a specific invalid email address.
+
+---
+
+### IP Addresses API Reference
+*View SendGrid Docs for [IP Addresses](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_addresses.html)*
+
+#### `addIPs( required numeric count = 0, array subusers = [], boolean warmpup = false )`
+Add IPs
+
+#### ` getIPsRemaining( )`
+Gets amount of IP Addresses that can still be created during a given period and the price of those IPs.
+
+#### `listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 )`
+Retrieve all IP addresses.  Response includes warm up status, pools, assigned subusers, and reverse DNS info. The start_date field corresponds to when warmup started for that IP.
+
+#### `getIPsAssigned( )`
+Retrieve all assigned IPs  (Throws internal error even on sendgrids sample)
+
+#### `getIPPools( required string ip = '' )`
+Retrieve all IP pools an IP address belongs to
+
+---
+
+### IP Pools API Reference
+*View SendGrid Docs for [IP Pools](https://sendgrid.com/docs/API_Reference/Web_API_v3/IP_Management/ip_pools.html)*
+
+#### `createIPPool( required string name )`
+Create an IP pool.
+
+#### ` listAllIPPools( )`
+Retrieve all IP pools.
+
+#### `getPoolIPs( required string ippool = '' )`
+Retrieve all IPs in a specified pool.
+
+#### `updatePoolName( required string name, required string new_pool_name )`
+Update an IP pool’s name.
+
+#### `deleteIPPool( required string name )`
+Delete an IP pool.
+
+#### `addIPToPool( required string name, required string ip )`
+Add an IP address to a pool
+
+#### `deleteIPFromPool( required string name, required string ip )`
+Remove an IP address from a pool.
+
+---
+
+### Link Branding API Reference
+*View SendGrid Docs for [Link Branding](https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding)*
+
+#### `listBrandedLinks( string on_behalf_of = '', numeric limit = 0 )`
+Retrieve all branded links.  Email link branding allows all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+
+#### `getBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 )`
+Retrieve a branded link
+
+#### `getDefaultBrandedLink( string domain = '', string on_behalf_of = '', numeric limit = 0 )`
+Retrieve the default branded link.  The default branded link is the actual URL to be used when sending messages. If there are multiple branded links, the default is determined by the following order:
+
+#### `getSubuserBrandedLink( required string username = '' )`
+Retrieve a subusers branded link
+
+#### `createLinkBranding( required string domain = '', string subdomain = '', string default = 'false', string on_behalf_of = '' )`
+Create a branded link.  Link branding can be associated with subusers from the parent account. This functionality allows subusers to send mail using their parent's link branding. To associate link branding, the parent account must first create a branded link and validate it. The parent may then associate that branded link with a subuser via the API or the Subuser Management page in the user interface.
+
+Link branding allow all of the click-tracked links you send in your emails to include the URL of your domain instead of sendgrid.net.
+
+#### `deleteBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 )`
+Delete a branded link
+
+#### `validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' )`
+Validate a branded link
+
+#### `associateLinkBranding( required numeric link_id = 0, required string username = '')`
+Associate a branded link with a subuser
+
+#### `disassociateBrandedLink( required string username )`
+Disassociate link branding from a subuser
 
 ---
 
@@ -347,6 +507,41 @@ Resend a sender identity verification email.
 
 #### `getSender( required numeric id )`
 Retrieve a single sender identity by ID.
+
+---
+
+### Subusers API Reference
+*View SendGrid Docs for [Subusers](https://sendgrid.com/docs/ui/account-and-settings/subusers/)*
+
+#### `listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 )`
+Retrieve all API Keys belonging to the authenticated user
+
+#### `getSubuserMonitorSettings( required string subuser_name )`
+Retrieve monitor settings for a subuser.  Subuser monitor settings allow you to receive a sample of an outgoing message by a specific customer at a specific frequency of emails.
+
+#### `getSubuserReputations( required string username )`
+Retrieve Subuser Reputations.  Subuser sender reputations give a good idea how well a sender is doing with regards to how recipients and recipient servers react to the mail that is being received. When a bounce, spam report, or other negative action happens on a sent email, it will effect your sender rating.
+
+#### `getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) `
+Retrieve Subuser Reputations.  Subuser sender reputations give a good idea how well a sender is doing with regards to how recipients and recipient servers react to the mail that is being received. When a bounce, spam report, or other negative action happens on a sent email, it will effect your sender rating.
+
+#### `getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 )`
+Retrieve monthly stats for all subusers
+
+#### `getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 )`
+Retrieve the totals for each email statistic metric for all subusers.
+
+#### `getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 )`
+Retrieve email statistics for your subusers.
+
+#### `createSubuser( required string username, required string email, required string password, required array ips = [] )`
+Create a Subuser
+
+#### `deleteSubuser( required string subuser_name )`
+Delete a subuser
+
+#### `updateSubuserIPs( required string subuser_name, required array ips = [] )`
+Update IPs assigned to a subuser.  Each subuser should be assigned to an IP address, from which all of this subuser's mail will be sent. Often, this is the same IP as the parent account, but each subuser can have their own, or multiple, IP addresses as well.
 
 ---
 
@@ -418,6 +613,38 @@ Retrieve a specific spam report by email address.
 
 ---
 
+### Users API Reference
+*View SendGrid Docs for [Users](https://sendgrid.com/docs/API_Reference/Web_API_v3/user.html)*
+
+#### `getUserProfile( required string username )`
+Get a user's profile
+
+#### `updateUserProfile( required string firstName, required string lastName, string on_behalf_of = '' )`
+Update a user's profile
+
+#### `getUserAccount( string on_behalf_of = '' )`
+Get a user's account information.
+
+#### `getUserEmail( string on_behalf_of = '' )`
+Retrieve your account email address
+
+#### `updateUserEmail( required string email, string on_behalf_of = '' )`
+Update your account email address
+
+#### `getUserUsername( string on_behalf_of = '' )`
+Retrieve your username
+
+#### `updateUserUsername( required string username, string on_behalf_of = '' )`
+Update your username
+
+#### `updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' )`
+Update your password
+
+#### `getUserCreditBalance( string on_behalf_of = '' )`
+Retrieve your credit balance
+
+---
+
 ### Validate Email
 *View SendGrid Docs for [Validate Email](https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email)*
 
@@ -425,6 +652,32 @@ Retrieve a specific spam report by email address.
 Retrive a validation information about an email address. The source param is just an one word classifier for the validation call.
 
 **Important**: SendGrid's email validation endpoint requires a separate API key from their primary email API. Additionally, this service is only available on their "Pro" tier, or higher. For a bit more information about SendGrid's email validation, you can read their [documentation](https://sendgrid.com/docs/ui/managing-contacts/email-address-validation/) and [product page](https://sendgrid.com/solutions/email-validation-api/). For a little more context on how this impact this wrapper, see the [note on email validation](#a-note-on-email-validation).
+
+---
+
+### Webhooks API Reference
+*View SendGrid Docs for [Webhooks](https://sendgrid.com/docs/API_Reference/Web_API_v3/Webhooks/event.html)*
+
+#### `getEventWebhookSettings( string on_behalf_of = '')`
+Retrieve Event Webhook settings
+
+#### `updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) `
+Update Event Notification Settings
+
+#### `testEventWebhook( required any webhook, string on_behalf_of = '' )`
+Test Event Notification Settings
+
+#### `getEventWebhookSignedPublicKey( string on_behalf_of = '')`
+Retrieve Signed Webhook Public Key
+
+#### `enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' )`
+Enable/Disable Signed Webhook
+
+#### `getEventWebhookParseSettings( string on_behalf_of = '')`
+Retrieve Parse Webhook settings
+
+#### `getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 )`
+Retrieves Inbound Parse Webhook statistics.
 
 ---
 
@@ -713,6 +966,94 @@ Required.
 
 #### `country( required string country )`
 Required.
+
+#### `build()`
+The function that puts it all together and builds the body for sender related API operations
+
+## Reference Manual for `helpers.domain`
+This section documents every public method in the `helpers/domain.cfc` file. A few notes about structure, data, and usage:
+
+- Unless indicated, all methods are chainable.
+
+#### `domain( required string domain )`
+Required.  The domain name to create an authenticated domain.
+
+#### `subdomain( required string subdomain )`
+Sets the subdomain to use for this authenticated domain
+
+#### `username( required string username )`
+Sets the username associated with this domain.
+
+#### `custom_spf( required bolean custom_spf )`
+Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
+
+#### `default( required boolean default )`
+Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
+
+#### `automatic_security( required boolean automatic_security )`
+Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
+
+#### `custom_dkim_selector( required string custom_dkim_selector )`
+Sets a custom DKIM selector. Accepts three letters or numbers.
+
+#### `ips( required any ips )`
+Set an array of ips you would like associated to this domain. If ips are already set, this overwrites them.
+
+#### `addIp( required string ip )`
+Appends a single ip to the ips array
+
+#### `build()`
+The function that puts it all together and builds the body for sender related API operations
+
+## Reference Manual for `helpers.webhook`
+This section documents every public method in the `helpers/webhook.cfc` file. A few notes about structure, data, and usage:
+
+- Unless indicated, all methods are chainable.
+
+#### `url( required string url )`
+Required.  The URL that you want the event webhook to POST to.
+
+#### `bounce( required bolean bounce )`
+Sets bounce flag - Receiving server could not or would not accept message.
+
+#### `click( required boolean click )`
+Sets click flag - Recipient clicked on a link within the message. You need to enable Click Tracking for getting this type of event.
+
+#### `deferred( required boolean deferred )`
+Sets deferred flag - Recipient's email server temporarily rejected message.
+
+#### `delivered( required boolean delivered )`
+Sets delivered flag - Recipient's email server temporarily rejected message.
+
+#### `dropped( required boolean dropped )`
+Sets dropped flag - You may see the following drop reasons: Invalid SMTPAPI header, Spam Content (if spam checker app enabled), Unsubscribed Address, Bounced Address, Spam Reporting Address, Invalid, Recipient List over Package Quota
+
+#### `enabled( required boolean enabled )`
+Sets enabled flag - Indicates if the event webhook is enabled.
+
+#### `group_resubscribe( required boolean group_resubscribe )`
+Sets group_resubscribe flag - Recipient resubscribes to specific group by updating preferences. You need to enable Subscription Tracking for getting this type of event.
+
+#### `group_unsubscribe( required boolean group_unsubscribe )`
+Sets group_unsubscribe flag - Recipient unsubscribe from specific group, by either direct link or updating preferences. You need to enable Subscription Tracking for getting this type of event.
+
+#### `open( required boolean open )`
+Sets open flag - Recipient has opened the HTML message. You need to enable Open Tracking for getting this type of event.
+
+#### `spam_report( required boolean spam_report )`
+Sets spam_report flag - Recipient marked a message as spam.
+
+#### `unsubscribe( required boolean unsubscribe )`
+Sets unsubscribe flag - Recipient clicked on message's subscription management link. You need to enable Subscription Tracking for getting this type of event.
+
+#### `oauth_client_id( required string oauth_client_id )`
+Sets the oath client id - The client ID Twilio SendGrid sends to your OAuth server or service provider to generate an OAuth access token. When passing data in this field, you must also include the oauth_token_url field.
+
+#### `oauth_client_secret( required string oauth_client_secret )`
+Set the oath client secret - This secret is needed only once to create an access token. SendGrid will store this secret, allowing you to update your Client ID and Token URL without passing the secret to SendGrid again. When passing data in this field, you must also include the oauth_client_id and oauth_token_url fields.
+
+#### `oauth_token_url( required string oauth_token_url )`
+Set the oath token URL - The URL where Twilio SendGrid sends the Client ID and Client Secret to generate an access token. This should be your OAuth server or service provider. When passing data in this field, you must also include the oauth_client_id field.
 
 #### `build()`
 The function that puts it all together and builds the body for sender related API operations

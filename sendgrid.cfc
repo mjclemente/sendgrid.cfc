@@ -349,7 +349,7 @@ component output="false" displayname="SendGrid.cfc"  {
   
   /**
   * https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
-  * @hint Create API keysCreate Subuser
+  * @hint Create Subuser
   * @username this should be an the name of your new key
   * @email this should be an the name of your new key
   * @password this should be an the name of your new key
@@ -830,7 +830,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/associate-an-authenticated-domain-with-a-given-user
-  * @hint Validate a domain authentication.
+  * @hint Associate a authenticated domain with a given user.
   * @domain_id 	ID of the authenticated domain to associate with the subuser.
   * @username Username to associate with the authenticated domain.
   */
@@ -861,7 +861,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-add
-  * @hint Validate a domain authentication.
+  * @hint Add IPs
   * @count 	The amount of IPs to add to the account.
   * @subusers Array of usernames to be assigned a send IP.
   * @warmpup Whether or not to warmup the IPs being added.
@@ -969,7 +969,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ip-pools
-  * @hint Retrieve all assigned IPs  
+  * @hint Retrieve all IP pools.
   */
   public struct function listAllIPPools( ) {
     return apiCall( 'GET', "/ips/pools");
@@ -1227,6 +1227,8 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/user/credits", params, body, headerparams );
   }
 
+
+  
   /**
   * Webhooks API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Webhooks/event.html
