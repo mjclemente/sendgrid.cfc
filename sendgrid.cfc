@@ -2289,8 +2289,7 @@ component output="false" displayname="SendGrid.cfc"  {
         'path' : fullApiPath,
         'params' : serializeJSON( queryParams ),
         'response' : apiResponse.fileContent,
-        'responseHeaders' : apiResponse.responseheader,
-        'arguments' : arguments
+        'responseHeaders' : apiResponse.responseheader
       };
     }
 
