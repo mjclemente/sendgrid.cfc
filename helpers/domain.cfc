@@ -18,10 +18,10 @@ component accessors="true" {
         if ( arguments.keyExists( 'domain' ) )
             this.domain( arguments.domain );
 
-        if ( arguments.keyExists( 'subdomain' ) )
+        if ( arguments.keyExists( 'subdomain' ) AND arguments.subdomain NEQ "" )
             this.subdomain( arguments.subdomain );
 
-        if ( arguments.keyExists( 'username' ) )
+        if ( arguments.keyExists( 'username' ) AND arguments.username NEQ "" )
             this.username( arguments.username );
 
         if ( isArray( ips ) )
@@ -38,7 +38,7 @@ component accessors="true" {
         if ( arguments.keyExists( 'automatic_security' ) )
             this.automatic_security( arguments.automatic_security );
 
-        if ( arguments.keyExists( 'custom_dkim_selector' ) )
+        if ( arguments.keyExists( 'custom_dkim_selector' ) AND arguments.custom_dkim_selector NEQ "" )
             this.custom_dkim_selector( arguments.custom_dkim_selector );
 
         return this;
