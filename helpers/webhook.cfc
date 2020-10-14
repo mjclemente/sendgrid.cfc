@@ -19,7 +19,7 @@ component accessors="true" {
 
   
     /**
-    * @hint Allow all values to be set by the init.   The URL is the only required key needed to create a webhook.
+    * @hint Only the URL can be set by the init.   The URL is the only required key needed to create a webhook.
     */
     public any function init( required string url ) {
 
