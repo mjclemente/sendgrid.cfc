@@ -5,7 +5,7 @@
 */
 component output="false" displayname="SendGrid.cfc"  {
 
-  variables._sendgridcfc_version = '0.9.5';
+  variables._sendgridcfc_version = '0.10.0';
 
   public any function init(
     string apiKey = '',

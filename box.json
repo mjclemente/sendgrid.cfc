@@ -1,56 +1,52 @@
 {
-    "name":"SendGrid.cfc",
-    "version":"0.9.5",
-    "author":"Matthew Clemente <mjclemente@gmail.com>",
-    "location":"mjclemente/sendgrid.cfc#v0.9.5",
-    "homepage":"https://github.com/mjclemente/sendgrid.cfc",
-    "documentation":"",
-    "repository":{
-        "type":"git",
-        "URL":"https://github.com/mjclemente/sendgrid.cfc"
-    },
-    "bugs":"https://github.com/mjclemente/sendgrid.cfc/issues",
-    "slug":"sendgridcfc",
-    "shortDescription":"A CFML wrapper for the SendGrid API",
-    "description":"",
-    "instructions":"",
-    "changelog":"",
-    "type":"modules",
-    "keywords":"sendgrid, api, email",
-    "private":false,
-    "projectURL":"",
-    "license":[
-        {
-            "type":"MIT",
-            "URL":"https://github.com/mjclemente/sendgrid.cfc/blob/master/LICENSE"
-        }
-    ],
-    "contributors":[],
-    "dependencies":{},
-    "devDependencies":{},
-    "installPaths":{},
-    "scripts":{},
-    "ignore":[
-        "**/.*",
-        "test",
-        "tests"
-    ],
-    "testbox":{
-        "runner":[
-            {
-                "default":""
-            }
-        ],
-        "labels":"",
-        "reporter":"",
-        "bundles":"",
-        "recurse":true,
-        "directory":"tests.specs",
-        "testBundles":"",
-        "testSuites":"",
-        "testSpecs":"",
-        "verbose":true,
-        "watchDelay":500,
-        "watchPaths":"**.cfc"
+  "name": "SendGrid.cfc",
+  "version": "0.10.0",
+  "author": "Matthew Clemente <mjclemente@gmail.com>",
+  "location": "mjclemente/sendgrid.cfc#v0.10.0",
+  "homepage": "https://github.com/mjclemente/sendgrid.cfc",
+  "documentation": "https://github.com/mjclemente/sendgrid.cfc",
+  "repository": {
+    "type": "git",
+    "URL": "https://github.com/mjclemente/sendgrid.cfc"
+  },
+  "bugs": "https://github.com/mjclemente/sendgrid.cfc/issues",
+  "slug": "sendgridcfc",
+  "shortDescription": "A CFML wrapper for the SendGrid API",
+  "description": "",
+  "instructions": "",
+  "changelog": "",
+  "type": "modules",
+  "keywords": ["sendgrid", "api", "email"],
+  "private": false,
+  "projectURL": "https://github.com/mjclemente/sendgrid.cfc",
+  "license": [
+    {
+      "type": "MIT",
+      "URL": "https://github.com/mjclemente/sendgrid.cfc/blob/master/LICENSE"
     }
+  ],
+  "contributors": [],
+  "dependencies": {},
+  "devDependencies": {},
+  "installPaths": {},
+  "scripts": {},
+  "ignore": ["**/.*", "test", "tests"],
+  "testbox": {
+    "runner": [
+      {
+        "default": ""
+      }
+    ],
+    "labels": "",
+    "reporter": "",
+    "bundles": "",
+    "recurse": true,
+    "directory": "tests.specs",
+    "testBundles": "",
+    "testSuites": "",
+    "testSpecs": "",
+    "verbose": true,
+    "watchDelay": 500,
+    "watchPaths": "**.cfc"
+  }
 }
