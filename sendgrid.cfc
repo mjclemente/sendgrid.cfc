@@ -2235,7 +2235,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var body = {
       'email': arguments.email,
       'source': arguments.source
-    }
+    };
 
     if( !len( variables.emailValidationApiKey ) ) {
       throw( "Use of email validation endpoint requires a separate API key. Please read the documentation for further details.");
