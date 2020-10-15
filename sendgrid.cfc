@@ -62,7 +62,7 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
-    
+
   /**
   * API Keys API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html
@@ -106,7 +106,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
   * @hint Create API keys
   * @name this should be an the name of your new key
-  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization 
+  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
@@ -143,7 +143,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
   * @hint This endpoint allows you to update the name of an existing API Key.
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @name The new name for the API Key for which you are updating. 
+  * @name The new name for the API Key for which you are updating.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function updateAPIKeyName( required string api_key_id, required string name,  string on_behalf_of = '' ) {
@@ -152,7 +152,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var headerparams = {};
 
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-    
+
     // Build JSON body
     body = '{"name":"#arguments.name#"}';
 
@@ -163,7 +163,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
   * @hint This endpoint allows you to update the name and scopes of a given API key.
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send 
+  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send
   * @name The updated name for the API Key for which you are updating.  (required)
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
@@ -182,7 +182,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
 
-    
+
   /**
   * Subusers API
   * https://sendgrid.com/docs/ui/account-and-settings/subusers/
@@ -202,7 +202,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;    
+    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
     return apiCall( 'GET', "/subusers", params, body, headerparams );
   }
@@ -243,7 +243,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @sort_by_metric The metric that you want to sort by.  (Optional)
   * @sort_by_direction The direction you want to sort. (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)  
+  * @offset The number of subusers to skip (Optional)
   */
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -269,7 +269,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @sort_by_metric The metric that you want to sort by.  (Optional)
   * @sort_by_direction The direction you want to sort. (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)  
+  * @offset The number of subusers to skip (Optional)
   */
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -297,7 +297,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @sort_by_direction The direction you want to sort. (Optional)
   * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)  
+  * @offset The number of subusers to skip (Optional)
   */
   public struct function getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -327,7 +327,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @sort_by_direction The direction you want to sort. (Optional)
   * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)  
+  * @offset The number of subusers to skip (Optional)
   */
   public struct function getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -345,15 +345,15 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
     return apiCall( 'GET', "/subusers/stats", params, body, headerparams );
-  }  
-  
+  }
+
   /**
   * https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
   * @hint Create Subuser
   * @username this should be an the name of your new key
   * @email this should be an the name of your new key
   * @password this should be an the name of your new key
-  * @ips The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization 
+  * @ips The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
   */
   public struct function createSubuser( required string username, required string email, required string password, required array ips = [] ) {
     var params = {};
@@ -371,12 +371,12 @@ component output="false" displayname="SendGrid.cfc"  {
         "2.2.2.2"
       ]
     }
-    */    
+    */
     body = '{"username":"#arguments.username#","email":"#arguments.email#","password":"#arguments.password#","ips":#serializeJSON(arguments.ips)#}';
 
     return apiCall( 'POST', '/subusers', params, body, headerparams );
   }
- 
+
   /**
   * https://sendgrid.api-docs.io/v3.0/subusers-api/delete-a-subuser
   * @hint Delete a subuser
@@ -618,7 +618,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
     return apiCall( 'GET', "/whitelabel/domains", params, body, headerparams );
   }
-  
+
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
   * @hint Retrieve an authenticated domain
@@ -646,10 +646,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
   * @automatic_security Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
   * @custom_dkim_selector Add a custom DKIM selector. Accepts three letters or numbers.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
-  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], 
-                                                    boolean custom_spf = false, boolean default = false, boolean automatic_security = false, 
+  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [],
+                                                    boolean custom_spf = false, boolean default = false, boolean automatic_security = false,
                                                     string custom_dkim_selector = '', string on_behalf_of = '') {
     var params = {};
     var body = {};
@@ -673,8 +673,8 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
 
-    // Build JSON body 
-    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=arguments.domain, subdomain=arguments.subdomain, username=arguments.username, ips=arguments.ips, 
+    // Build JSON body
+    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=arguments.domain, subdomain=arguments.subdomain, username=arguments.username, ips=arguments.ips,
                                                                             custom_spf=arguments.custom_spf, default=arguments.default, automatic_security=arguments.automatic_security,
                                                                             custom_dkim_selector=arguments.custom_dkim_selector );
 
@@ -688,7 +688,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @domain_id Domain ID to be updated.
   * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
   * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function updateAuthenticatedDomain( required numeric domain_id = 0, boolean custom_spf = false, boolean default = false, string on_behalf_of = '' ) {
     var params = {};
@@ -707,7 +707,7 @@ component output="false" displayname="SendGrid.cfc"  {
     body = '{"default":#arguments.default#, "custom_spf":#arguments.custom_spf#}';
 
     return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", params, body, headerparams );
-  }  
+  }
 
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
@@ -745,7 +745,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Add an IP to an authenticated domain
   * @domain_id Domain ID to be updated.
   * @ip IP to associate with the domain. Used for manually specifying IPs for custom SPF.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
     var params = {};
@@ -758,11 +758,11 @@ component output="false" displayname="SendGrid.cfc"  {
     */
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
-    // Build JSON body 
+    // Build JSON body
     body = '{"ip":"#arguments.ip#"}';
 
     return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/ips", params, body, headerparams );
-  }  
+  }
 
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/remove-an-ip-from-an-authenticated-domain
@@ -786,7 +786,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
   * @hint Validate a domain authentication.
   * @domain_id ID of the domain to validate.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call  
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
     var params = {};
@@ -796,7 +796,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", params, body, headerparams );
-  }  
+  }
 
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-the-authenticated-domain-associated-with-the-given-user
@@ -848,11 +848,11 @@ component output="false" displayname="SendGrid.cfc"  {
     body = '{"username":"#arguments.username#"}';
 
     return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/subuser", params, body, headerparams );
-  }  
+  }
 
 
 
-  
+
   /**
   * IP Addresses
   * https://sendgrid.api-docs.io/v3.0/ip-addresses
@@ -884,7 +884,7 @@ component output="false" displayname="SendGrid.cfc"  {
     body = '{"count":#arguments.count#,"subusers":#serializeJSON(arguments.subusers)#,"warmup":#arguments.warmup#}';
 
     return apiCall( 'POST', "/ips", params, body, headerparams );
-  }  
+  }
 
   /**
   * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-remaining
@@ -941,7 +941,7 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/ips/#arguments.ip#", params, body, headerparams );
   }
 
-    
+
   /**
   * IP Pools
   * https://sendgrid.api-docs.io/v3.0/ip-pools
@@ -1069,7 +1069,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/users-api/update-a-user-s-profile
   * @hint Update a user's profile
-  * @firstName  The first name of the user. 
+  * @firstName  The first name of the user.
   * @lastName   The last name of the user.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -1135,14 +1135,14 @@ component output="false" displayname="SendGrid.cfc"  {
     var headerparams = {};
 
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-    
+
     /*
       {
         "email": "example@example.com"
       }
     */
     // Build JSON body
-    body = '{"email":"#arguments.email#"}';    
+    body = '{"email":"#arguments.email#"}';
 
     return apiCall( 'PUT', "/user/email", params, body, headerparams );
   }
@@ -1174,14 +1174,14 @@ component output="false" displayname="SendGrid.cfc"  {
     var headerparams = {};
 
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-    
+
     /*
       {
         "username": "test_username"
       }
     */
     // Build JSON body
-    body = '{"username":"#arguments.username#"}';    
+    body = '{"username":"#arguments.username#"}';
 
     return apiCall( 'PUT', "/user/username", params, body, headerparams );
   }
@@ -1199,7 +1199,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var headerparams = {};
 
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-    
+
     /*
       {
         "new_password": "new_password",
@@ -1207,7 +1207,7 @@ component output="false" displayname="SendGrid.cfc"  {
       }
     */
     // Build JSON body
-    body = '{"old_password":"#arguments.oldpassword#","new_password":"#arguments.newpassword#"}';    
+    body = '{"old_password":"#arguments.oldpassword#","new_password":"#arguments.newpassword#"}';
 
     return apiCall( 'PUT', "/user/password", params, body, headerparams );
   }
@@ -1228,7 +1228,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
 
-  
+
   /**
   * Webhooks API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Webhooks/event.html
@@ -1253,7 +1253,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
   * @hint Update Event Notification Settings
-  * @webhook The webhook helper component 
+  * @webhook The webhook helper component
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
@@ -1262,7 +1262,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var headerparams = {};
 
     if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-    
+
     // Build JSON body
     body = arguments.webhook.build();
 
@@ -1272,7 +1272,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
   * @hint Test Event Notification Settings
-  * @webhook The webhook helper component 
+  * @webhook The webhook helper component
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
@@ -1330,7 +1330,7 @@ component output="false" displayname="SendGrid.cfc"  {
     }
     */
     // Build JSON body
-    body = '{"enabled":#arguments.enabled#}';    
+    body = '{"enabled":#arguments.enabled#}';
 
     return apiCall( 'PATCH', "/user/webhooks/event/settings/signed", params, body, headerparams );
   }
@@ -1357,7 +1357,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
   * @aggregated_by How you would like the statistics to by grouped.   Allowed Values: day, week, month (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)  
+  * @offset The number of subusers to skip (Optional)
   */
   public struct function getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
