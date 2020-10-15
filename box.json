@@ -1,8 +1,8 @@
 {
   "name": "SendGrid.cfc",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "author": "Matthew Clemente <mjclemente@gmail.com>",
-  "location": "mjclemente/sendgrid.cfc#v0.10.0",
+  "location": "mjclemente/sendgrid.cfc#v0.10.1",
   "homepage": "https://github.com/mjclemente/sendgrid.cfc",
   "documentation": "https://github.com/mjclemente/sendgrid.cfc",
   "repository": {
