@@ -1935,8 +1935,15 @@ component output="false" displayname="SendGrid.cfc"  {
   * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-recipients-on-a-segment
   * @hint Retrieve all of the recipients in a segment with the given ID.
   */
-  public struct function listRecipientsBySegment( required numeric id ) {
-    return apiCall( 'GET', "/contactdb/segments/#id#/recipients" );
+  public struct function listRecipientsBySegment( required numeric id, numeric page = 0, numeric page_size = 0 ) {
+    var params = {};
+    if( page ){
+      params["page"] = page;
+    }
+    if( page_size ){
+      params["page_size"] = page_size;
+    }
+    return apiCall( 'GET', "/contactdb/segments/#id#/recipients", params );
   }
 
   /**
