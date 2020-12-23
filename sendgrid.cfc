@@ -1425,6 +1425,14 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/suppression/blocks/#email#" );
   }
 
+  /**
+  * https://sendgrid.api-docs.io/v3.0/blocks-api/delete-a-specific-block
+  * @hint Retrieve a specific email address from your blocks list.
+  */
+  public struct function deleteBlock( required string email ) {
+    return apiCall( 'DELETE', "/suppression/blocks/#email#" );
+  }
+
 
   /**
   * Bounces API
