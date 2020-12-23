@@ -1,6 +1,6 @@
 /**
 * sendgrid.cfc
-* Copyright 2017-2020 Matthew Clemente, John Berquist
+* Copyright 2017-2021 Matthew Clemente, John Berquist
 * Licensed under MIT (https://github.com/mjclemente/sendgrid.cfc/blob/master/LICENSE)
 */
 component output="false" displayname="SendGrid.cfc"  {
