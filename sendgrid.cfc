@@ -75,12 +75,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @limit limit the number of rows returned.
   */
   public struct function listKeys( string on_behalf_of = '', numeric limit = 0 ) {
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( limit ) params[ 'limit' ] = limit;
 
-    return apiCall( 'GET', "/api_keys", {}, {}, headerparams );
+    return apiCall( 'GET', "/api_keys", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -90,11 +87,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/api_keys/#api_key_id#", {}, {}, headerparams );
+    return apiCall( 'GET', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -107,14 +101,11 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     // Build JSON body
     body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';
 
-    return apiCall( 'POST', '/api_keys', {}, body, headerparams );
+    return apiCall( 'POST', '/api_keys', {}, body, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -125,11 +116,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'DELETE', "/api_keys/#api_key_id#", {}, {}, headerparams );
+    return apiCall( 'DELETE', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -141,14 +129,11 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateAPIKeyName( required string api_key_id, required string name,  string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     // Build JSON body
     body = '{"name":"#arguments.name#"}';
 
-    return apiCall( 'PATCH', "/api_keys/#api_key_id#", {}, body, headerparams );
+    return apiCall( 'PATCH', "/api_keys/#api_key_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -161,15 +146,13 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateAPIKey( required string api_key_id, required string name, array scopes = ['mail.send'],  string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
 
     // Build JSON body
     body = '{"scopes":#serializeJSON(arguments.scopes)#}';
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( len(arguments.name) gt 0)  body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';;
 
-    return apiCall( 'PUT', "/api_keys/#api_key_id#", {}, body, headerparams );
+    return apiCall( 'PUT', "/api_keys/#api_key_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -401,12 +384,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function listBrandedLinks( string on_behalf_of = '', numeric limit = 0 ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( limit ) params[ 'limit' ] = limit;
 
-    return apiCall( 'GET', "/whitelabel/links", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/links", params, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -418,12 +399,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( limit ) params[ 'limit' ] = limit;
 
-    return apiCall( 'GET', "/whitelabel/links/#arguments.id#", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/links/#arguments.id#", params, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -436,13 +415,11 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '', numeric limit = 0 ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
 
-    return apiCall( 'GET', "/whitelabel/links/default", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/links/default", params, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -470,9 +447,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function createLinkBranding( required string domain = '', string subdomain = '', string default = 'false', string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     /*
       {
         "domain": "example.com",
@@ -484,7 +459,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"domain":"#arguments.domain#","subdomain":"#arguments.subdomain#","default":#arguments.default#}';
 
-    return apiCall( 'POST', "/whitelabel/links", {}, body, headerparams );
+    return apiCall( 'POST', "/whitelabel/links", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -496,12 +471,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function deleteBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( limit ) params[ 'limit' ] = limit;
 
-    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", params, {}, headerparams );
+    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", params, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -511,11 +484,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/validate", {}, {}, headerparams );
+    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -548,11 +518,8 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function disassociateBrandedLink( required string username ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
-
-    return apiCall( 'DELETE', "/whitelabel/links/subuser", params, {}, headerparams );
+    return apiCall( 'DELETE', "/whitelabel/links/subuser", params, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -575,16 +542,14 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function listAllDomains( string on_behalf_of = '', numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '' ) {
     var params = {};
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
     params[ 'exclude_subusers' ] = arguments.exclude_subusers;
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
     if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
 
-    return apiCall( 'GET', "/whitelabel/domains", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/domains", params, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -594,11 +559,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/whitelabel/domains/#arguments.domain_id#", {}, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -618,7 +580,6 @@ component output="false" displayname="SendGrid.cfc"  {
                                                     boolean custom_spf = false, boolean default = false, boolean automatic_security = false,
                                                     string custom_dkim_selector = '', string on_behalf_of = '') {
     var body = {};
-    var headerparams = {};
 
     /*
       {
@@ -635,8 +596,6 @@ component output="false" displayname="SendGrid.cfc"  {
         "custom_dkim_selector": "tes"
       }
     */
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
 
     // Build JSON body
     local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=arguments.domain, subdomain=arguments.subdomain, username=arguments.username, ips=arguments.ips,
@@ -644,7 +603,7 @@ component output="false" displayname="SendGrid.cfc"  {
                                                                             custom_dkim_selector=arguments.custom_dkim_selector );
 
     body = local.domain.build();
-    return apiCall( 'POST', "/whitelabel/domains", {}, body, headerparams );
+    return apiCall( 'POST', "/whitelabel/domains", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -657,7 +616,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateAuthenticatedDomain( required numeric domain_id = 0, boolean custom_spf = false, boolean default = false, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
 
     /*
       {
@@ -665,12 +623,11 @@ component output="false" displayname="SendGrid.cfc"  {
         "custom_spf": true
       }
     */
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     // Build JSON body  -  May create a helper later  ****** NEED to finish
     body = '{"default":#arguments.default#, "custom_spf":#arguments.custom_spf#}';
 
-    return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", {}, body, headerparams );
+    return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -680,11 +637,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#", {}, {}, headerparams );
+    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -693,11 +647,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getDefaultAuthenticatedDomain( string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/whitelabel/domains/default", {}, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/domains/default", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -709,18 +660,16 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
     /*
       {
         "ip": "192.168.0.1"
       }
     */
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     // Build JSON body
     body = '{"ip":"#arguments.ip#"}';
 
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/ips", {}, body, headerparams );
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/ips", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -731,11 +680,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#/ips/#arguments.ip#", {}, {}, headerparams );
+    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#/ips/#arguments.ip#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -746,11 +692,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", {}, {}, headerparams );
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1018,9 +961,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateUserProfile( required string firstName, required string lastName, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     /*
       {
@@ -1032,7 +972,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"first_name":"#arguments.firstName#","last_name":"#arguments.lastName#"}';
 
-    return apiCall( 'PATCH', "/user/profile", {}, body, headerparams );
+    return apiCall( 'PATCH', "/user/profile", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1041,11 +981,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserAccount( string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/account", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/account", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1054,11 +991,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserEmail( string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/email", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/email", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1069,9 +1003,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateUserEmail( required string email, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     /*
       {
@@ -1081,7 +1012,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"email":"#arguments.email#"}';
 
-    return apiCall( 'PUT', "/user/email", {}, body, headerparams );
+    return apiCall( 'PUT', "/user/email", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1090,11 +1021,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserUsername( string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/username", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/username", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1105,9 +1033,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateUserUsername( required string username, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     /*
       {
@@ -1117,7 +1042,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"username":"#arguments.username#"}';
 
-    return apiCall( 'PUT', "/user/username", {}, body, headerparams );
+    return apiCall( 'PUT', "/user/username", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1129,9 +1054,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     /*
       {
@@ -1142,7 +1064,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"old_password":"#arguments.oldpassword#","new_password":"#arguments.newpassword#"}';
 
-    return apiCall( 'PUT', "/user/password", {}, body, headerparams );
+    return apiCall( 'PUT', "/user/password", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1151,11 +1073,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserCreditBalance( string on_behalf_of = '' ) {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/credits", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/credits", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -1171,11 +1090,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookSettings( string on_behalf_of = '') {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/webhooks/event/settings", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/webhooks/event/settings", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -1187,14 +1103,11 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     // Build JSON body
     body = arguments.webhook.build();
 
-    return apiCall( 'PATCH', "/user/webhooks/event/settings", {}, body, headerparams );
+    return apiCall( 'PATCH', "/user/webhooks/event/settings", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1205,9 +1118,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
 
     /*
       {
@@ -1220,7 +1130,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = arguments.webhook.buildTest();
 
-    return apiCall( 'POST', "/user/webhooks/event/test", {}, body, headerparams );
+    return apiCall( 'POST', "/user/webhooks/event/test", {}, body, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -1230,11 +1140,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookSignedPublicKey( string on_behalf_of = '') {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/webhooks/event/settings/signed", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/webhooks/event/settings/signed", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1245,9 +1152,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' ) {
     var body = {};
-    var headerparams = {};
-
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
     /*
     {
       "enabled": true
@@ -1256,7 +1160,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"enabled":#arguments.enabled#}';
 
-    return apiCall( 'PATCH', "/user/webhooks/event/settings/signed", {}, body, headerparams );
+    return apiCall( 'PATCH', "/user/webhooks/event/settings/signed", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1265,11 +1169,8 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookParseSettings( string on_behalf_of = '') {
-    var headerparams = {};
 
-    if ( len(arguments.on_behalf_of) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.on_behalf_of;
-
-    return apiCall( 'GET', "/user/webhooks/parse/settings", {}, {}, headerparams );
+    return apiCall( 'GET', "/user/webhooks/parse/settings", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -2319,6 +2220,14 @@ component output="false" displayname="SendGrid.cfc"  {
       return body;
     else
       return '';
+  }
+
+  private struct function parseSubUser( string on_behalf_of = '' ){
+    if( len( on_behalf_of ) ){
+      return { 'on-behalf-of': on_behalf_of };
+    } else {
+      return {}
+    }
   }
 
   private string function encodeUrl( required string str, boolean encodeSlash = true ) {
