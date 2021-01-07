@@ -171,13 +171,12 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/subusers", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers", params );
   }
 
   /**
@@ -186,9 +185,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subuser_name The name of the subuser to return.
   */
   public struct function getSubuserMonitorSettings( required string subuser_name ) {
-    var headerparams = {};
-
-    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/monitor", {}, {}, headerparams );
+    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/monitor" );
   }
 
   /**
@@ -198,11 +195,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSubuserReputations( required string username ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.username) gt 0 ) params[ 'usernames' ] = arguments.username;
 
-    return apiCall( 'GET', "/subusers/reputations", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers/reputations", params );
   }
 
   /**
@@ -217,7 +213,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
@@ -227,7 +222,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/stats/monthly", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/stats/monthly", params );
   }
 
   /**
@@ -242,7 +237,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
@@ -253,7 +247,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/subusers/stats/monthly", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers/stats/monthly", params );
   }
 
   /**
@@ -269,7 +263,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     params[ 'start_date' ] = arguments.start_date;
 
@@ -280,7 +273,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/subusers/stats/sums", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers/stats/sums", params );
   }
 
 
@@ -298,7 +291,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     params[ 'subusers' ] = arguments.subusers;
     params[ 'start_date' ] = arguments.start_date;
@@ -310,7 +302,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/subusers/stats", params, {}, headerparams );
+    return apiCall( 'GET', "/subusers/stats", params );
   }
 
   /**
@@ -323,7 +315,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function createSubuser( required string username, required string email, required string password, required array ips = [] ) {
     var body = {};
-    var headerparams = {};
 
     // Build JSON body
     /*
@@ -339,7 +330,7 @@ component output="false" displayname="SendGrid.cfc"  {
     */
     body = '{"username":"#arguments.username#","email":"#arguments.email#","password":"#arguments.password#","ips":#serializeJSON(arguments.ips)#}';
 
-    return apiCall( 'POST', '/subusers', {}, body, headerparams );
+    return apiCall( 'POST', '/subusers', {}, body );
   }
 
   /**
@@ -348,9 +339,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subuser_name The subuser name to delete
   */
   public struct function deleteSubuser( required string subuser_name ) {
-    var headerparams = {};
-
-    return apiCall( 'DELETE', "/subusers/#arguments.subuser_name#", {}, {}, headerparams );
+    return apiCall( 'DELETE', "/subusers/#arguments.subuser_name#" );
   }
 
 
@@ -362,11 +351,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateSubuserIPs( required string subuser_name, required array ips = [] ) {
     var body = {};
-    var headerparams = {};
 
     body = '#serializeJSON(arguments.ips)#';
 
-    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", {}, body, headerparams );
+    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", {}, body );
   }
 
 
@@ -429,11 +417,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getSubuserBrandedLink( required string username = '' ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
 
-    return apiCall( 'GET', "/whitelabel/links/subuser", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/links/subuser", params );
   }
 
   /**
@@ -496,7 +483,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function associateLinkBranding( required numeric link_id = 0, required string username = '') {
     var body = {};
-    var headerparams = {};
 
     /*
     {
@@ -506,7 +492,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"username":"#arguments.username#"}';
 
-    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/subuser", {}, body, headerparams );
+    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/subuser", {}, body );
   }
 
   /**
@@ -703,11 +689,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function listSubuserAuthenticatedDomain( required string username ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
 
-    return apiCall( 'GET', "/whitelabel/domains/subuser", params, {}, headerparams );
+    return apiCall( 'GET', "/whitelabel/domains/subuser", params );
   }
 
   /**
@@ -717,11 +702,10 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function disassociateSubuserAuthenticatedDomain( required string username ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
 
-    return apiCall( 'DELETE', "/whitelabel/domains/subuser", params, {}, headerparams );
+    return apiCall( 'DELETE', "/whitelabel/domains/subuser", params );
   }
 
   /**
@@ -732,7 +716,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function associateSubuserWithAuthenticatedDomain( required numeric domain_id, required string username ) {
     var body = {};
-    var headerparams = {};
 
     /*
     {
@@ -742,7 +725,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"username":"#arguments.username#"}';
 
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/subuser", {}, body, headerparams );
+    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/subuser", {}, body );
   }
 
 
@@ -763,7 +746,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function addIPs( required numeric count = 0, array subusers = [], boolean warmpup = false ) {
     var body = {};
-    var headerparams = {};
     /*
       {
         "count": 90323478,
@@ -777,7 +759,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"count":#arguments.count#,"subusers":#serializeJSON(arguments.subusers)#,"warmup":#arguments.warmup#}';
 
-    return apiCall( 'POST', "/ips", {}, body, headerparams );
+    return apiCall( 'POST', "/ips", {}, body );
   }
 
   /**
@@ -801,7 +783,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     if ( len(arguments.ip) gt 0 ) params[ 'ip' ] = arguments.ip;
     if ( len(arguments.subuser) gt 0 ) params[ 'subuser' ] = arguments.subuser;
@@ -810,7 +791,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/ips", params, {}, headerparams );
+    return apiCall( 'GET', "/ips", params );
   }
 
   /**
@@ -827,9 +808,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ip The IP address to get
   */
   public struct function getIPPools( required string ip = '' ) {
-    var headerparams = {};
-
-    return apiCall( 'GET', "/ips/#arguments.ip#", {}, {}, headerparams );
+    return apiCall( 'GET', "/ips/#arguments.ip#" );
   }
 
 
@@ -845,7 +824,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function createIPPool( required string name ) {
     var body = {};
-    var headerparams = {};
     /*
       {
         "name": "marketing"
@@ -854,7 +832,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"name":"#arguments.name#"}';
 
-    return apiCall( 'POST', "/ips/pools", {}, body, headerparams );
+    return apiCall( 'POST', "/ips/pools", {}, body );
   }
 
   /**
@@ -882,7 +860,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updatePoolName( required string name, required string new_pool_name ) {
     var body = {};
-    var headerparams = {};
     /*
       {
         "name": "new_pool_name"
@@ -891,7 +868,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"name":"#arguments.new_pool_name#"}';
 
-    return apiCall( 'PUT', "/ips/pools/#arguments.name#", {}, body, headerparams );
+    return apiCall( 'PUT', "/ips/pools/#arguments.name#", {}, body );
   }
 
   /**
@@ -911,7 +888,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function addIPToPool( required string name, required string ip ) {
     var body = {};
-    var headerparams = {};
     /*
       {
         "ip": "0.0.0.0"
@@ -920,7 +896,7 @@ component output="false" displayname="SendGrid.cfc"  {
     // Build JSON body
     body = '{"ip":"#arguments.ip#"}';
 
-    return apiCall( 'POST', "/ips/pools/#arguments.name#/ips", {}, body, headerparams );
+    return apiCall( 'POST', "/ips/pools/#arguments.name#/ips", {}, body );
   }
 
   /**
@@ -942,14 +918,11 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
   * @hint Get a user's profile
-  * @username Username for the subuser to find associated authenticated domain.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  // TODO document param change
   */
-  public struct function getUserProfile( required string username ) {
-    var headerparams = {};
-
-    if ( len(arguments.username) gt 0 ) headerparams[ 'on-behalf-of' ] = arguments.username;
-
-    return apiCall( 'GET', "/user/profile", {}, {}, headerparams );
+  public struct function getUserProfile( string on_behalf_of = '' ) {
+    return apiCall( 'GET', "/user/profile", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -1184,7 +1157,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
-    var headerparams = {};
 
     params[ 'start_date' ] = arguments.start_date;
 
@@ -1193,7 +1165,7 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
     if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
 
-    return apiCall( 'GET', "/user/webhooks/parse/stats", params, {}, headerparams );
+    return apiCall( 'GET', "/user/webhooks/parse/stats", params );
   }
 
 
