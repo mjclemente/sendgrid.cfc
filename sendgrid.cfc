@@ -499,14 +499,13 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/link-branding/disassociate-link-branding-from-a-subuser
   * @hint Disassociate link branding from a subuser
-  * @id The id of the branded link you want to delete.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  * @limit limit the number of rows returned.
+  * @username The username of the subuser account that you want to disassociate a branded link from.
   */
   public struct function disassociateBrandedLink( required string username ) {
-    var params = {};
-
-    return apiCall( 'DELETE', "/whitelabel/links/subuser", params, {}, parseSubUser( on_behalf_of ) );
+    var params = {
+      'username': username
+    };
+    return apiCall( 'DELETE', "/whitelabel/links/subuser", params );
   }
 
 
