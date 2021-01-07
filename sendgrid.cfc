@@ -102,11 +102,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
-    var body = {};
-
-    // Build JSON body
-    body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';
-
+    var body = {
+      'name': name,
+      'scopes': scopes
+    };
     return apiCall( 'POST', '/api_keys', {}, body, parseSubUser( on_behalf_of ) );
   }
 
