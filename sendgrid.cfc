@@ -89,7 +89,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -117,7 +116,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
-
     return apiCall( 'DELETE', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -472,7 +470,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
-
     return apiCall( 'POST', "/whitelabel/links/#arguments.id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -545,7 +542,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -623,7 +619,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-
     return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -633,7 +628,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getDefaultAuthenticatedDomain( string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/whitelabel/domains/default", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -666,7 +660,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
-
     return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#/ips/#arguments.ip#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -678,7 +671,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
-
     return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -954,7 +946,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserAccount( string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/user/account", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -964,7 +955,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserEmail( string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/user/email", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -994,7 +984,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserUsername( string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/user/username", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -1046,7 +1035,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getUserCreditBalance( string on_behalf_of = '' ) {
-
     return apiCall( 'GET', "/user/credits", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -1063,7 +1051,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookSettings( string on_behalf_of = '') {
-
     return apiCall( 'GET', "/user/webhooks/event/settings", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -1113,7 +1100,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookSignedPublicKey( string on_behalf_of = '') {
-
     return apiCall( 'GET', "/user/webhooks/event/settings/signed", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
@@ -1142,7 +1128,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getEventWebhookParseSettings( string on_behalf_of = '') {
-
     return apiCall( 'GET', "/user/webhooks/parse/settings", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
