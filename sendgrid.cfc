@@ -126,12 +126,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @name The new name for the API Key for which you are updating.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
-  public struct function updateAPIKeyName( required string api_key_id, required string name,  string on_behalf_of = '' ) {
-    var body = {};
-
-    // Build JSON body
-    body = '{"name":"#arguments.name#"}';
-
+  public struct function updateAPIKeyName( required string api_key_id, required string name, string on_behalf_of = '' ) {
+    var body = {
+      'name': name
+    };
     return apiCall( 'PATCH', "/api_keys/#api_key_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -144,13 +142,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
   */
   public struct function updateAPIKey( required string api_key_id, required string name, array scopes = ['mail.send'],  string on_behalf_of = '' ) {
-    var body = {};
-
-    // Build JSON body
-    body = '{"scopes":#serializeJSON(arguments.scopes)#}';
-
-    if ( len(arguments.name) gt 0)  body = '{"name":"#arguments.name#","scopes":#serializeJSON(arguments.scopes)#}';;
-
+    var body = {
+      'name': name,
+      'scopes': scopes
+    };
     return apiCall( 'PUT', "/api_keys/#api_key_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -190,13 +185,13 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
   * @hint Retrieve Subuser Reputations
-  * @username The name of the subuser which you are obtaining the reputation score.
+  * @usernames The name of the subuser which you are obtaining the reputation score.
+  // TODO arg name changed
   */
-  public struct function getSubuserReputations( required string username ) {
-    var params = {};
-
-    if ( len(arguments.username) gt 0 ) params[ 'usernames' ] = arguments.username;
-
+  public struct function getSubuserReputations( required string usernames ) {
+    var params = {
+      'usernames': usernames
+    };
     return apiCall( 'GET', "/subusers/reputations", params );
   }
 
@@ -307,28 +302,18 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
   * @hint Create Subuser
-  * @username this should be an the name of your new key
-  * @email this should be an the name of your new key
-  * @password this should be an the name of your new key
-  * @ips The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
+  * @username The username for this subuser.
+  * @email The email address of the subuser.
+  * @password The password this subuser will use when logging into SendGrid.
+  * @ips The IP addresses that should be assigned to this subuser.
   */
   public struct function createSubuser( required string username, required string email, required string password, required array ips = [] ) {
-    var body = {};
-
-    // Build JSON body
-    /*
-    {
-      "username": "John@example.com",
-      "email": "John@example.com",
-      "password": "johns_password",
-      "ips": [
-        "1.1.1.1",
-        "2.2.2.2"
-      ]
-    }
-    */
-    body = '{"username":"#arguments.username#","email":"#arguments.email#","password":"#arguments.password#","ips":#serializeJSON(arguments.ips)#}';
-
+    var body = {
+      'username': username,
+      'email': email,
+      'password': password,
+      'ips': ips
+    };
     return apiCall( 'POST', '/subusers', {}, body );
   }
 
@@ -349,11 +334,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ips The IP addresses that are assigned to the subuser.
   */
   public struct function updateSubuserIPs( required string subuser_name, required array ips = [] ) {
-    var body = {};
-
-    body = '#serializeJSON(arguments.ips)#';
-
-    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", {}, body );
+    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", {}, ips );
   }
 
 
@@ -429,22 +410,17 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subdomain The subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
   * @default Indicates if you want to use this link branding as the fallback, or as the default.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  * @limit limit the number of rows returned.
   */
-  public struct function createLinkBranding( required string domain = '', string subdomain = '', string default = 'false', string on_behalf_of = '' ) {
-    var body = {};
-
-    /*
-      {
-        "domain": "example.com",
-        "subdomain": "mail",
-        "default": true
-      }
-    */
-
-    // Build JSON body
-    body = '{"domain":"#arguments.domain#","subdomain":"#arguments.subdomain#","default":#arguments.default#}';
-
+  public struct function createLinkBranding( required string domain, string subdomain = '', boolean default, string on_behalf_of = '' ) {
+    var body = {
+      'domain': domain
+    };
+    if( len(subdomain) ){
+      body['subdomain'] = subdomain;
+    }
+    if( !isNull( default ) ){
+      body['default'] = default;
+    }
     return apiCall( 'POST', "/whitelabel/links", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -453,14 +429,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Delete a branded link
   * @id The id of the branded link you want to delete.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  * @limit limit the number of rows returned.
   */
-  public struct function deleteBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
-    var params = {};
-
-    if ( limit ) params[ 'limit' ] = limit;
-
-    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", params, {}, parseSubUser( on_behalf_of ) );
+  public struct function deleteBrandedLink( required numeric id, string on_behalf_of = '' ) {
+    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -476,21 +447,17 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/link-branding/associate-a-branded-link-with-a-subuser
   * @hint Associate a branded link with a subuser
-  * @id The id of the branded link you want to delete.
+  * @link_id The id of the branded link you want to delete.
   * @username The username of the subuser account that you want to associate the branded link with.
   */
-  public struct function associateLinkBranding( required numeric link_id = 0, required string username = '') {
+  public struct function associateLinkBranding( required numeric link_id, string username = '') {
     var body = {};
 
-    /*
-    {
-      "username": "jane@example.com"
+    if( len( username ) ){
+      body[ 'username' ] = username;
     }
-    */
-    // Build JSON body
-    body = '{"username":"#arguments.username#"}';
 
-    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/subuser", {}, body );
+    return apiCall( 'POST', "/whitelabel/links/#link_id#/subuser", {}, body );
   }
 
   /**
@@ -558,9 +525,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @custom_dkim_selector Add a custom DKIM selector. Accepts three letters or numbers.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
-  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [],
-                                                    boolean custom_spf = false, boolean default = false, boolean automatic_security = false,
-                                                    string custom_dkim_selector = '', string on_behalf_of = '') {
+  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], boolean custom_spf = false, boolean default = false, boolean automatic_security = false, string custom_dkim_selector = '', string on_behalf_of = '') {
     var body = {};
 
     /*
@@ -595,19 +560,16 @@ component output="false" displayname="SendGrid.cfc"  {
   * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
   * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  // TODO defaults changed
   */
-  public struct function updateAuthenticatedDomain( required numeric domain_id = 0, boolean custom_spf = false, boolean default = false, string on_behalf_of = '' ) {
+  public struct function updateAuthenticatedDomain( required numeric domain_id, boolean custom_spf, boolean default, string on_behalf_of = '' ) {
     var body = {};
-
-    /*
-      {
-        "default": false,
-        "custom_spf": true
-      }
-    */
-
-    // Build JSON body  -  May create a helper later  ****** NEED to finish
-    body = '{"default":#arguments.default#, "custom_spf":#arguments.custom_spf#}';
+    if( !isNull( custom_spf ) ){
+      body['custom_spf'] = custom_spf;
+    }
+    if( !isNull( default ) ){
+      body['default'] = default;
+    }
 
     return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
@@ -639,17 +601,11 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
-    var body = {};
-    /*
-      {
-        "ip": "192.168.0.1"
-      }
-    */
+    var body = {
+      'ip': ip
+    };
 
-    // Build JSON body
-    body = '{"ip":"#arguments.ip#"}';
-
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/ips", {}, body, parseSubUser( on_behalf_of ) );
+    return apiCall( 'POST', "/whitelabel/domains/#domain_id#/ips", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -707,17 +663,11 @@ component output="false" displayname="SendGrid.cfc"  {
   * @username Username to associate with the authenticated domain.
   */
   public struct function associateSubuserWithAuthenticatedDomain( required numeric domain_id, required string username ) {
-    var body = {};
+    var body = {
+      'username': username
+    };
 
-    /*
-    {
-      "username": "jane@example.com"
-    }
-    */
-    // Build JSON body
-    body = '{"username":"#arguments.username#"}';
-
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/subuser", {}, body );
+    return apiCall( 'POST', "/whitelabel/domains/#domain_id#/subuser", {}, body );
   }
 
 
@@ -736,21 +686,14 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subusers Array of usernames to be assigned a send IP.
   * @warmpup Whether or not to warmup the IPs being added.
   */
-  public struct function addIPs( required numeric count = 0, array subusers = [], boolean warmpup = false ) {
-    var body = {};
-    /*
-      {
-        "count": 90323478,
-        "subusers": [
-          "subuser1",
-          "subuser2"
-        ],
-        "warmup": true
-      }
-    */
-    // Build JSON body
-    body = '{"count":#arguments.count#,"subusers":#serializeJSON(arguments.subusers)#,"warmup":#arguments.warmup#}';
-
+  public struct function addIPs( required numeric count, array subusers = [], boolean warmpup = false ) {
+    var body = {
+      'count': count,
+      'warmpup': warmpup
+    };
+    if( arraylen( subusers ) ){
+      body[ 'subusers' ] = subusers;
+    }
     return apiCall( 'POST', "/ips", {}, body );
   }
 
@@ -812,18 +755,12 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/ip-pools/create-an-ip-pool
   * @hint Create an IP pool.
-  * @name   * @name 	The amount of IPs to add to the account.
+  * @name The amount of IPs to add to the account.
   */
   public struct function createIPPool( required string name ) {
-    var body = {};
-    /*
-      {
-        "name": "marketing"
-      }
-    */
-    // Build JSON body
-    body = '{"name":"#arguments.name#"}';
-
+    var body = {
+      'name': name
+    };
     return apiCall( 'POST', "/ips/pools", {}, body );
   }
 
@@ -851,16 +788,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @new_pool_name The new name for your IP pool.
   */
   public struct function updatePoolName( required string name, required string new_pool_name ) {
-    var body = {};
-    /*
-      {
-        "name": "new_pool_name"
-      }
-    */
-    // Build JSON body
-    body = '{"name":"#arguments.new_pool_name#"}';
-
-    return apiCall( 'PUT', "/ips/pools/#arguments.name#", {}, body );
+    var body = {
+      'name': new_pool_name
+    };
+    return apiCall( 'PUT', "/ips/pools/#name#", {}, body );
   }
 
   /**
@@ -875,20 +806,14 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/ip-pools/add-an-ip-address-to-a-pool
   * @hint Add an IP address to a pool
-  * @name   The name of the IP pool that you want to add the IP to.
+  * @name The name of the IP pool that you want to add the IP to.
   * @ip The IP address that you want to add to an IP pool.
   */
   public struct function addIPToPool( required string name, required string ip ) {
-    var body = {};
-    /*
-      {
-        "ip": "0.0.0.0"
-      }
-    */
-    // Build JSON body
-    body = '{"ip":"#arguments.ip#"}';
-
-    return apiCall( 'POST', "/ips/pools/#arguments.name#/ips", {}, body );
+    var body = {
+      'ip': ip
+    };
+    return apiCall( 'POST', "/ips/pools/#name#/ips", {}, body );
   }
 
   /**
@@ -924,19 +849,14 @@ component output="false" displayname="SendGrid.cfc"  {
   * @lastName   The last name of the user.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
-  public struct function updateUserProfile( required string firstName, required string lastName, string on_behalf_of = '' ) {
+  public struct function updateUserProfile( string firstName = '', string lastName = '', string on_behalf_of = '' ) {
     var body = {};
-
-    /*
-      {
-        "first_name": "Example",
-        "last_name": "User",
-        "city": "Orange"
-      }
-    */
-    // Build JSON body
-    body = '{"first_name":"#arguments.firstName#","last_name":"#arguments.lastName#"}';
-
+    if( len( firstName ) ){
+      body[ 'first_name' ] = firstName;
+    }
+    if( len( lastName ) ){
+      body[ 'last_name' ] = lastName;
+    }
     return apiCall( 'PATCH', "/user/profile", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -965,16 +885,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function updateUserEmail( required string email, string on_behalf_of = '' ) {
-    var body = {};
-
-    /*
-      {
-        "email": "example@example.com"
-      }
-    */
-    // Build JSON body
-    body = '{"email":"#arguments.email#"}';
-
+    var body = {
+      'email': email
+    };
     return apiCall( 'PUT', "/user/email", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -994,16 +907,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function updateUserUsername( required string username, string on_behalf_of = '' ) {
-    var body = {};
-
-    /*
-      {
-        "username": "test_username"
-      }
-    */
-    // Build JSON body
-    body = '{"username":"#arguments.username#"}';
-
+    var body = {
+      'username': username
+    };
     return apiCall( 'PUT', "/user/username", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -1015,17 +921,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' ) {
-    var body = {};
-
-    /*
-      {
-        "new_password": "new_password",
-        "old_password": "old_password"
-      }
-    */
-    // Build JSON body
-    body = '{"old_password":"#arguments.oldpassword#","new_password":"#arguments.newpassword#"}';
-
+    var body = {
+      'new_password': newpassword,
+      'old_password': oldpassword
+    };
     return apiCall( 'PUT', "/user/password", {}, body, parseSubUser( on_behalf_of ) );
   }
 
@@ -1110,15 +1009,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' ) {
-    var body = {};
-    /*
-    {
-      "enabled": true
-    }
-    */
-    // Build JSON body
-    body = '{"enabled":#arguments.enabled#}';
-
+    var body = {
+      'enabled': enabled
+    };
     return apiCall( 'PATCH', "/user/webhooks/event/settings/signed", {}, body, parseSubUser( on_behalf_of ) );
   }
 
