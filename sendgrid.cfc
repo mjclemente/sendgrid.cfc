@@ -476,14 +476,15 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
   * @hint List all authenticated domains
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   * @limit limit the number of rows returned.
   * @offset Paging offset.
   * @exclude_subusers Exclude subuser domains from the result.
   * @username The username associated with an authenticated domain.
   * @domain Search for authenticated domains.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  // TODO reordered params
   */
-  public struct function listAllDomains( string on_behalf_of = '', numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '' ) {
+  public struct function listAllDomains( numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '', string on_behalf_of = '' ) {
     var params = {};
 
     if ( limit ) params[ 'limit' ] = limit;
