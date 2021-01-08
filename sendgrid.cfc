@@ -363,14 +363,9 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Retrieve a branded link
   * @id The id of the branded link you want to retrieve.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  * @limit limit the number of rows returned.
   */
-  public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '', numeric limit = 0 ) {
-    var params = {};
-
-    if ( limit ) params[ 'limit' ] = limit;
-
-    return apiCall( 'GET', "/whitelabel/links/#id#", params, {}, parseSubUser( on_behalf_of ) );
+  public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '' ) {
+    return apiCall( 'GET', "/whitelabel/links/#id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -379,13 +374,11 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Retrieve the default branded link
   * @domain The domain to match against when finding a corresponding branded link.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  * @limit limit the number of rows returned.
   */
-  public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '', numeric limit = 0 ) {
+  public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '' ) {
     var params = {};
 
     if ( len(domain) gt 0 ) params[ 'domain' ] = domain;
-    if ( limit ) params[ 'limit' ] = limit;
 
     return apiCall( 'GET', "/whitelabel/links/default", params, {}, parseSubUser( on_behalf_of ) );
   }
