@@ -166,9 +166,9 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/subusers", params );
   }
@@ -179,7 +179,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subuser_name The name of the subuser to return.
   */
   public struct function getSubuserMonitorSettings( required string subuser_name ) {
-    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/monitor" );
+    return apiCall( 'GET', "/subusers/#subuser_name#/monitor" );
   }
 
   /**
@@ -208,15 +208,15 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
+    if (len(date) gt 0) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
-    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
-    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
-    return apiCall( 'GET', "/subusers/#arguments.subuser_name#/stats/monthly", params );
+    return apiCall( 'GET', "/subusers/#subuser_name#/stats/monthly", params );
   }
 
   /**
@@ -232,14 +232,14 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if (len(arguments.date) gt 0) params[ 'date' ] = dateFormat(arguments.date, 'YYYY-mm-dd');
+    if (len(date) gt 0) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
-    if ( len(arguments.subuser) gt 0 ) params[ 'subuser' ] = arguments.subuser;
-    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
-    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if ( len(subuser) gt 0 ) params[ 'subuser' ] = subuser;
+    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/subusers/stats/monthly", params );
   }
@@ -258,14 +258,14 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    params[ 'start_date' ] = arguments.start_date;
+    params[ 'start_date' ] = start_date;
 
-    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
-    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
-    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
-    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
+    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/subusers/stats/sums", params );
   }
@@ -286,15 +286,15 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    params[ 'subusers' ] = arguments.subusers;
-    params[ 'start_date' ] = arguments.start_date;
+    params[ 'subusers' ] = subusers;
+    params[ 'start_date' ] = start_date;
 
-    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
-    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
-    if ( len(arguments.sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = arguments.sort_by_metric;
-    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
+    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/subusers/stats", params );
   }
@@ -323,7 +323,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @subuser_name The subuser name to delete
   */
   public struct function deleteSubuser( required string subuser_name ) {
-    return apiCall( 'DELETE', "/subusers/#arguments.subuser_name#" );
+    return apiCall( 'DELETE', "/subusers/#subuser_name#" );
   }
 
 
@@ -334,7 +334,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ips The IP addresses that are assigned to the subuser.
   */
   public struct function updateSubuserIPs( required string subuser_name, required array ips = [] ) {
-    return apiCall( 'PUT', "/subusers/#arguments.subuser_name#/ips", {}, ips );
+    return apiCall( 'PUT', "/subusers/#subuser_name#/ips", {}, ips );
   }
 
 
@@ -370,7 +370,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
     if ( limit ) params[ 'limit' ] = limit;
 
-    return apiCall( 'GET', "/whitelabel/links/#arguments.id#", params, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'GET', "/whitelabel/links/#id#", params, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -384,8 +384,8 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '', numeric limit = 0 ) {
     var params = {};
 
-    if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
+    if ( len(domain) gt 0 ) params[ 'domain' ] = domain;
+    if ( limit ) params[ 'limit' ] = limit;
 
     return apiCall( 'GET', "/whitelabel/links/default", params, {}, parseSubUser( on_behalf_of ) );
   }
@@ -398,7 +398,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserBrandedLink( required string username = '' ) {
     var params = {};
 
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+    if ( len(username) gt 0 ) params[ 'username' ] = username;
 
     return apiCall( 'GET', "/whitelabel/links/subuser", params );
   }
@@ -431,7 +431,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteBrandedLink( required numeric id, string on_behalf_of = '' ) {
-    return apiCall( 'DELETE', "/whitelabel/links/#arguments.id#", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'DELETE', "/whitelabel/links/#id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -441,7 +441,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
-    return apiCall( 'POST', "/whitelabel/links/#arguments.id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'POST', "/whitelabel/links/#id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -493,11 +493,11 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listAllDomains( string on_behalf_of = '', numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '' ) {
     var params = {};
 
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
-    params[ 'exclude_subusers' ] = arguments.exclude_subusers;
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
-    if ( len(arguments.domain) gt 0 ) params[ 'domain' ] = arguments.domain;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
+    params[ 'exclude_subusers' ] = exclude_subusers;
+    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( len(domain) gt 0 ) params[ 'domain' ] = domain;
 
     return apiCall( 'GET', "/whitelabel/domains", params, {}, parseSubUser( on_behalf_of ) );
   }
@@ -509,7 +509,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-    return apiCall( 'GET', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'GET', "/whitelabel/domains/#domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -545,9 +545,9 @@ component output="false" displayname="SendGrid.cfc"  {
     */
 
     // Build JSON body
-    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=arguments.domain, subdomain=arguments.subdomain, username=arguments.username, ips=arguments.ips,
-                                                                            custom_spf=arguments.custom_spf, default=arguments.default, automatic_security=arguments.automatic_security,
-                                                                            custom_dkim_selector=arguments.custom_dkim_selector );
+    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=domain, subdomain=subdomain, username=username, ips=ips,
+                                                                            custom_spf=custom_spf, default=default, automatic_security=automatic_security,
+                                                                            custom_dkim_selector=custom_dkim_selector );
 
     body = local.domain.build();
     return apiCall( 'POST', "/whitelabel/domains", {}, body, parseSubUser( on_behalf_of ) );
@@ -571,7 +571,7 @@ component output="false" displayname="SendGrid.cfc"  {
       body['default'] = default;
     }
 
-    return apiCall( 'PATCH', "/whitelabel/domains/#arguments.domain_id#", {}, body, parseSubUser( on_behalf_of ) );
+    return apiCall( 'PATCH', "/whitelabel/domains/#domain_id#", {}, body, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -581,7 +581,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
-    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'DELETE', "/whitelabel/domains/#domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -616,7 +616,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
-    return apiCall( 'DELETE', "/whitelabel/domains/#arguments.domain_id#/ips/#arguments.ip#", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'DELETE', "/whitelabel/domains/#domain_id#/ips/#ip#", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
 
@@ -627,7 +627,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
-    return apiCall( 'POST', "/whitelabel/domains/#arguments.domain_id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
+    return apiCall( 'POST', "/whitelabel/domains/#domain_id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
   }
 
   /**
@@ -638,7 +638,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listSubuserAuthenticatedDomain( required string username ) {
     var params = {};
 
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+    if ( len(username) gt 0 ) params[ 'username' ] = username;
 
     return apiCall( 'GET', "/whitelabel/domains/subuser", params );
   }
@@ -651,7 +651,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function disassociateSubuserAuthenticatedDomain( required string username ) {
     var params = {};
 
-    if ( len(arguments.username) gt 0 ) params[ 'username' ] = arguments.username;
+    if ( len(username) gt 0 ) params[ 'username' ] = username;
 
     return apiCall( 'DELETE', "/whitelabel/domains/subuser", params );
   }
@@ -719,12 +719,12 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if ( len(arguments.ip) gt 0 ) params[ 'ip' ] = arguments.ip;
-    if ( len(arguments.subuser) gt 0 ) params[ 'subuser' ] = arguments.subuser;
-    params[ 'exclude_whitelabels' ] = arguments.exclude_whitelabels;
-    if ( len(arguments.sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = arguments.sort_by_direction;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if ( len(ip) gt 0 ) params[ 'ip' ] = ip;
+    if ( len(subuser) gt 0 ) params[ 'subuser' ] = subuser;
+    params[ 'exclude_whitelabels' ] = exclude_whitelabels;
+    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/ips", params );
   }
@@ -743,7 +743,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ip The IP address to get
   */
   public struct function getIPPools( required string ip = '' ) {
-    return apiCall( 'GET', "/ips/#arguments.ip#" );
+    return apiCall( 'GET', "/ips/#ip#" );
   }
 
 
@@ -778,7 +778,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ippool The IP address to get
   */
   public struct function getPoolIPs( required string ippool = '' ) {
-    return apiCall( 'GET', "/ips/pools/#arguments.ippool#");
+    return apiCall( 'GET', "/ips/pools/#ippool#");
   }
 
   /**
@@ -800,7 +800,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @name The name of the IP pool that you want to delete.
   */
   public struct function deleteIPPool( required string name ) {
-    return apiCall( 'DELETE', "/ips/pools/#arguments.name#" );
+    return apiCall( 'DELETE', "/ips/pools/#name#" );
   }
 
   /**
@@ -823,7 +823,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @ip The IP address that you are removing.
   */
   public struct function deleteIPFromPool( required string name, required string ip ) {
-    return apiCall( 'DELETE', "/ips/pools/#arguments.name#/ips/#arguments.ip#" );
+    return apiCall( 'DELETE', "/ips/pools/#name#/ips/#ip#" );
   }
 
 
@@ -964,7 +964,7 @@ component output="false" displayname="SendGrid.cfc"  {
     var body = {};
 
     // Build JSON body
-    body = arguments.webhook.build();
+    body = webhook.build();
 
     return apiCall( 'PATCH', "/user/webhooks/event/settings", {}, body, parseSubUser( on_behalf_of ) );
   }
@@ -987,7 +987,7 @@ component output="false" displayname="SendGrid.cfc"  {
       }
     */
     // Build JSON body
-    body = arguments.webhook.buildTest();
+    body = webhook.buildTest();
 
     return apiCall( 'POST', "/user/webhooks/event/test", {}, body, parseSubUser( on_behalf_of ) );
   }
@@ -1036,12 +1036,12 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    params[ 'start_date' ] = arguments.start_date;
+    params[ 'start_date' ] = start_date;
 
-    if (len(arguments.end_date) gt 0) params[ 'end_date' ] = arguments.end_date;
-    if (len(arguments.aggregated_by) gt 0) params[ 'aggregated_by' ] = arguments.aggregated_by;
-    if ( arguments.limit ) params[ 'limit' ] = arguments.limit;
-    if ( arguments.offset ) params[ 'offset' ] = arguments.offset;
+    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
+    if ( limit ) params[ 'limit' ] = limit;
+    if ( offset ) params[ 'offset' ] = offset;
 
     return apiCall( 'GET', "/user/webhooks/parse/stats", params );
   }
@@ -1861,7 +1861,7 @@ component output="false" displayname="SendGrid.cfc"  {
       'name' : name,
       'description' : description
     };
-    if ( arguments.keyExists( isDefault ) )
+    if ( keyExists( isDefault ) )
       body[ 'is_default' ] = isDefault;
 
     return apiCall( 'POST', '/asm/groups', {}, body );
@@ -1894,9 +1894,9 @@ component output="false" displayname="SendGrid.cfc"  {
     var body = {
       'is_default' : isDefault
     };
-    if ( arguments.name.len() )
+    if ( name.len() )
       body[ 'name' ] = name;
-    if ( arguments.description.len() )
+    if ( description.len() )
       body[ 'description' ] = description;
 
     return apiCall( 'PATCH', '/asm/groups/#id#', {}, body );
@@ -1920,8 +1920,8 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function validateEmail( required string email, string source = '' ) {
     var body = {
-      'email': arguments.email,
-      'source': arguments.source
+      'email': email,
+      'source': source
     };
 
     if( !len( variables.emailValidationApiKey ) ) {
