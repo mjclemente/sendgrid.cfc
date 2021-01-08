@@ -166,7 +166,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( len(username) ) params[ 'username' ] = username;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -208,11 +208,11 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if (len(date) gt 0) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
+    if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
-    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
-    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( len(sort_by_metric) ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) ) params[ 'sort_by_direction' ] = sort_by_direction;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -232,12 +232,12 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if (len(date) gt 0) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
+    if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
-    if ( len(subuser) gt 0 ) params[ 'subuser' ] = subuser;
-    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
-    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( len(subuser) ) params[ 'subuser' ] = subuser;
+    if ( len(sort_by_metric) ) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction) ) params[ 'sort_by_direction' ] = sort_by_direction;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -260,10 +260,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
     params[ 'start_date' ] = start_date;
 
-    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
-    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
-    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
-    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if (len(end_date)) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by)) params[ 'aggregated_by' ] = aggregated_by;
+    if ( len(sort_by_metric)) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction)) params[ 'sort_by_direction' ] = sort_by_direction;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -289,10 +289,10 @@ component output="false" displayname="SendGrid.cfc"  {
     params[ 'subusers' ] = subusers;
     params[ 'start_date' ] = start_date;
 
-    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
-    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
-    if ( len(sort_by_metric) gt 0 ) params[ 'sort_by_metric' ] = sort_by_metric;
-    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if (len(end_date)) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by)) params[ 'aggregated_by' ] = aggregated_by;
+    if ( len(sort_by_metric)) params[ 'sort_by_metric' ] = sort_by_metric;
+    if ( len(sort_by_direction)) params[ 'sort_by_direction' ] = sort_by_direction;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -378,7 +378,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '' ) {
     var params = {};
 
-    if ( len(domain) gt 0 ) params[ 'domain' ] = domain;
+    if ( len(domain)) params[ 'domain' ] = domain;
 
     return apiCall( 'GET', "/whitelabel/links/default", params, {}, parseSubUser( on_behalf_of ) );
   }
@@ -391,7 +391,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserBrandedLink( required string username = '' ) {
     var params = {};
 
-    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( len(username)) params[ 'username' ] = username;
 
     return apiCall( 'GET', "/whitelabel/links/subuser", params );
   }
@@ -490,8 +490,8 @@ component output="false" displayname="SendGrid.cfc"  {
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
     params[ 'exclude_subusers' ] = exclude_subusers;
-    if ( len(username) gt 0 ) params[ 'username' ] = username;
-    if ( len(domain) gt 0 ) params[ 'domain' ] = domain;
+    if ( len(username) ) params[ 'username' ] = username;
+    if ( len(domain) ) params[ 'domain' ] = domain;
 
     return apiCall( 'GET', "/whitelabel/domains", params, {}, parseSubUser( on_behalf_of ) );
   }
@@ -632,7 +632,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listSubuserAuthenticatedDomain( required string username ) {
     var params = {};
 
-    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( len(username) ) params[ 'username' ] = username;
 
     return apiCall( 'GET', "/whitelabel/domains/subuser", params );
   }
@@ -645,7 +645,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function disassociateSubuserAuthenticatedDomain( required string username ) {
     var params = {};
 
-    if ( len(username) gt 0 ) params[ 'username' ] = username;
+    if ( len(username) ) params[ 'username' ] = username;
 
     return apiCall( 'DELETE', "/whitelabel/domains/subuser", params );
   }
@@ -713,10 +713,10 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    if ( len(ip) gt 0 ) params[ 'ip' ] = ip;
-    if ( len(subuser) gt 0 ) params[ 'subuser' ] = subuser;
+    if ( len(ip) ) params[ 'ip' ] = ip;
+    if ( len(subuser) ) params[ 'subuser' ] = subuser;
     params[ 'exclude_whitelabels' ] = exclude_whitelabels;
-    if ( len(sort_by_direction) gt 0 ) params[ 'sort_by_direction' ] = sort_by_direction;
+    if ( len(sort_by_direction) ) params[ 'sort_by_direction' ] = sort_by_direction;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
@@ -1032,8 +1032,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
     params[ 'start_date' ] = start_date;
 
-    if (len(end_date) gt 0) params[ 'end_date' ] = end_date;
-    if (len(aggregated_by) gt 0) params[ 'aggregated_by' ] = aggregated_by;
+    if (len(end_date)) params[ 'end_date' ] = end_date;
+    if (len(aggregated_by)) params[ 'aggregated_by' ] = aggregated_by;
     if ( limit ) params[ 'limit' ] = limit;
     if ( offset ) params[ 'offset' ] = offset;
 
