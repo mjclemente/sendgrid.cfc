@@ -347,12 +347,12 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
   * @hint Retrieve all branded links
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   * @limit limit the number of rows returned.
+  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  // TODO changed param order
   */
-  public struct function listBrandedLinks( string on_behalf_of = '', numeric limit = 0 ) {
+  public struct function listBrandedLinks( numeric limit = 0, string on_behalf_of = '' ) {
     var params = {};
-
     if ( limit ) params[ 'limit' ] = limit;
 
     return apiCall( 'GET', "/whitelabel/links", params, {}, parseSubUser( on_behalf_of ) );
