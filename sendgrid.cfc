@@ -69,7 +69,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-all-api-keys-belonging-to-the-authenticated-user
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-all-api-keys-belonging-to-the-authenticated-user
   * @hint Retrieve all API Keys belonging to the authenticated user
   * @limit limit the number of rows returned.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -83,7 +83,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
   * @hint Retrieve an existing API Key
   * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
@@ -94,7 +94,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
   * @hint Create API keys
   * @name this should be an the name of your new key
   * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
@@ -110,7 +110,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
   * @hint Delete API keys
   * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
@@ -120,7 +120,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
   * @hint This endpoint allows you to update the name of an existing API Key.
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @name The new name for the API Key for which you are updating.
@@ -134,7 +134,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
+  * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
   * @hint This endpoint allows you to update the name and scopes of a given API key.
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send
@@ -157,7 +157,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/list-all-subusers
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/list-all-subusers
   * @hint Retrieve all API Keys belonging to the authenticated user
   * @username The username of the subuser to return.  (Optional)
   * @limit The number of results you would like to get in each request. (Optional)
@@ -174,7 +174,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monitor-settings-for-a-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monitor-settings-for-a-subuser
   * @hint Retrieve monitor settings for a subuser
   * @subuser_name The name of the subuser to return.
   */
@@ -183,7 +183,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
   * @hint Retrieve Subuser Reputations
   * @usernames The name of the subuser which you are obtaining the reputation score.
   // TODO arg name changed
@@ -196,7 +196,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-monthly-email-statistics-for-a-single-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-monthly-email-statistics-for-a-single-subuser
   * @hint Retrieve the monthly email statistics for a single subuser
   * @subuser_name The name of the subuser to return.
   * @date The date the stastics were gathered.   Format: YYYY-MM-DD
@@ -220,7 +220,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monthly-stats-for-all-subusers
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monthly-stats-for-all-subusers
   * @hint Retrieve monthly stats for all subusers
   * @date The date the stastics were gathered.   Format: YYYY-MM-DD
   * @subuser A substring search of your subusers.  (Optional)
@@ -245,7 +245,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-totals-for-each-email-statistic-metric-for-all-subusers
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-totals-for-each-email-statistic-metric-for-all-subusers
   * @hint Retrieve the totals for each email statistic metric for all subusers.
   * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
   * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
@@ -272,7 +272,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-email-statistics-for-your-subusers
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-email-statistics-for-your-subusers
   * @hint Retrieve email statistics for your subusers.
   * @subusers The subuser you want to retrieve statistics for. You may include this parameter up to 10 times to retrieve statistics for multiple subusers.  (Optional)
   * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
@@ -300,7 +300,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
   * @hint Create Subuser
   * @username The username for this subuser.
   * @email The email address of the subuser.
@@ -318,7 +318,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/delete-a-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/delete-a-subuser
   * @hint Delete a subuser
   * @subuser_name The subuser name to delete
   */
@@ -328,7 +328,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/subusers-api/update-ips-assigned-to-a-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/update-ips-assigned-to-a-subuser
   * @hint Update IPs assigned to a subuser
   * @subuser_name The subuser to update
   * @ips The IP addresses that are assigned to the subuser.
@@ -345,7 +345,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
   * @hint Retrieve all branded links
   * @limit limit the number of rows returned.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -359,7 +359,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-branded-link
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-branded-link
   * @hint Retrieve a branded link
   * @id The id of the branded link you want to retrieve.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -370,7 +370,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-the-default-branded-link
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-the-default-branded-link
   * @hint Retrieve the default branded link
   * @domain The domain to match against when finding a corresponding branded link.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -384,7 +384,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-a-subusers-branded-link
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-a-subusers-branded-link
   * @hint Retrieve a subusers branded link
   * @username The username of the subuser to retrieve associated branded links for.
   */
@@ -397,7 +397,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/create-a-link-branding
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/create-a-link-branding
   * @hint Create a branded link
   * @domain The root domain for your subdomain that you are creating the link branding for. This should match your FROM email address.
   * @subdomain The subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
@@ -418,7 +418,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/delete-a-branded-link
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/delete-a-branded-link
   * @hint Delete a branded link
   * @id The id of the branded link you want to delete.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -428,7 +428,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/validate-a-branded-link
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/validate-a-branded-link
   * @hint Validate a branded link
   * @id The id of the branded link you want to delete.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -438,7 +438,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/associate-a-branded-link-with-a-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/associate-a-branded-link-with-a-subuser
   * @hint Associate a branded link with a subuser
   * @link_id The id of the branded link you want to delete.
   * @username The username of the subuser account that you want to associate the branded link with.
@@ -454,7 +454,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/link-branding/disassociate-link-branding-from-a-subuser
+  * @docs https://sendgrid.api-docs.io/v3.0/link-branding/disassociate-link-branding-from-a-subuser
   * @hint Disassociate link branding from a subuser
   * @username The username of the subuser account that you want to disassociate a branded link from.
   */
@@ -474,7 +474,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
   * @hint List all authenticated domains
   * @limit limit the number of rows returned.
   * @offset Paging offset.
@@ -497,7 +497,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
   * @hint Retrieve an authenticated domain
   * @domain_id The id of the branded link you want to retrieve.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -507,7 +507,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
   * @hint Authenticate a domain
   * @domain Domain being authenticated.
   * @subdomain The subdomain to use for this authenticated domain
@@ -548,7 +548,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/update-an-authenticated-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/update-an-authenticated-domain
   * @hint Update an authenticated domain
   * @domain_id Domain ID to be updated.
   * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
@@ -569,7 +569,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
   * @hint Delete an authenticated domain.
   * @domain_id The id of the branded link you want to delete.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -579,7 +579,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/get-the-default-authentication
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/get-the-default-authentication
   * @hint Get the default authentication
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -588,7 +588,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/add-an-ip-to-an-authenticated-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/add-an-ip-to-an-authenticated-domain
   * @hint Add an IP to an authenticated domain
   * @domain_id Domain ID to be updated.
   * @ip IP to associate with the domain. Used for manually specifying IPs for custom SPF.
@@ -603,7 +603,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/remove-an-ip-from-an-authenticated-domain
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/remove-an-ip-from-an-authenticated-domain
   * @hint Remove an IP from an authenticated domain.
   * @domain_id 	ID of the domain to delete the IP from.
   * @ip IP to remove from the domain.
@@ -615,7 +615,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
   * @hint Validate a domain authentication.
   * @domain_id ID of the domain to validate.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -625,7 +625,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/list-the-authenticated-domain-associated-with-the-given-user
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/list-the-authenticated-domain-associated-with-the-given-user
   * @hint List the authenticated domain associated with the given user.
   * @username Username for the subuser to find associated authenticated domain.
   */
@@ -638,7 +638,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/disassociate-an-authenticated-domain-from-a-given-user
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/disassociate-an-authenticated-domain-from-a-given-user
   * @hint Disassociate a authenticated domain from a given user.
   * @username Username for the subuser to find associated authenticated domain.
   */
@@ -651,7 +651,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/domain-authentication/associate-an-authenticated-domain-with-a-given-user
+  * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/associate-an-authenticated-domain-with-a-given-user
   * @hint Associate a authenticated domain with a given user.
   * @domain_id 	ID of the authenticated domain to associate with the subuser.
   * @username Username to associate with the authenticated domain.
@@ -674,7 +674,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-add
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-add
   * @hint Add IPs
   * @count 	The amount of IPs to add to the account.
   * @subusers Array of usernames to be assigned a send IP.
@@ -692,7 +692,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-remaining
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-remaining
   * @hint Get remaining IPs count
   */
   public struct function getIPsRemaining( ) {
@@ -701,7 +701,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-addresses
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-addresses
   * @hint Retrieve all IP addresses
   * @ip The IP address to get
   * @subuser The subuser you are requesting for.
@@ -724,7 +724,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-assigned-ips
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-assigned-ips
   * @hint Retrieve all assigned IPs  (Throws internal error even on sendgrids sample)
   */
   public struct function getIPsAssigned( ) {
@@ -732,7 +732,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-pools-an-ip-address-belongs-to
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-pools-an-ip-address-belongs-to
   * @hint Retrieve all IP pools an IP address belongs to
   * @ip The IP address to get
   */
@@ -747,7 +747,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/create-an-ip-pool
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/create-an-ip-pool
   * @hint Create an IP pool.
   * @name The amount of IPs to add to the account.
   */
@@ -759,7 +759,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ip-pools
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ip-pools
   * @hint Retrieve all IP pools.
   */
   public struct function listAllIPPools( ) {
@@ -767,7 +767,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ips-in-a-specified-pool
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ips-in-a-specified-pool
   * @hint Retrieve all IPs in a specified pool.
   * @ippool The IP address to get
   */
@@ -776,7 +776,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/update-an-ip-pool-s-name
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/update-an-ip-pool-s-name
   * @hint Update an IP pool’s name.
   * @name   The name of the IP pool that you want to rename.
   * @new_pool_name The new name for your IP pool.
@@ -789,7 +789,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/delete-an-ip-pool
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/delete-an-ip-pool
   * @hint Delete an IP pool.
   * @name The name of the IP pool that you want to delete.
   */
@@ -798,7 +798,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/add-an-ip-address-to-a-pool
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/add-an-ip-address-to-a-pool
   * @hint Add an IP address to a pool
   * @name The name of the IP pool that you want to add the IP to.
   * @ip The IP address that you want to add to an IP pool.
@@ -811,7 +811,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/ip-pools/remove-an-ip-address-from-a-pool
+  * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/remove-an-ip-address-from-a-pool
   * @hint Remove an IP address from a pool.
   * @name The name of the IP pool that you want to delete.
   * @ip The IP address that you are removing.
@@ -827,7 +827,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
   * @hint Get a user's profile
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   // TODO document param change
@@ -837,7 +837,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/update-a-user-s-profile
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-a-user-s-profile
   * @hint Update a user's profile
   * @firstName  The first name of the user.
   * @lastName   The last name of the user.
@@ -855,7 +855,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-account-information
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-account-information
   * @hint Get a user's account information.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -864,7 +864,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-account-email-address
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-account-email-address
   * @hint Retrieve your account email address
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -873,7 +873,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-account-email-address
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-account-email-address
   * @hint Update your account email address
   * @email The new email address that you would like to use for your account.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -886,7 +886,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-username
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-username
   * @hint Retrieve your username
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -895,7 +895,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-username
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-username
   * @hint Update your username
   * @username The new username you would like to use for your account.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -908,7 +908,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/update-your-password
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-password
   * @hint Update your password
   * @oldpassword The old password for your account.
   * @newpassword The new password you would like to use for your account.
@@ -923,7 +923,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-credit-balance
+  * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-credit-balance
   * @hint Retrieve your credit balance
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -939,7 +939,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-event-webhook-settings
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-event-webhook-settings
   * @hint Retrieve Event Webhook settings
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -949,7 +949,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
   * @hint Update Event Notification Settings
   * @webhook The webhook helper component
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -964,7 +964,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
   * @hint Test Event Notification Settings
   * @webhook The webhook helper component
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -988,7 +988,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-signed-webhook-public-key
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-signed-webhook-public-key
   * @hint Retrieve Signed Webhook Public Key
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -997,7 +997,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/enable-disable-signed
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/enable-disable-signed
   * @hint Enable/Disable Signed Webhook
   * @enabled You may either enable or disable signing of the Event Webhook using this endpoint.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
@@ -1010,7 +1010,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-parse-webhook-settings
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-parse-webhook-settings
   * @hint Retrieve Parse Webhook settings
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
   */
@@ -1019,7 +1019,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/webhooks/retrieves-inbound-parse-webhook-statistics
+  * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieves-inbound-parse-webhook-statistics
   * @hint Retrieves Inbound Parse Webhook statistics.
   * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
   * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
@@ -1047,7 +1047,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-all-blocks
+  * @docs https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-all-blocks
   * @hint Retrieve a list of all email addresses that are currently on your blocks list.
   * @start_time Start of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
   * @end_time End of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
@@ -1084,7 +1084,7 @@ component output="false" displayname="SendGrid.cfc"  {
   // }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-a-specific-block
+  * @docs https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-a-specific-block
   * @hint Retrieve a specific email address from your blocks list.
   */
   public struct function getBlock( required string email ) {
@@ -1092,7 +1092,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/blocks-api/delete-a-specific-block
+  * @docs https://sendgrid.api-docs.io/v3.0/blocks-api/delete-a-specific-block
   * @hint Retrieve a specific email address from your blocks list.
   */
   public struct function deleteBlock( required string email ) {
@@ -1106,7 +1106,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-all-bounces
+  * @docs https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-all-bounces
   * @hint Retrieve a list of bounces that are currently on your bounces list.
   * @start_time Start of the time range when the bounce was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
   * @end_time End of the time range when the bounce was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
@@ -1130,7 +1130,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-a-bounce
+  * @docs https://sendgrid.api-docs.io/v3.0/bounces-api/retrieve-a-bounce
   * @hint Retrieve specific bounce information for a given email address.
   */
   public struct function getBounce( required string email ) {
@@ -1156,7 +1156,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
+  * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
   * @hint Retrieve a list of all of your campaigns.
   */
   public struct function listCampaigns() {
@@ -1164,7 +1164,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-a-single-campaign
+  * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-a-single-campaign
   * @hint Retrieve a single campaign by ID.
   */
   public struct function getCampaign( required numeric id ) {
@@ -1172,7 +1172,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/campaigns-api/delete-a-campaign
+  * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/delete-a-campaign
   * @hint Delete a single campaign by ID.
   */
   public struct function deleteCampaign( required numeric id ) {
@@ -1180,7 +1180,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/campaigns-api/update-a-campaign
+  * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/update-a-campaign
   * @hint Update a campaign by ID.
   * @campaign this should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
@@ -1200,7 +1200,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/add-recipients
   * @hint Add Marketing Campaigns recipients. Note that it also appears to update existing records, so it basically functions like a PATCH.
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
@@ -1218,7 +1218,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/update-recipient
   * @hint Update one or more Marketing Campaign recipients. Note that it will also add non-existing records.
   * @recipients an array of objects, with at minimum, and 'email' key/value
   */
@@ -1269,7 +1269,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/get-recipient-upload-status
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/get-recipient-upload-status
   * @hint Check the upload status of a Marketing Campaigns recipient.
   */
   public struct function getRecipientUploadStatus() {
@@ -1277,7 +1277,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-a-recipient
   * @hint Delete a single recipient with the given ID from your contact database.
   * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
@@ -1286,7 +1286,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-recipient
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/delete-recipient
   * @hint Deletes one or more recipients. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/recipients`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the recipients through the individual delete method.
   * @recipients An array of the recipient IDs you want to delete. You can also provide their email addresses, and they will be converted to recipient IDs
   */
@@ -1299,7 +1299,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients
   * @hint Retrieve all of your Marketing Campaign recipients.
   * @page Page index of first recipients to return (must be a positive integer)
   * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
@@ -1315,7 +1315,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-single-recipient
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-single-recipient
   * @hint Retrieve a single recipient by ID from your contact database.
   * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
@@ -1324,7 +1324,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-lists-that-a-recipient-is-on
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-lists-that-a-recipient-is-on
   * @hint Retrieve the lists that a given recipient belongs to.
   * @id the recipient ID or email address (which will be converted to the recipient ID).
   */
@@ -1333,7 +1333,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-count-of-billable-recipients
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-the-count-of-billable-recipients
   * @hint Retrieve the number of Marketing Campaigns recipients that you will be billed for.
   */
   public struct function getBillableRecipientCount() {
@@ -1341,7 +1341,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-count-of-recipients
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-a-count-of-recipients
   * @hint Retrieve the total number of Marketing Campaigns recipients.
   */
   public struct function getRecipientCount() {
@@ -1349,7 +1349,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients-matching-search-criteria
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/retrieve-recipients-matching-search-criteria
   * @hint Perform a search on all of your Marketing Campaigns recipients.
   * @fieldName the name of a custom field or reserved field
   * @search the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
@@ -1362,7 +1362,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/Create_Search%20with%20conditions
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-recipients/Create_Search%20with%20conditions
   * POST /contactdb/recipients/search
   * Note that this endpoint exists, providing more robust, segmented search. However, I don't see support for it in any of the official libraries, so I'm not going to bother to put it together here, unless there's a need for it.
   */
@@ -1426,7 +1426,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/create-a-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/create-a-list
   * @hint Create a list for your recipients.
   */
   public struct function createList( required string name ) {
@@ -1437,7 +1437,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-lists
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-lists
   * @hint Retrieve all of your recipient lists. If you don't have any lists, an empty array will be returned.
   */
   public struct function listLists() {
@@ -1445,7 +1445,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-multiple-lists
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-multiple-lists
   * @hint Delete multiple recipient lists. This is an incomplete implementation of the SendGrid API. Technically, this should send a DELETE request to `/contactdb/lists`, with an array of IDs as the body. But ColdFusion doesn't currently include the request body in DELETE calls. So we loop the lists through the individual delete method.
   * @recipients An array of the list IDs you want to delete
   */
@@ -1458,7 +1458,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-list
   * @hint Delete a single list with the given ID from your contact database.
   */
   public struct function deleteList( required numeric id ) {
@@ -1466,7 +1466,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-a-single-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-a-single-list
   * @hint Retrieve a single recipient list by ID.
   */
   public struct function getList( required numeric id ) {
@@ -1484,7 +1484,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-recipients-on-a-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/retrieve-all-recipients-on-a-list
   * @hint Retrieve all recipients on the list with the given ID.
   * @page Page index of first recipient to return (must be a positive integer)
   * @pageSize Number of recipients to return at a time (must be a positive integer between 1 and 1000)
@@ -1501,7 +1501,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-a-single-recipient-to-a-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-a-single-recipient-to-a-list
   * @hint Add a single recipient to a list.
   * @recipientId The recipient ID or email address (which will be converted to the recipient ID)
   */
@@ -1510,7 +1510,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-single-recipient-from-a-single-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/delete-a-single-recipient-from-a-single-list
   * @hint Delete a single recipient from a list.
   * @recipientId The recipient ID or email address (which will be converted to the recipient ID)
   */
@@ -1519,7 +1519,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-multiple-recipients-to-a-list
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-lists/add-multiple-recipients-to-a-list
   * @hint Add multiple recipients to a list.
   * @recipients an array of recipient IDs or email addresses
   */
@@ -1543,7 +1543,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-segments/create-a-segment
   * @hint Create a segment using search conditions.
   * @conditions an array of structs making up the search conditions that define this segment. Read SendGrid documentation for specifics on how to segment contacts.
   * @listId The list id from which to make this segment. Not including this ID will mean your segment is created from the main contactdb rather than a list.
@@ -1559,7 +1559,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-all-segments
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-all-segments
   * @hint Retrieve all of your segments.
   */
   public struct function listSegments() {
@@ -1567,7 +1567,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-a-segment
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-a-segment
   * @hint Retrieve a single segment with the given ID.
   */
   public struct function getSegment( required numeric id ) {
@@ -1590,7 +1590,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/delete-a-segment
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-segments/delete-a-segment
   * @hint Delete a segment from your recipients database.
   */
   public struct function deleteSegment( required numeric id ) {
@@ -1598,7 +1598,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-recipients-on-a-segment
+  * @docs https://sendgrid.api-docs.io/v3.0/contacts-api-segments/retrieve-recipients-on-a-segment
   * @hint Retrieve all of the recipients in a segment with the given ID.
   */
   public struct function listRecipientsBySegment( required numeric id, numeric page = 0, numeric page_size = 0 ) {
@@ -1618,7 +1618,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-all-invalid-emails
+  * @docs https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-all-invalid-emails
   * @hint Retrieve a list of invalid emails that are currently on your invalid emails list.
   * @start_time Start of the time range when the invalid email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
   * @end_time End of the time range when the invalid email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
@@ -1642,7 +1642,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-a-specific-invalid-email
+  * @docs https://sendgrid.api-docs.io/v3.0/invalid-emails-api/retrieve-a-specific-invalid-email
   * @hint Retrieve information about a specific invalid email address.
   */
   public struct function getInvalidEmail( required string email ) {
@@ -1655,7 +1655,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/create-a-sender-identity
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/create-a-sender-identity
   * @hint Create a new sender identity.
   * @sender this should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
@@ -1669,7 +1669,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/get-all-sender-identities
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/get-all-sender-identities
   * @hint Retrieve a list of all sender identities that have been created for your account.
   */
   public struct function listSenders() {
@@ -1677,7 +1677,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/update-a-sender-identity
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/update-a-sender-identity
   * @hint Update a sender identity by ID.
   * @sender this should be an instance of the `helpers.sender` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
@@ -1691,7 +1691,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/delete-a-sender-identity
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/delete-a-sender-identity
   * @hint Delete a single sender identity by ID.
   */
   public struct function deleteSender( required numeric id ) {
@@ -1699,7 +1699,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/resend-sender-identity-verification
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/resend-sender-identity-verification
   * @hint Resend a sender identity verification email.
   */
   public struct function resendSenderVerification( required numeric id ) {
@@ -1707,7 +1707,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/sender-identities-api/view-a-sender-identity
+  * @docs https://sendgrid.api-docs.io/v3.0/sender-identities-api/view-a-sender-identity
   * @hint Retrieve a single sender identity by ID.
   */
   public struct function getSender( required numeric id ) {
@@ -1721,7 +1721,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends/create-a-batch-id
+  * @docs https://sendgrid.api-docs.io/v3.0/cancel-scheduled-sends/create-a-batch-id
   * @hint Generate a new batch ID. This batch ID can be associated with scheduled sends via the mail/send endpoint.
   */
   public struct function generateBatchId() {
@@ -1734,7 +1734,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/spam-reports-api/retrieve-all-spam-reports
+  * @docs https://sendgrid.api-docs.io/v3.0/spam-reports-api/retrieve-all-spam-reports
   * @hint Retrieve a list of spam reports that are currently on your spam reports list.
   * @start_time Start of the time range when the spam reports was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
   * @end_time End of the time range when the spam reports was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
@@ -1758,7 +1758,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/spam-reports-api/retrieve-a-specific-spam-report
+  * @docs https://sendgrid.api-docs.io/v3.0/spam-reports-api/retrieve-a-specific-spam-report
   * @hint Retrieve a specific spam report by email address
   */
   public struct function getSpamReport( required string email ) {
@@ -1771,7 +1771,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/add-suppressions-to-a-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/add-suppressions-to-a-suppression-group
   * @hint Add email addresses to an unsubscribe group. If you attempt to add suppressions to a group that has been deleted or does not exist, the suppressions will be added to the global suppressions list.
   * @emails an array of email addresses
   */
@@ -1790,7 +1790,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions-for-a-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions-for-a-suppression-group
   * @hint Retrieve all suppressed email addresses belonging to the given group.
   */
   public struct function listEmailsByUnsubscribeGroup( required numeric id ) {
@@ -1798,7 +1798,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/delete-a-suppression-from-a-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/delete-a-suppression-from-a-suppression-group
   * @hint Remove a suppressed email address from the given suppression group.
   */
   public struct function deleteEmailFromUnsubscribeGroup( required numeric id, required string email ) {
@@ -1806,7 +1806,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppressions
   * @hint Retrieve a list of all suppressions.
   */
   public struct function listAllSupressions() {
@@ -1814,7 +1814,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppression-groups-for-an-email-address
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/retrieve-all-suppression-groups-for-an-email-address
   * @hint Appears to slightly differ from the documentation. Returns all supressions groups, with an indication if the email address is supressed or not.
   */
   public struct function listUnsubscribeGroupsByEmail( required string email ) {
@@ -1822,7 +1822,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/search-for-suppressions-within-a-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-suppressions/search-for-suppressions-within-a-group
   * @hint Search a suppression group for multiple suppressions.
   */
   public struct function searchUnsubscribeGroupForEmails( required numeric id, required array emails ) {
@@ -1845,7 +1845,7 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/create-a-new-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/create-a-new-suppression-group
   * @hint Create a new unsubscribe suppression group.
   * @name Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (30) by silently trimming excess characters.
   * @description Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (100) by silently trimming excess characters.
@@ -1862,7 +1862,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/retrieve-all-suppression-groups-associated-with-the-user
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/retrieve-all-suppression-groups-associated-with-the-user
   * @hint Retrieve a list of all suppression groups created by this user.
   */
   public struct function listUnsubscribeGroups() {
@@ -1870,7 +1870,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/get-information-on-a-single-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/get-information-on-a-single-suppression-group
   * @hint Retrieve a single suppression group.
   */
   public struct function getUnsubscribeGroup( required numeric id ) {
@@ -1878,7 +1878,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/update-a-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/update-a-suppression-group
   * @hint Update an unsubscribe suppression group.
   * @name Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (30) by silently trimming excess characters.
   * @description Can be seen by recipients on the unsubscribe landing page. SendGrid enforces the max length (100) by silently trimming excess characters.
@@ -1897,7 +1897,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/delete-a-suppression-group
+  * @docs https://sendgrid.api-docs.io/v3.0/suppressions-unsubscribe-groups/delete-a-suppression-group
   * @hint Delete a suppression group.
   */
   public struct function deleteUnsubscribeGroup( required numeric id ) {
@@ -1906,8 +1906,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
 
   /**
-  * https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email
-  * https://sendgrid.com/docs/ui/managing-contacts/email-address-validation/
+  * @docs https://sendgrid.api-docs.io/v3.0/email-address-validation/validate-an-email
   * @hint Validates an email
   * @email Email address to validate
   * @source One word classifier for the validation
