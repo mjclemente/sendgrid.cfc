@@ -1065,7 +1065,7 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
-  * @todo Look into workaround, as CF doesn't send the request body for DELETE
+  * // TODO Look into workaround, as CF doesn't send the request body for DELETE
   * https://sendgrid.api-docs.io/v3.0/blocks-api/delete-blocks
   * @hint Delete email addresses on your blocks list
   */
