@@ -206,6 +206,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
+    // TODO does this work?
     if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
@@ -230,6 +231,7 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
+    // TODO does this work?
     if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
     else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
 
@@ -514,10 +516,11 @@ component output="false" displayname="SendGrid.cfc"  {
   * @automatic_security Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
   * @custom_dkim_selector Add a custom DKIM selector. Accepts three letters or numbers.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  // TODO adjust creation of authenticated domain
   */
   public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], boolean custom_spf = false, boolean default = false, boolean automatic_security = false, string custom_dkim_selector = '', string on_behalf_of = '') {
     var body = {};
-
+    // TODO clean out examples
     /*
       {
         "domain": "example.com",
