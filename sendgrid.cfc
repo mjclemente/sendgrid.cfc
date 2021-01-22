@@ -73,7 +73,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Retrieve all API Keys belonging to the authenticated user
   * @limit limit the number of rows returned.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO Changed order
   */
   public struct function listKeys( numeric limit = 0, string on_behalf_of = '' ) {
     var params = {};
@@ -186,7 +185,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
   * @hint Retrieve Subuser Reputations
   * @usernames The name of the subuser which you are obtaining the reputation score.
-  // TODO arg name changed
   */
   public struct function getSubuserReputations( required string usernames ) {
     var params = {
@@ -349,7 +347,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Retrieve all branded links
   * @limit limit the number of rows returned.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO changed param order
   */
   public struct function listBrandedLinks( numeric limit = 0, string on_behalf_of = '' ) {
     var params = {};
@@ -482,7 +479,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @username The username associated with an authenticated domain.
   * @domain Search for authenticated domains.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO reordered params
   */
   public struct function listAllDomains( numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '', string on_behalf_of = '' ) {
     var params = {};
@@ -554,7 +550,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
   * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO defaults changed
   */
   public struct function updateAuthenticatedDomain( required numeric domain_id, boolean custom_spf, boolean default, string on_behalf_of = '' ) {
     var body = {};
@@ -830,7 +825,6 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
   * @hint Get a user's profile
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO document param change
   */
   public struct function getUserProfile( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/profile", {}, {}, parseSubUser( on_behalf_of ) );
