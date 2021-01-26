@@ -524,22 +524,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], boolean custom_spf = false, boolean default = false, boolean automatic_security = false, string custom_dkim_selector = '', string on_behalf_of = '') {
     var body = {};
-    // TODO clean out examples
-    /*
-      {
-        "domain": "example.com",
-        "subdomain": "news",
-        "username": "john@example.com",
-        "ips": [
-          "192.168.1.1",
-          "192.168.1.2"
-        ],
-        "custom_spf": true,
-        "default": true,
-        "automatic_security": false,
-        "custom_dkim_selector": "tes"
-      }
-    */
 
     // Build JSON body
     local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=domain, subdomain=subdomain, username=username, ips=ips,
