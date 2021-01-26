@@ -206,9 +206,11 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    // TODO does this work?
-    if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
-    else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+    if (len(date)) {
+      params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
+    } else {
+      params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+    }
 
     if ( len(sort_by_metric) ) params[ 'sort_by_metric' ] = sort_by_metric;
     if ( len(sort_by_direction) ) params[ 'sort_by_direction' ] = sort_by_direction;
@@ -231,9 +233,11 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
 
-    // TODO does this work?
-    if (len(date)) params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
-    else params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+    if (len(date)) {
+      params[ 'date' ] = dateFormat(date, 'YYYY-mm-dd');
+    } else {
+      params[ 'date' ] = dateFormat(now(), 'YYYY-mm-dd');
+    }
 
     if ( len(subuser) ) params[ 'subuser' ] = subuser;
     if ( len(sort_by_metric) ) params[ 'sort_by_metric' ] = sort_by_metric;
