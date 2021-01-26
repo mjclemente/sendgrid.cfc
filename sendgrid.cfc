@@ -957,15 +957,6 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
     var body = {};
 
-    /*
-      {
-        "url": "mollit non ipsum magna",
-        "oauth_client_id": "nisi",
-        "oauth_client_secret": "veniam commodo ex sunt",
-        "oauth_token_url": "dolor Duis"
-      }
-    */
-    // Build JSON body
     body = webhook.buildTest();
 
     return apiCall( 'POST', "/user/webhooks/event/test", {}, body, parseSubUser( on_behalf_of ) );
