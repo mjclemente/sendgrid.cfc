@@ -17,10 +17,10 @@ component accessors="true" {
         if ( arguments.keyExists( 'domain' ) )
             this.domain( arguments.domain );
 
-        if ( arguments.keyExists( 'subdomain' ) AND arguments.subdomain NEQ "" )
+        if ( arguments.keyExists( 'subdomain' ) )
             this.subdomain( arguments.subdomain );
 
-        if ( arguments.keyExists( 'username' ) AND arguments.username NEQ "" )
+        if ( arguments.keyExists( 'username' ) )
             this.username( arguments.username );
 
         if ( isArray( ips ) )
@@ -37,12 +37,12 @@ component accessors="true" {
         if ( arguments.keyExists( 'automatic_security' ) )
             this.automatic_security( arguments.automatic_security );
 
-        if ( arguments.keyExists( 'custom_dkim_selector' ) AND arguments.custom_dkim_selector NEQ "" )
+        if ( arguments.keyExists( 'custom_dkim_selector' ) )
             this.custom_dkim_selector( arguments.custom_dkim_selector );
 
         return this;
     }
-  
+
     /**
     * @hint  Sets the domain being authenticated.
     */
@@ -50,7 +50,7 @@ component accessors="true" {
       setDomain( domain );
       return this;
     }
-  
+
     /**
     * @hint Sets the subdomain to use for this authenticated domain
     */
@@ -58,7 +58,7 @@ component accessors="true" {
       setSubdomain( subdomain );
       return this;
     }
-  
+
     /**
     * @hint Sets the username associated with this domain.
     */
@@ -98,7 +98,7 @@ component accessors="true" {
         setCustom_dkim_selector( custom_dkim_selector );
         return this;
     }
-    
+
     /**
     * @hint Set an array of ips you would like associated to this domain. If ips are already set, this overwrites them.
     * @ips Can be passed in as an array or comma separated list. Lists will be converted to arrays
@@ -108,25 +108,24 @@ component accessors="true" {
         setIps( ips );
       else
         setIps( ips.listToArray() );
-  
+
       return this;
     }
-  
+
     /**
     * @hint Appends a single ip to the ips array
     */
     public any function addIp( required string ip ) {
       variables.ips.append( ip );
-  
       return this;
     }
-  
+
 
     /**
     * @hint Because the domain is the only required field this helper builds the body based on the parameters passed in.
     */
     public string function build() {
-  
+
       var body = '';
       var properties = getPropertyValues();
       var count = properties.len();
@@ -148,25 +147,25 @@ component accessors="true" {
       );
       return '{' & body & '}';
     }
-  
+
     private string function serializeIps( required array data ) {
       var serializedData = data.reduce(
         function( result, item, index ) {
           if ( result.len() ) result &= ',';
-  
+
           return result & '"#item#"';
         }, ''
       );
-  
+
       return '[' & serializedData & ']';
     }
-  
+
 
     /**
     * @hint converts the array of properties to an array of their keys/values, while filtering those that have not been set
     */
     private array function getPropertyValues() {
-  
+
       var propertyValues = getProperties().map(
         function( item, index ) {
           return {
@@ -175,7 +174,7 @@ component accessors="true" {
           };
         }
       );
-  
+
       return propertyValues.filter(
         function( item, index ) {
           if ( isStruct( item.value ) )
@@ -187,19 +186,19 @@ component accessors="true" {
         }
       );
     }
-  
+
     private array function getProperties() {
-  
+
       var metaData = getMetaData( this );
       var properties = [];
-  
+
       for( var prop in metaData.properties ) {
         properties.append( prop );
       }
-  
+
       return properties;
     }
-  
+
     private any function getPropertyValue( string key ){
       var method = this["get#key#"];
       var value = method();
