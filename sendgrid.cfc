@@ -511,26 +511,15 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
   * @hint Authenticate a domain
-  * @domain Domain being authenticated.
-  * @subdomain The subdomain to use for this authenticated domain
-  * @username The username associated with this domain.
-  * @ips The IP addresses that will be included in the custom SPF record for this authenticated domain.
-  * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
-  * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
-  * @automatic_security Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
-  * @custom_dkim_selector Add a custom DKIM selector. Accepts three letters or numbers.
+  * @domain this should be an instance of the `helpers.domain` component. However, if you want to create and pass in the struct or json yourself, you can.
   * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
-  // TODO adjust creation of authenticated domain
   */
-  public struct function createAuthenticatedDomain( required string domain, string subdomain = '', string username = '', array ips = [], boolean custom_spf = false, boolean default = false, boolean automatic_security = false, string custom_dkim_selector = '', string on_behalf_of = '') {
+  public struct function createAuthenticatedDomain( required any domain, string on_behalf_of = '') {
     var body = {};
-
-    // Build JSON body
-    local.domain = createObject("modules.sendgridcfc.helpers.domain").init( domain=domain, subdomain=subdomain, username=username, ips=ips,
-                                                                            custom_spf=custom_spf, default=default, automatic_security=automatic_security,
-                                                                            custom_dkim_selector=custom_dkim_selector );
-
-    body = local.domain.build();
+    if ( isValid( 'component', domain ) )
+      body = domain.build();
+    else
+      body = domain;
     return apiCall( 'POST', "/whitelabel/domains", {}, body, parseSubUser( on_behalf_of ) );
   }
 
