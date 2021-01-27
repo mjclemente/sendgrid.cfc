@@ -68,7 +68,7 @@ component accessors="true" {
   * @hint Sets the IDs of the lists you are sending this campaign to. Note that you can have both segment IDs and list IDs. If any list Ids were previously set, this method overwrites them.
   * @lists Can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
-  public any function useLists( required array lists ) {
+  public any function useLists( required any lists ) {
     if ( isArray( lists ) )
       setList_ids( lists );
     else
