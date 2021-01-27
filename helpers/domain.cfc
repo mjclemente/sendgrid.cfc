@@ -8,12 +8,11 @@ component accessors="true" {
     property name="default" default=false type="boolean";
     property name="automatic_security" default=false type="boolean";
     property name="custom_dkim_selector" default="";
-  
-  
+
     /**
-    * @hint Allow all values to be set by the init.   The domain name is the only required key needed to create an authenticated domain.
+    * @hint Allow all values to be set by the init. The domain name is the only required key needed to create an authenticated domain.
     */
-    public any function init( required string domain, string subdomain, string username, array ips, boolean custom_spf, boolean default, boolean automatic_security, string custom_dkim_selector ) {
+    public any function init( string domain, string subdomain, string username, array ips, boolean custom_spf, boolean default, boolean automatic_security, string custom_dkim_selector ) {
 
         if ( arguments.keyExists( 'domain' ) )
             this.domain( arguments.domain );
