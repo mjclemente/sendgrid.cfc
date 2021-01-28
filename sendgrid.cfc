@@ -53,8 +53,8 @@ component output="false" displayname="SendGrid.cfc"  {
   */
 
   /**
-  * @hint Send email, using SendGrid's REST API
-  * @mail must be an instance of the `helpers.mail` component
+  * @hint Sends email, using SendGrid's REST API.
+  * @mail must be an instance of the `helpers.mail` component. The README provides examples of how to send and build an email
   */
   public struct function sendMail( required component mail ) {
     if ( variables.forceTestMode ) mail.enableSandboxMode();
@@ -71,8 +71,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-all-api-keys-belonging-to-the-authenticated-user
   * @hint Retrieve all API Keys belonging to the authenticated user
-  * @limit limit the number of rows returned.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @limit limits the number of rows returned.
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function listKeys( numeric limit = 0, string on_behalf_of = '' ) {
     var params = {};
@@ -85,7 +85,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
   * @hint Retrieve an existing API Key
   * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
     return apiCall( 'GET', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -97,7 +97,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Create API keys
   * @name this should be an the name of your new key
   * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
     var body = {
@@ -112,7 +112,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
   * @hint Delete API keys
   * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
     return apiCall( 'DELETE', "/api_keys/#api_key_id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -123,7 +123,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint This endpoint allows you to update the name of an existing API Key.
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @name The new name for the API Key for which you are updating.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAPIKeyName( required string api_key_id, required string name, string on_behalf_of = '' ) {
     var body = {
@@ -138,7 +138,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
   * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send
   * @name The updated name for the API Key for which you are updating.  (required)
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call (Optional)
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAPIKey( required string api_key_id, required string name, array scopes = ['mail.send'],  string on_behalf_of = '' ) {
     var body = {
@@ -352,7 +352,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
   * @hint Retrieve all branded links
   * @limit limit the number of rows returned.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function listBrandedLinks( numeric limit = 0, string on_behalf_of = '' ) {
     var params = {};
@@ -365,7 +365,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-branded-link
   * @hint Retrieve a branded link
   * @id The id of the branded link you want to retrieve.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '' ) {
     return apiCall( 'GET', "/whitelabel/links/#id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -376,7 +376,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-the-default-branded-link
   * @hint Retrieve the default branded link
   * @domain The domain to match against when finding a corresponding branded link.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '' ) {
     var params = {};
@@ -405,7 +405,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @domain The root domain for your subdomain that you are creating the link branding for. This should match your FROM email address.
   * @subdomain The subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
   * @default Indicates if you want to use this link branding as the fallback, or as the default.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createLinkBranding( required string domain, string subdomain = '', boolean default, string on_behalf_of = '' ) {
     var body = {
@@ -424,7 +424,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/delete-a-branded-link
   * @hint Delete a branded link
   * @id The id of the branded link you want to delete.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteBrandedLink( required numeric id, string on_behalf_of = '' ) {
     return apiCall( 'DELETE', "/whitelabel/links/#id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -434,7 +434,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/validate-a-branded-link
   * @hint Validate a branded link
   * @id The id of the branded link you want to delete.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
     return apiCall( 'POST', "/whitelabel/links/#id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
@@ -484,7 +484,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @exclude_subusers Exclude subuser domains from the result.
   * @username The username associated with an authenticated domain.
   * @domain Search for authenticated domains.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function listAllDomains( numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '', string on_behalf_of = '' ) {
     var params = {};
@@ -502,7 +502,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
   * @hint Retrieve an authenticated domain
   * @domain_id The id of the branded link you want to retrieve.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
     return apiCall( 'GET', "/whitelabel/domains/#domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -512,7 +512,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
   * @hint Authenticate a domain
   * @domain this should be an instance of the `helpers.domain` component. However, if you want to create and pass in the struct or json yourself, you can.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createAuthenticatedDomain( required any domain, string on_behalf_of = '') {
     var body = {};
@@ -529,7 +529,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @domain_id Domain ID to be updated.
   * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
   * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAuthenticatedDomain( required numeric domain_id, boolean custom_spf, boolean default, string on_behalf_of = '' ) {
     var body = {};
@@ -547,7 +547,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
   * @hint Delete an authenticated domain.
   * @domain_id The id of the branded link you want to delete.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
     return apiCall( 'DELETE', "/whitelabel/domains/#domain_id#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -556,7 +556,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/get-the-default-authentication
   * @hint Get the default authentication
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getDefaultAuthenticatedDomain( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/whitelabel/domains/default", {}, {}, parseSubUser( on_behalf_of ) );
@@ -567,7 +567,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Add an IP to an authenticated domain
   * @domain_id Domain ID to be updated.
   * @ip IP to associate with the domain. Used for manually specifying IPs for custom SPF.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
     var body = {
@@ -582,7 +582,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Remove an IP from an authenticated domain.
   * @domain_id 	ID of the domain to delete the IP from.
   * @ip IP to remove from the domain.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
     return apiCall( 'DELETE', "/whitelabel/domains/#domain_id#/ips/#ip#", {}, {}, parseSubUser( on_behalf_of ) );
@@ -593,7 +593,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
   * @hint Validate a domain authentication.
   * @domain_id ID of the domain to validate.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
     return apiCall( 'POST', "/whitelabel/domains/#domain_id#/validate", {}, {}, parseSubUser( on_behalf_of ) );
@@ -804,7 +804,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-profile
   * @hint Get a user's profile
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getUserProfile( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/profile", {}, {}, parseSubUser( on_behalf_of ) );
@@ -815,7 +815,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Update a user's profile
   * @firstName  The first name of the user.
   * @lastName   The last name of the user.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserProfile( string firstName = '', string lastName = '', string on_behalf_of = '' ) {
     var body = {};
@@ -831,7 +831,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/get-a-user-s-account-information
   * @hint Get a user's account information.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getUserAccount( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/account", {}, {}, parseSubUser( on_behalf_of ) );
@@ -840,7 +840,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-account-email-address
   * @hint Retrieve your account email address
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getUserEmail( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/email", {}, {}, parseSubUser( on_behalf_of ) );
@@ -850,7 +850,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-account-email-address
   * @hint Update your account email address
   * @email The new email address that you would like to use for your account.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserEmail( required string email, string on_behalf_of = '' ) {
     var body = {
@@ -862,7 +862,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-username
   * @hint Retrieve your username
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getUserUsername( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/username", {}, {}, parseSubUser( on_behalf_of ) );
@@ -872,7 +872,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-username
   * @hint Update your username
   * @username The new username you would like to use for your account.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserUsername( required string username, string on_behalf_of = '' ) {
     var body = {
@@ -886,7 +886,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @hint Update your password
   * @oldpassword The old password for your account.
   * @newpassword The new password you would like to use for your account.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' ) {
     var body = {
@@ -899,7 +899,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/retrieve-your-credit-balance
   * @hint Retrieve your credit balance
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getUserCreditBalance( string on_behalf_of = '' ) {
     return apiCall( 'GET', "/user/credits", {}, {}, parseSubUser( on_behalf_of ) );
@@ -915,7 +915,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-event-webhook-settings
   * @hint Retrieve Event Webhook settings
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getEventWebhookSettings( string on_behalf_of = '') {
     return apiCall( 'GET', "/user/webhooks/event/settings", {}, {}, parseSubUser( on_behalf_of ) );
@@ -926,7 +926,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
   * @hint Update Event Notification Settings
   * @webhook The webhook helper component
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
     var body = {};
@@ -941,7 +941,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
   * @hint Test Event Notification Settings
   * @webhook The webhook helper component
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
     var body = {};
@@ -955,7 +955,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-signed-webhook-public-key
   * @hint Retrieve Signed Webhook Public Key
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getEventWebhookSignedPublicKey( string on_behalf_of = '') {
     return apiCall( 'GET', "/user/webhooks/event/settings/signed", {}, {}, parseSubUser( on_behalf_of ) );
@@ -965,7 +965,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/enable-disable-signed
   * @hint Enable/Disable Signed Webhook
   * @enabled You may either enable or disable signing of the Event Webhook using this endpoint.
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' ) {
     var body = {
@@ -977,7 +977,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-parse-webhook-settings
   * @hint Retrieve Parse Webhook settings
-  * @on_behalf_of The subuser's username. This header generates the API call as if the subuser account was making the call
+  * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getEventWebhookParseSettings( string on_behalf_of = '') {
     return apiCall( 'GET', "/user/webhooks/parse/settings", {}, {}, parseSubUser( on_behalf_of ) );
