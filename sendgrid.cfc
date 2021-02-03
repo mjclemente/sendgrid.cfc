@@ -84,7 +84,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
   * @hint Retrieve an existing API Key
-  * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
@@ -94,9 +94,9 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
-  * @hint Create API keys
-  * @name this should be an the name of your new key
-  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization
+  * @hint Creates API keys
+  * @name should be the name of your new key
+  * @scopes refers to the individual permissions that you are giving to this API Key ( [options listed here](https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization) )
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createAPIKey( required string name, array scopes = ['mail.send'], string on_behalf_of = '' ) {
@@ -111,7 +111,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
   * @hint Delete API keys
-  * @api_key_id The ID of the API Key for which you are requesting information. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
@@ -121,8 +121,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
   * @hint This endpoint allows you to update the name of an existing API Key.
-  * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @name The new name for the API Key for which you are updating.
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @name is the new name for the API Key that you are updating.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAPIKeyName( required string api_key_id, required string name, string on_behalf_of = '' ) {
@@ -135,9 +135,9 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
   * @hint This endpoint allows you to update the name and scopes of a given API key.
-  * @api_key_id The ID of the API Key for which you are updating. This is everything in the API key after the SG and before the second dot, so if this were an example API key: SG.aaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbb, your api_key_id would be aaaaaaaaaaaaaa
-  * @scopes The individual permissions that you are giving to this API Key.  https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization    (Optional)  defaults to mail.send
-  * @name The updated name for the API Key for which you are updating.  (required)
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @scopes is optional and defaults to `mail.send`. It refers to the individual permissions that you are giving to this API Key ( [options listed here](https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization) )
+  * @name is the updated name for the API Key that you are updating. It is required.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAPIKey( required string api_key_id, required string name, array scopes = ['mail.send'],  string on_behalf_of = '' ) {
