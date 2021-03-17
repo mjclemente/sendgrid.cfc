@@ -1167,6 +1167,14 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'PATCH', '/campaigns/#id#', {}, body );
   }
 
+  /**
+  * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/view-scheduled-time-of-a-campaign
+  * @hint View Scheduled Time of a Campaign
+  */
+  public struct function getCampaignSchedule( required numeric id ) {
+    return apiCall( 'GET', '/campaigns/#id#/schedules' );
+  }
+
 
   /**
   * Contacts API - Recipients
