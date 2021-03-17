@@ -1131,8 +1131,10 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://sendgrid.api-docs.io/v3.0/campaigns-api/retrieve-all-campaigns
   * @hint Retrieve a list of all of your campaigns.
   */
-  public struct function listCampaigns() {
-    return apiCall( 'GET', "/campaigns" );
+  public struct function listCampaigns( numeric limit = 0 ) {
+    var params = {};
+    if ( limit ) params[ 'limit' ] = limit;
+    return apiCall( 'GET', "/campaigns", params );
   }
 
   /**
