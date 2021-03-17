@@ -62,7 +62,6 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/mail/send', {}, mail.build() );
   }
 
-
   /**
   * API Keys API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/API_Keys/index.html
@@ -1058,7 +1057,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/blocks-api/delete-a-specific-block
-  * @hint Retrieve a specific email address from your blocks list.
+  * @hint Remove a specific email address from your blocks list.
   */
   public struct function deleteBlock( required string email ) {
     return apiCall( 'DELETE', "/suppression/blocks/#email#" );
