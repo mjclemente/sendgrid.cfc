@@ -1102,6 +1102,14 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * @docs https://sendgrid.api-docs.io/v3.0/bounces-api/delete-a-bounce
+  * @hint Remove an email address from your block list
+  */
+  public struct function deleteBounce( required string email ) {
+    return apiCall( 'DELETE', "/suppression/bounces/#email#" );
+  }
+
+  /**
   * Campaigns API
   * https://sendgrid.com/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html
   */
