@@ -11,8 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - A changelog
-- Method `deleteBlock()`
+- Methods `deleteBlock()`, `getCampaignSchedule()`, and `deleteBounce()`
 - Parameters `page` and `page_size` to method `listRecipientsBySegment()`
+- Parameter `limit` to method `getCampaignSchedule()`
 
 ### Changed
 
@@ -20,3 +21,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Argument name in `getSubuserReputations()` from `username` to `usernames` to match SendGrid.
 - Argument name in `getUserProfile()` from `username` to `on_behalf_of` to match convention used throughout component for accessing Subuser information.
 - Removed parameter defaults from `updateAuthenticatedDomain()` so that only explicit values are used in API requests.
+- Updated `createAuthenticatedDomain()` to use `helpers.domain` instead of accepting all parameters.
+- Moved most component documentation to `/docs`
+
+### Fixed
+
+- In `helpers.campaign`, the `useLists()` method now accepts arrays *and* lists, as documented.
