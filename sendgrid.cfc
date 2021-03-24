@@ -54,7 +54,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @hint Sends email, using SendGrid's REST API.
-  * @mail must be an instance of the `helpers.mail` component. The README provides examples of how to send and build an email
+  * @mail must be an instance of the `helpers.mail` component. The README provides examples of how to build and send an email
   */
   public struct function sendMail( required component mail ) {
     if ( variables.forceTestMode ) mail.enableSandboxMode();
