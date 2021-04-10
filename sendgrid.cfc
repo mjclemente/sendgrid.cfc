@@ -83,7 +83,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/retrieve-an-existing-api-key
   * @hint Retrieve an existing API Key
-  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs for this endpoint explain where to find this.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getAPIKey( required string api_key_id, string on_behalf_of = '' ) {
@@ -93,7 +93,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/create-api-keys
-  * @hint Creates API keys
+  * @hint Creates an API key.
   * @name should be the name of your new key
   * @scopes refers to the individual permissions that you are giving to this API Key ( [options listed here](https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization) )
   * @on_behalf_of generates the API call as if the subuser account was making the request
@@ -109,8 +109,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/delete-api-keys
-  * @hint Delete API keys
-  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @hint Delete an API key
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs for this endpoint explain where to find this.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteAPIKey( required string api_key_id, string on_behalf_of = '' ) {
@@ -119,8 +119,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-api-keys
-  * @hint This endpoint allows you to update the name of an existing API Key.
-  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @hint Updates the name of an existing API Key.
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs for this endpoint explain where to find this.
   * @name is the new name for the API Key that you are updating.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
@@ -133,8 +133,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/api-keys/update-the-name-and-scopes-of-an-api-key
-  * @hint This endpoint allows you to update the name and scopes of a given API key.
-  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs explain where to find this.
+  * @hint Updates the name and scopes of a given API key.
+  * @api_key_id is the ID of the API Key for which you are requesting information. The SendGrid docs for this endpoint explain where to find this.
   * @scopes is optional and defaults to `mail.send`. It refers to the individual permissions that you are giving to this API Key ( [options listed here](https://sendgrid.api-docs.io/v3.0/how-to-use-the-sendgrid-v3-api/api-authorization) )
   * @name is the updated name for the API Key that you are updating. It is required.
   * @on_behalf_of generates the API call as if the subuser account was making the request
@@ -156,10 +156,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/list-all-subusers
-  * @hint Retrieve all API Keys belonging to the authenticated user
-  * @username The username of the subuser to return.  (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @hint Retrieve a list of all of your subusers.
+  * @username is the username of the subuser to return.  (Optional)
+  * @limit limits the number of results you would like to get in each request. (Optional)
+  * @offset is the number of subusers to skip (Optional)
   */
   public struct function listAllSubusers( string username = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -173,8 +173,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monitor-settings-for-a-subuser
-  * @hint Retrieve monitor settings for a subuser
-  * @subuser_name The name of the subuser to return.
+  * @hint Retrieves monitor settings for a subuser.
+  * @subuser_name is the name of the subuser to return.
   */
   public struct function getSubuserMonitorSettings( required string subuser_name ) {
     return apiCall( 'GET', "/subusers/#subuser_name#/monitor" );
@@ -182,8 +182,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-subuser-reputations
-  * @hint Retrieve Subuser Reputations
-  * @usernames The name of the subuser which you are obtaining the reputation score.
+  * @hint Retrieves subuser reputations.
+  * @usernames is the name of the subuser that you are obtaining the reputation score for.
   */
   public struct function getSubuserReputations( required string usernames ) {
     var params = {
@@ -195,12 +195,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-monthly-email-statistics-for-a-single-subuser
   * @hint Retrieve the monthly email statistics for a single subuser
-  * @subuser_name The name of the subuser to return.
-  * @date The date the stastics were gathered.   Format: YYYY-MM-DD
-  * @sort_by_metric The metric that you want to sort by.  (Optional)
-  * @sort_by_direction The direction you want to sort. (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @subuser_name is the name of the subuser to return.
+  * @date is the date the statistics were gathered in the format: YYYY-MM-DD.
   */
   public struct function getSubuserMonthlyStats( required string subuser_name, required string date = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
