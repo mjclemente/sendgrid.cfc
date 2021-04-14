@@ -218,12 +218,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-monthly-stats-for-all-subusers
   * @hint Retrieve monthly stats for all subusers
-  * @date The date the stastics were gathered.   Format: YYYY-MM-DD
-  * @subuser A substring search of your subusers.  (Optional)
-  * @sort_by_metric The metric that you want to sort by.  (Optional)
-  * @sort_by_direction The direction you want to sort. (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @date is the date the statistics were gathered in the format: YYYY-MM-DD.
+  * @subuser is a substring search of your subusers.
   */
   public struct function getSubuserMonthlyStatsAllSubusers( required string date = '', string subuser = '', string sort_by_metric = '', string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -246,13 +242,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-the-totals-for-each-email-statistic-metric-for-all-subusers
   * @hint Retrieve the totals for each email statistic metric for all subusers.
-  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
-  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
-  * @sort_by_metric The metric that you want to sort by.  (Optional)
-  * @sort_by_direction The direction you want to sort. (Optional)
-  * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @start_date is the starting date of the statistics to retrieve in the format YYYY-MM-DD.
+  * @end_date is the end date of the statistics to retrieve in the format YYYY-MM-DD. It defaults to today.
   */
   public struct function getAllSubuserTotals( required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -272,15 +263,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/retrieve-email-statistics-for-your-subusers
-  * @hint Retrieve email statistics for your subusers.
-  * @subusers The subuser you want to retrieve statistics for. You may include this parameter up to 10 times to retrieve statistics for multiple subusers.  (Optional)
-  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
-  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
-  * @sort_by_metric The metric that you want to sort by.  (Optional)
-  * @sort_by_direction The direction you want to sort. (Optional)
-  * @aggregated_by How to group the statistics. Defaults to today. Must follow format YYYY-MM-DD. (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @hint Allows you to retrieve the email statistics for the given subusers.
+  * @subusers is the subusers you want to retrieve statistics for. You may include this parameter up to 10 times to retrieve statistics for multiple subusers.
+  * @start_date is the starting date of the statistics to retrieve in the format YYYY-MM-DD.
+  * @end_date is the end date of the statistics to retrieve in the format YYYY-MM-DD. It defaults to today.
   */
   public struct function getSubuserStats( required string subusers, required string start_date, string end_date = '', string sort_by_metric = '', string sort_by_direction = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -300,11 +286,11 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/create-subuser
-  * @hint Create Subuser
-  * @username The username for this subuser.
-  * @email The email address of the subuser.
-  * @password The password this subuser will use when logging into SendGrid.
-  * @ips The IP addresses that should be assigned to this subuser.
+  * @hint Creates a Subuser
+  * @username is the username for this subuser.
+  * @email is the email address of the subuser.
+  * @password is the password this subuser will use when logging into SendGrid.
+  * @ips are the IP addresses that should be assigned to this subuser.
   */
   public struct function createSubuser( required string username, required string email, required string password, required array ips = [] ) {
     var body = {
@@ -319,7 +305,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/delete-a-subuser
   * @hint Delete a subuser
-  * @subuser_name The subuser name to delete
+  * @subuser_name is the name of the subuser to delete
   */
   public struct function deleteSubuser( required string subuser_name ) {
     return apiCall( 'DELETE', "/subusers/#subuser_name#" );
@@ -329,8 +315,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/subusers-api/update-ips-assigned-to-a-subuser
   * @hint Update IPs assigned to a subuser
-  * @subuser_name The subuser to update
-  * @ips The IP addresses that are assigned to the subuser.
+  * @subuser_name is the name of the subuser to update
+  * @ips are the IP addresses that are assigned to the subuser.
   */
   public struct function updateSubuserIPs( required string subuser_name, required array ips = [] ) {
     return apiCall( 'PUT', "/subusers/#subuser_name#/ips", {}, ips );
@@ -346,7 +332,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-all-link-branding
   * @hint Retrieve all branded links
-  * @limit limit the number of rows returned.
+  * @limit limits the number of rows returned.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function listBrandedLinks( numeric limit = 0, string on_behalf_of = '' ) {
@@ -359,7 +345,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-branded-link
   * @hint Retrieve a branded link
-  * @id The id of the branded link you want to retrieve.
+  * @id is the id of the branded link you want to retrieve.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getBrandedLink( required numeric id = 0, string on_behalf_of = '' ) {
@@ -369,8 +355,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-the-default-branded-link
-  * @hint Retrieve the default branded link
-  * @domain The domain to match against when finding a corresponding branded link.
+  * @hint Retrieve the default branded link. The default branded link is the actual URL to be used when sending messages.
+  * @domain is the domain to match against when finding a corresponding branded link.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getDefaultBrandedLink( string domain = '', string on_behalf_of = '' ) {
@@ -383,8 +369,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/retrieve-a-subusers-branded-link
-  * @hint Retrieve a subusers branded link
-  * @username The username of the subuser to retrieve associated branded links for.
+  * @hint Retrieve a subuser's branded link
+  * @username specifies the username of the subuser to retrieve associated branded links for.
   */
   public struct function getSubuserBrandedLink( required string username = '' ) {
     var params = {};
@@ -397,9 +383,9 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/create-a-link-branding
   * @hint Create a branded link
-  * @domain The root domain for your subdomain that you are creating the link branding for. This should match your FROM email address.
-  * @subdomain The subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
-  * @default Indicates if you want to use this link branding as the fallback, or as the default.
+  * @domain is the root domain for your subdomain that you are creating the link branding for. This should match your FROM email address.
+  * @subdomain is the subdomain to create the link branding for. Must be different from the subdomain you used for authenticating your domain.
+  * @default indicates if you want to use this link branding as the fallback, or as the default.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createLinkBranding( required string domain, string subdomain = '', boolean default, string on_behalf_of = '' ) {
@@ -418,7 +404,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/delete-a-branded-link
   * @hint Delete a branded link
-  * @id The id of the branded link you want to delete.
+  * @id is the id of the branded link you want to delete.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteBrandedLink( required numeric id, string on_behalf_of = '' ) {
@@ -428,7 +414,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/validate-a-branded-link
   * @hint Validate a branded link
-  * @id The id of the branded link you want to delete.
+  * @id is the id of the branded link you want to delete.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function validateLinkBranding(  required numeric id = 0, string on_behalf_of = '' ) {
@@ -438,8 +424,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/associate-a-branded-link-with-a-subuser
   * @hint Associate a branded link with a subuser
-  * @link_id The id of the branded link you want to delete.
-  * @username The username of the subuser account that you want to associate the branded link with.
+  * @link_id is the id of the branded link you want to associate.
+  * @username is the username of the subuser account that you want to associate the branded link with.
   */
   public struct function associateLinkBranding( required numeric link_id, string username = '') {
     var body = {};
@@ -454,7 +440,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/link-branding/disassociate-link-branding-from-a-subuser
   * @hint Disassociate link branding from a subuser
-  * @username The username of the subuser account that you want to disassociate a branded link from.
+  * @username is the username of the subuser account that you want to disassociate link branding from.
   */
   public struct function disassociateBrandedLink( required string username ) {
     var params = {
@@ -474,11 +460,9 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/list-all-authenticated-domains
   * @hint List all authenticated domains
-  * @limit limit the number of rows returned.
-  * @offset Paging offset.
-  * @exclude_subusers Exclude subuser domains from the result.
-  * @username The username associated with an authenticated domain.
-  * @domain Search for authenticated domains.
+  * @exclude_subusers excludes subuser domains from the result.
+  * @username is the username associated with an authenticated domain.
+  * @domain searches for authenticated domains.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function listAllDomains( numeric limit = 0, numeric offset = 0, boolean exclude_subusers = false, string username = '', string domain = '', string on_behalf_of = '' ) {
@@ -496,7 +480,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/retrieve-a-authenticated-domain
   * @hint Retrieve an authenticated domain
-  * @domain_id The id of the branded link you want to retrieve.
+  * @domain_id is the id of the authenticated domain you want to retrieve.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
@@ -506,7 +490,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/authenticate-a-domain
   * @hint Authenticate a domain
-  * @domain this should be an instance of the `helpers.domain` component. However, if you want to create and pass in the struct or json yourself, you can.
+  * @domain should be an instance of the `helpers.domain` component. However, if you want to create and pass in the struct or json yourself, you can.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function createAuthenticatedDomain( required any domain, string on_behalf_of = '') {
@@ -521,9 +505,9 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/update-an-authenticated-domain
   * @hint Update an authenticated domain
-  * @domain_id Domain ID to be updated.
-  * @custom_spf Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
-  * @default Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
+  * @domain_id is the domain ID to be updated.
+  * @custom_spf specifies whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
+  * @default indicates whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateAuthenticatedDomain( required numeric domain_id, boolean custom_spf, boolean default, string on_behalf_of = '' ) {
@@ -541,7 +525,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/delete-an-authenticated-domain
   * @hint Delete an authenticated domain.
-  * @domain_id The id of the branded link you want to delete.
+  * @domain_id is the id of the domain you want to delete.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteAuthenticatedDomain( required numeric domain_id = 0, string on_behalf_of = '' ) {
@@ -550,7 +534,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/get-the-default-authentication
-  * @hint Get the default authentication
+  * @hint Get the default authenticated domain
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getDefaultAuthenticatedDomain( string on_behalf_of = '' ) {
@@ -560,8 +544,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/add-an-ip-to-an-authenticated-domain
   * @hint Add an IP to an authenticated domain
-  * @domain_id Domain ID to be updated.
-  * @ip IP to associate with the domain. Used for manually specifying IPs for custom SPF.
+  * @domain_id is the ID of the domain to be updated.
+  * @ip is the IP to associate with the domain. Used for manually specifying IPs for custom SPF.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function addIPAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
@@ -575,8 +559,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/remove-an-ip-from-an-authenticated-domain
   * @hint Remove an IP from an authenticated domain.
-  * @domain_id 	ID of the domain to delete the IP from.
-  * @ip IP to remove from the domain.
+  * @domain_id 	is the ID of the domain to delete the IP from.
+  * @ip is the IP to remove from the domain.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function deleteIPForAuthenticatedDomain( required numeric domain_id, required string ip, string on_behalf_of = '' ) {
@@ -587,7 +571,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/validate-a-domain-authentication
   * @hint Validate a domain authentication.
-  * @domain_id ID of the domain to validate.
+  * @domain_id is the ID of the domain to validate.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function validateAuthenticatedDomain( required numeric domain_id, string on_behalf_of = '' ) {
@@ -597,7 +581,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/list-the-authenticated-domain-associated-with-the-given-user
   * @hint List the authenticated domain associated with the given user.
-  * @username Username for the subuser to find associated authenticated domain.
+  * @username is the username for the subuser to find associated authenticated domain.
   */
   public struct function listSubuserAuthenticatedDomain( required string username ) {
     var params = {};
@@ -610,7 +594,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/disassociate-an-authenticated-domain-from-a-given-user
   * @hint Disassociate a authenticated domain from a given user.
-  * @username Username for the subuser to find associated authenticated domain.
+  * @username is the username for the subuser to disassociate from an authenticated domain.
   */
   public struct function disassociateSubuserAuthenticatedDomain( required string username ) {
     var params = {};
@@ -623,8 +607,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/domain-authentication/associate-an-authenticated-domain-with-a-given-user
   * @hint Associate a authenticated domain with a given user.
-  * @domain_id 	ID of the authenticated domain to associate with the subuser.
-  * @username Username to associate with the authenticated domain.
+  * @domain_id is the ID of the authenticated domain to associate with the subuser.
+  * @username is the username to associate with the authenticated domain.
   */
   public struct function associateSubuserWithAuthenticatedDomain( required numeric domain_id, required string username ) {
     var body = {
@@ -645,10 +629,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-add
-  * @hint Add IPs
-  * @count 	The amount of IPs to add to the account.
-  * @subusers Array of usernames to be assigned a send IP.
-  * @warmpup Whether or not to warmup the IPs being added.
+  * @hint Add IPs to your account.
+  * @count is the number of IPs to add to the account.
+  * @subusers can be an array of usernames to be assigned a send IP.
+  * @warmpup indicates whether or not to warmup the IPs being added.
   */
   public struct function addIPs( required numeric count, array subusers = [], boolean warmpup = false ) {
     var body = {
@@ -663,7 +647,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/ips-remaining
-  * @hint Get remaining IPs count
+  * @hint Gets amount of IP Addresses that can still be created during a given period and the price of those IPs.
   */
   public struct function getIPsRemaining( ) {
     return apiCall( 'GET', "/ips/remaining");
