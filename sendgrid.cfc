@@ -657,12 +657,10 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-addresses
   * @hint Retrieve all IP addresses
-  * @ip The IP address to get
-  * @subuser The subuser you are requesting for.
-  * @exclude_whitelabels Should we exclude reverse DNS records (whitelabels)?
-  * @sort_by_direction The direction to sort the results.  (desc, asc)
-  * @limit limit the number of rows returned.
-  * @offset Paging offset.
+  * @ip is an IP address to get (Optional)
+  * @subuser is a subuser you are requesting for (Optional)
+  * @exclude_whitelabels provides the ability to exclude reverse DNS records (whitelabels)
+  * @sort_by_direction is the direction to sort the results (desc, asc)
   */
   public struct function listAllIPs( string ip = '', string subuser = '', boolean exclude_whitelabels = false, string sort_by_direction = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -688,7 +686,6 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-addresses/retrieve-all-ip-pools-an-ip-address-belongs-to
   * @hint Retrieve all IP pools an IP address belongs to
-  * @ip The IP address to get
   */
   public struct function getIPPools( required string ip = '' ) {
     return apiCall( 'GET', "/ips/#ip#" );
@@ -702,8 +699,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/create-an-ip-pool
-  * @hint Create an IP pool.
-  * @name The amount of IPs to add to the account.
+  * @hint Create an IP pool. Note that before you can create an IP Pool, you need to activate the IP in your SendGrid account.
   */
   public struct function createIPPool( required string name ) {
     var body = {
@@ -723,7 +719,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/retrieve-all-ips-in-a-specified-pool
   * @hint Retrieve all IPs in a specified pool.
-  * @ippool The IP address to get
+  * @ippool is the name of the IP pool you are retrieving IPs for.
   */
   public struct function getPoolIPs( required string ippool = '' ) {
     return apiCall( 'GET', "/ips/pools/#ippool#");
@@ -732,8 +728,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/update-an-ip-pool-s-name
   * @hint Update an IP pool’s name.
-  * @name   The name of the IP pool that you want to rename.
-  * @new_pool_name The new name for your IP pool.
+  * @name is the name of the IP pool that you want to rename.
+  * @new_pool_name is the new name for your IP pool.
   */
   public struct function updatePoolName( required string name, required string new_pool_name ) {
     var body = {
@@ -745,7 +741,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/delete-an-ip-pool
   * @hint Delete an IP pool.
-  * @name The name of the IP pool that you want to delete.
+  * @name is the name of the IP pool that you want to delete.
   */
   public struct function deleteIPPool( required string name ) {
     return apiCall( 'DELETE', "/ips/pools/#name#" );
@@ -754,8 +750,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/add-an-ip-address-to-a-pool
   * @hint Add an IP address to a pool
-  * @name The name of the IP pool that you want to add the IP to.
-  * @ip The IP address that you want to add to an IP pool.
+  * @name is the name of the IP pool that you want to add the IP to.
+  * @ip is the IP address that you want to add to an IP pool.
   */
   public struct function addIPToPool( required string name, required string ip ) {
     var body = {
@@ -767,8 +763,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/ip-pools/remove-an-ip-address-from-a-pool
   * @hint Remove an IP address from a pool.
-  * @name The name of the IP pool that you want to delete.
-  * @ip The IP address that you are removing.
+  * @name is the name of the IP pool that you want to delete an IP from.
+  * @ip is the IP address that you are removing.
   */
   public struct function deleteIPFromPool( required string name, required string ip ) {
     return apiCall( 'DELETE', "/ips/pools/#name#/ips/#ip#" );
