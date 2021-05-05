@@ -905,9 +905,11 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
     var body = {};
-
-    // Build JSON body
-    body = webhook.build();
+    if ( isValid( 'component', webhook ) ){
+      body = webhook.build();
+    } else {
+      body = webhook;
+    }
 
     return apiCall( 'PATCH', "/user/webhooks/event/settings", {}, body, parseSubUser( on_behalf_of ) );
   }
@@ -921,7 +923,11 @@ component output="false" displayname="SendGrid.cfc"  {
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
     var body = {};
 
-    body = webhook.buildTest();
+    if ( isValid( 'component', webhook ) ){
+      body = webhook.buildTest();
+    } else {
+      body = webhook;
+    }
 
     return apiCall( 'POST', "/user/webhooks/event/test", {}, body, parseSubUser( on_behalf_of ) );
   }
