@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Methods `deleteBlock()`, `getCampaignSchedule()`, and `deleteBounce()`
 - Parameters `page` and `page_size` to method `listRecipientsBySegment()`
 - Parameter `limit` to method `getCampaignSchedule()`
+- Support for passing your own struct/json into `updateEventWebhookSettings()` and `testEventWebhook()` instead of using the helper component.
 
 ### Changed
 
