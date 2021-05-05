@@ -899,8 +899,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/update-event-notification-settings
-  * @hint Update Event Notification Settings
-  * @webhook The webhook helper component
+  * @hint Update a webhook's event notification settings
+  * @webhook should be an instance of the `helpers.webhook` component. However, if you want to create and pass in the struct or json yourself, you can.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateEventWebhookSettings( required any webhook, string on_behalf_of = '' ) {
@@ -916,8 +916,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/test-event-notification-settings
-  * @hint Test Event Notification Settings
-  * @webhook The webhook helper component
+  * @hint Test your event webhook by sending a fake event notification post to the provided URL.
+  * @webhook should be an instance of the `helpers.webhook` component. However, if you want to create and pass in the struct or json yourself, you can.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function testEventWebhook( required any webhook, string on_behalf_of = '' ) {
