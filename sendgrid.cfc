@@ -788,8 +788,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-a-user-s-profile
   * @hint Update a user's profile
-  * @firstName  The first name of the user.
-  * @lastName   The last name of the user.
+  * @firstName is the first name of the user.
+  * @lastName is the last name of the user.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserProfile( string firstName = '', string lastName = '', string on_behalf_of = '' ) {
@@ -824,7 +824,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-account-email-address
   * @hint Update your account email address
-  * @email The new email address that you would like to use for your account.
+  * @email is the new email address that you would like to use for your account.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserEmail( required string email, string on_behalf_of = '' ) {
@@ -846,7 +846,7 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-username
   * @hint Update your username
-  * @username The new username you would like to use for your account.
+  * @username is the new username you would like to use for your account.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserUsername( required string username, string on_behalf_of = '' ) {
@@ -859,8 +859,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/users-api/update-your-password
   * @hint Update your password
-  * @oldpassword The old password for your account.
-  * @newpassword The new password you would like to use for your account.
+  * @oldpassword is the old password for your account.
+  * @newpassword is the new password you would like to use for your account.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function updateUserPassword( required string oldpassword, required string newpassword, string on_behalf_of = '' ) {
@@ -929,7 +929,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-signed-webhook-public-key
-  * @hint Retrieve Signed Webhook Public Key
+  * @hint Retrieve your signed webhook's public key.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getEventWebhookSignedPublicKey( string on_behalf_of = '') {
@@ -938,8 +938,8 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/enable-disable-signed
-  * @hint Enable/Disable Signed Webhook
-  * @enabled You may either enable or disable signing of the Event Webhook using this endpoint.
+  * @hint Enable or disable signing of the Event Webhook.
+  * @enabled is boolean value that either enables or disables signing of the Event Webhook using this endpoint.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function enableEventSignedWebhook( required boolean enabled, string on_behalf_of = '' ) {
@@ -951,7 +951,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieve-parse-webhook-settings
-  * @hint Retrieve Parse Webhook settings
+  * @hint Retrieve your current inbound parse webhook settings.
   * @on_behalf_of generates the API call as if the subuser account was making the request
   */
   public struct function getEventWebhookParseSettings( string on_behalf_of = '') {
@@ -960,12 +960,10 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/webhooks/retrieves-inbound-parse-webhook-statistics
-  * @hint Retrieves Inbound Parse Webhook statistics.
-  * @start_date The starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
-  * @end_date The end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
-  * @aggregated_by How you would like the statistics to by grouped.   Allowed Values: day, week, month (Optional)
-  * @limit The number of results you would like to get in each request. (Optional)
-  * @offset The number of subusers to skip (Optional)
+  * @hint Retrieve the statistics for your Parse Webhook usage.
+  * @start_date is the starting date of the statistics to retrieve. Must follow format YYYY-MM-DD.
+  * @end_date is the end date of the statistics to retrieve. Defaults to today. Must follow format YYYY-MM-DD.
+  * @aggregated_by indicates how you would like the statistics to by grouped. Allowed Values: `day`, `week`, `month` (Optional)
   */
   public struct function getEventWebhookParseStats( required string start_date, string end_date = '', string aggregated_by = '', numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -989,8 +987,8 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://sendgrid.api-docs.io/v3.0/blocks-api/retrieve-all-blocks
   * @hint Retrieve a list of all email addresses that are currently on your blocks list.
-  * @start_time Start of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
-  * @end_time End of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  * @start_time is the start of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
+  * @end_time is the end of the time range when the blocked email was created. If numeric, it's assumed to be a unix timestamp. Otherwise, it's presumed to be a valid date that will be converted to a unix timestamp automatically
   */
   public struct function listBlocks( any start_time = 0, any end_time = 0, numeric limit = 0, numeric offset = 0 ) {
     var params = {};
@@ -1092,7 +1090,7 @@ component output="false" displayname="SendGrid.cfc"  {
 
   /**
   * @hint Create a marketing campaign.
-  * @campaign this should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
+  * @campaign should be an instance of the `helpers.campaign` component. However, if you want to create and pass in the struct or json yourself, you can.
   */
   public struct function createCampaign( required any campaign ) {
     var body = {};
