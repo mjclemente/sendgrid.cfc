@@ -44,7 +44,7 @@ component accessors="true" {
     }
 
     /**
-    * @hint  Sets the domain being authenticated.
+    * @hint Required. Sets the domain being authenticated.
     */
     public any function domain( required string domain ) {
       setDomain( domain );
@@ -101,7 +101,7 @@ component accessors="true" {
 
     /**
     * @hint Set an array of ips you would like associated to this domain. If ips are already set, this overwrites them.
-    * @ips Can be passed in as an array or comma separated list. Lists will be converted to arrays
+    * @ips can be passed in as an array or comma separated list. Lists will be converted to arrays
     */
     public any function ips( required any ips ) {
       if ( isArray( ips ) )
@@ -122,7 +122,7 @@ component accessors="true" {
 
 
     /**
-    * @hint Because the domain is the only required field this helper builds the body based on the parameters passed in.
+    * @hint Assembles the JSON to send to the API. Generally, you shouldn't need to call this directly.
     */
     public string function build() {
 
