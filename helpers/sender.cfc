@@ -38,7 +38,7 @@ component accessors="true" {
 
   /**
   * @hint Set where the email will appear to originate from for your recipients.
-  * @email Facilitates two means of setting who the email is from. You can pass in a struct with keys for `name` and `email` (only email is required), or you can pass in the email as a string. Note that, despite what the documentation says, both email address and name need to be provided. If a string is passed in and the name is not provided, the email address will be used as the name as well.
+  * @email facilitates two means of setting who the email is from. You can pass in a struct with keys for `name` and `email` (only email is required), or you can pass in the email as a string. Note that, despite what the documentation says, both email address and name need to be provided. If a string is passed in and the name is not provided, the email address will be used as the name as well.
   */
   public any function from( required any email ) {
     setFrom( parseEmail( email ) );
@@ -79,7 +79,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint optional
+  * @hint Optional
   */
   public any function state( required string state ) {
     setState( state );
@@ -87,7 +87,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint optional
+  * @hint Optional
   */
   public any function zip( required string zip ) {
     setZip( zip );
@@ -104,7 +104,7 @@ component accessors="true" {
 
 
   /**
-  * @hint A very simple build*() that does not require any custom serialization methods via onMissingMethod(), like other helpers.
+  * @hint Assembles the JSON to send to the API. Generally, you shouldn't need to call this directly.
   */
   public string function build() {
 
