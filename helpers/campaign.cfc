@@ -66,7 +66,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the IDs of the lists you are sending this campaign to. Note that you can have both segment IDs and list IDs. If any list Ids were previously set, this method overwrites them.
-  * @lists Can be passed in as an array or comma separated list. Lists will be converted to arrays
+  * @lists can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
   public any function useLists( required any lists ) {
     if ( isArray( lists ) )
@@ -87,7 +87,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the segment IDs that you are sending this list to. Note that you can have both segment IDs and list IDs. If any segment Ids were previously set, this method overwrites them.
-  * @segments Can be passed in as an array or comma separated list. Lists will be converted to arrays
+  * @segments can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
   public any function useSegments( required any segments ) {
     if ( isArray( segments ) )
@@ -109,7 +109,7 @@ component accessors="true" {
 
   /**
   * @hint Set an array of categories you would like associated to this campaign. If categories are already set, this overwrites them.
-  * @categories Can be passed in as an array or comma separated list. Lists will be converted to arrays
+  * @categories can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
   public any function categories( required any categories ) {
     if ( isArray( categories ) )
@@ -131,7 +131,7 @@ component accessors="true" {
 
   /**
   * @hint Assigns the suppression group that this marketing email belongs to, allowing recipients to opt-out of emails of this type. Note that you cannot provide both a suppression group Id and a custom unsubscribe url. The two are mutually exclusive.
-  * @id the supression group Id
+  * @id is the supression group Id
   */
   public any function suppressionGroupId( required numeric id ) {
     setSuppression_group_id( id );
@@ -147,7 +147,7 @@ component accessors="true" {
 
   /**
   * @hint This is the url of the custom unsubscribe page that you provide for customers to unsubscribe from mailings. Using this takes the place of having SendGrid manage your suppression groups.
-  * @uri the web address where you're hosting your custom unsubscribe page
+  * @uri is the web address where you're hosting your custom unsubscribe page
   */
   public any function customUnsubscribeUrl( required string uri ) {
     setCustom_unsubscribe_url( uri );
@@ -162,8 +162,8 @@ component accessors="true" {
   }
 
   /**
-  * @hint The pool of IPs that you would like to send this email from.
-  * @name the name of the IP pool. Note that your SendGrid plan must include dedicated IPs in order to use this.
+  * @hint The pool of IPs that you would like to send this email from. Note that your SendGrid plan must include dedicated IPs in order to use this.
+  * @name is the name of the IP pool.
   */
   public any function ipPool( required string name ) {
     setIp_pool( name );
@@ -178,7 +178,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for adding the text/html content
+  * @hint Convenience method for adding the text/html content
   */
   public any function html( required string message ) {
     setHtml_content( message );
@@ -193,7 +193,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for adding the text/plain content
+  * @hint Convenience method for adding the text/plain content
   */
   public any function plain( required string message ) {
     setPlain_content( message );
@@ -208,7 +208,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for setting both html and plain at the same time. You can either pass in the HTML content, and both will be set from it (using a method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
+  * @hint Convenience method for setting both html and plain at the same time. You can either pass in the HTML content, and both will be set from it (using a method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
   */
   public any function plainFromHtml( string message = '' ) {
 
@@ -245,7 +245,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint Because this helper is less complex than mail.cfc, the build method is more straightforward. Support for onMissingMethod is not required, and only the categories need to be handled via a custom method.
+  * @hint Assembles the JSON to send to the API. Generally, you shouldn't need to call this directly.
   */
   public string function build() {
 
