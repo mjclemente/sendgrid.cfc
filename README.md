@@ -170,49 +170,7 @@ The reference manual for all public methods in `helpers/sender.cfc` can be found
 
 ## Reference Manual for `helpers.domain`
 
-This section documents every public method in the `helpers/domain.cfc` file. A few notes about structure, data, and usage:
-
-- Unless indicated, all methods are chainable.
-
-#### `domain( required string domain )`
-
-Required.  The domain name to create an authenticated domain.
-
-#### `subdomain( required string subdomain )`
-
-Sets the subdomain to use for this authenticated domain
-
-#### `username( required string username )`
-
-Sets the username associated with this domain.
-
-#### `custom_spf( required bolean custom_spf )`
-
-Specify whether to use a custom SPF or allow SendGrid to manage your SPF. This option is only available to authenticated domains set up for manual security.
-
-#### `default( required boolean default )`
-
-Whether to use this authenticated domain as the fallback if no authenticated domains match the sender's domain.
-
-#### `automatic_security( required boolean automatic_security )`
-
-Whether to allow SendGrid to manage your SPF records, DKIM keys, and DKIM key rotation.
-
-#### `custom_dkim_selector( required string custom_dkim_selector )`
-
-Sets a custom DKIM selector. Accepts three letters or numbers.
-
-#### `ips( required any ips )`
-
-Set an array of ips you would like associated to this domain. If ips are already set, this overwrites them.
-
-#### `addIp( required string ip )`
-
-Appends a single ip to the ips array
-
-#### `build()`
-
-The function that puts it all together and builds the body for sender related API operations
+The reference manual for all public methods in `helpers/domain.cfc` can be found in the `docs` directory, [in `domain.md`](https://github.com/mjclemente/sendgrid.cfc/blob/master/docs/domain.md).
 
 ## Reference Manual for `helpers.webhook`
 
