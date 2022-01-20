@@ -57,11 +57,17 @@ component accessors="true" {
     return this;
   }
 
+  /**
+  * @hint Set the address the email is from
+  */
   public any function from( required any email ) {
     setFrom( parseEmail( email ) );
     return this;
   }
 
+  /**
+  * @hint Set the reply-to email address
+  */
   public any function replyTo( required any email ) {
     setReply_to( parseEmail( email ) );
     return this;
@@ -76,7 +82,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for adding the text/html content
+  * @hint Convenience method for adding the text/html content
   */
   public any function html( required string message ) {
     var htmlContent = {
@@ -87,7 +93,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for adding the text/plain content
+  * @hint Convenience method for adding the text/plain content
   */
   public any function plain( required string message ) {
     var plainContent = {
@@ -98,7 +104,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint method for setting any content mimetype. The default is that the new mimetype is appended, but you can override this
+  * @hint Method for setting any content mime-type. The default is that the new mime-type is appended to the Content array, but you can override this and have it prepended. This is used internally to ensure that `text/plain` precedes `text/html`, in accordance with the RFC specs, as enforced by SendGrid.
   */
   public any function emailContent( required struct content, boolean doAppend = true ) {
     if ( doAppend )
@@ -109,7 +115,7 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for setting both text/html and text/plain at the same time. You can either pass in the HTML content, and both will be set from it (using a method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
+  * @hint Convenience method for setting both `text/html` and `text/plain` at the same time. You can either pass in the HTML content as the message argument, and both will be set from it (using an internal method to strip the HTML for the plain text version), or you can call the method without an argument, after having set the HTML, and that will be used.
   */
   public any function plainFromHtml( string message = '' ) {
 
@@ -142,7 +148,7 @@ component accessors="true" {
 
   /**
   * @hint Appends a single attachment to the message.
-  * @attachment A struct with at minimum keys for `content` and `filename`. View the SendGrid docs for the full makeup of the object: https://sendgrid.api-docs.io/v3.0/mail-send
+  * @attachment is a struct with at minimum keys for `content` and `filename`. View [the SendGrid docs](https://sendgrid.api-docs.io/v3.0/mail-send) for the full makeup and requirements of the object.
   */
   public any function addAttachment( required struct attachment ) {
     variables.attachments.append( attachment );
@@ -151,8 +157,8 @@ component accessors="true" {
   }
 
   /**
-  * @hint a convenience method for appending a single file attachment to the message
-  * @filePath The relative or absolute path to an on-disk file. Its properties are used if the additional arguments aren't provided
+  * @hint Convenience method for appending a single file attachment to the message
+  * @filePath is the relative or absolute path to an on-disk file. Its properties are used if the additional arguments aren't provided
   */
   public any function attachFile( required string filePath, string fileName, string type, string disposition = 'attachment', string content_id ) {
 
@@ -180,7 +186,7 @@ component accessors="true" {
   }
 
   /**
-  * https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html
+  * @docs https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html
   * @hint Sets the id of a template that you would like to use for the message
   */
   public any function templateId( required string templateId ) {
@@ -189,10 +195,9 @@ component accessors="true" {
   }
 
   /**
-  * https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html (from SMTP API, but helpful for understanding use)
-  * https://sendgrid.com/docs/Classroom/Build/Add_Content/substitution_and_section_tags.html
-  * @hint Appends a single section block to the global message's `sections` property.
-  * @section Facilitates two means of adding a section. You can pass in a struct with a key/value pair for the section tag and code block to replace it with. Alternatively, you can use this to pass in the section tag, and provide the replacement value as a second argument.
+  * @docs https://sendgrid.com/docs/Classroom/Build/Add_Content/substitution_and_section_tags.html
+  * @hint Appends a single section block to the global message's `sections` property. I'd recommend reading up on the somewhat [limited](https://sendgrid.com/docs/Classroom/Build/Add_Content/substitution_and_section_tags.html) [documentation](https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html) SendGrid provides about sections and substitutions for more clarity on how they should be structured and used.
+  * @section facilitates two means of adding a section. You can pass in a struct with a key/value pair for the section tag and code block to replace it with, for example, `{ "-greeting-" : 'Welcome -first_name- -last_name-,' }`. Alternatively, you can use this to pass in the section tag, and provide the replacement value as a second argument.
   */
   public any function section( required any section, any value ) {
     if ( isStruct( section ) )
@@ -205,7 +210,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the `sections` property for the global message. If any sections were previously set, this method overwrites them.
-  * @sections An object containing key/value pairs of section tags and their replacement values.
+  * @sections is an object containing key/value pairs of section tags and their replacement values.
   */
   public any function sections( required struct sections ) {
     setSections( sections );
@@ -214,7 +219,7 @@ component accessors="true" {
 
   /**
   * @hint Appends a single header to the global message's `headers` property. This can be overridden by a personalized header.
-  * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
+  * @header facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header, for example, `{ "X-my-application-name" : 'testing' }`. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
   public any function header( required any header, any value ) {
     if ( isStruct( header ) )
@@ -227,7 +232,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the `headers` property for the global message. Headers can be overridden by a personalized header. If any headers were previously set, this method overwrites them.
-  * @headers An object containing key/value pairs of header names and their value. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC
+  * @headers is an object containing key/value pairs of header names and their value. You must ensure these are properly encoded if they contain unicode characters. Must not be any of the following reserved headers: x-sg-id, x-sg-eid, received, dkim-signature, Content-Type, Content-Transfer-Encoding, To, From, Subject, Reply-To, CC, BCC
   */
   public any function headers( required struct headers ) {
     setHeaders( headers );
@@ -236,7 +241,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the category array for the global message. If categories are already set, this overwrites them.
-  * @categories Can be passed in as an array or comma separated list. Lists will be converted to arrays
+  * @categories can be passed in as an array or comma separated list. Lists will be converted to arrays
   */
   public any function categories( required any categories ) {
     if ( isArray( categories ) )
@@ -258,7 +263,7 @@ component accessors="true" {
 
   /**
   * @hint Appends a single custom argument on the global message's `custom_args` property. This can be overridden by a personalized custom argument.
-  * @arg Facilitates two means of setting a custom argument. You can pass in a struct with a key/value pair, for example, { "Team": "Engineering" }, or you can use this to pass in the custom argument's name, and provide the value as a second argument.
+  * @arg facilitates two means of setting a custom argument. You can pass in a struct with a key/value pair, for example, { "Team": "Engineering" }, or you can use this to pass in the custom argument's name, and provide the value as a second argument.
   */
   public any function customArg( required any arg, any value ) {
     if ( isStruct( arg ) )
@@ -271,7 +276,7 @@ component accessors="true" {
 
   /**
   * @hint Sets the `custom_args` property for the global message. Custom arguments can be overridden by a personalized custom argument. If any custom arguments were previously set, this overwrites them.
-  * @args An object containing the key/value pairs of parameter names and their values. For example, { "Team": "Engineering", "Color": "Gray" }
+  * @args is an object containing the key/value pairs of parameter names and their values. For example, { "Team": "Engineering", "Color": "Gray" }
   */
   public any function customArgs( required struct args ) {
     setCustom_args( args );
@@ -300,8 +305,8 @@ component accessors="true" {
   //todo IP Pool
 
   /**
-  * @hint Sets the `mail_settings` property for the global message. If any mail settings were previously set, this method overwrites them.
-  * @settings An object containing key/value pairs of each defined mail setting and its value
+  * @hint Sets the `mail_settings` property for the global message. If any mail settings were previously set, this method overwrites them. While this makes it possible to pass in the fully constructed mail settings struct, the preferred method of setting mail settings is by using their dedicated methods.
+  * @settings is an object containing key/value pairs of each defined mail setting and its value
   */
   public any function mailSettings ( required struct settings ) {
     setMail_settings( settings );
@@ -310,7 +315,7 @@ component accessors="true" {
 
   /**
   * @hint Generic method for defining individual mail settings. Using the dedicated methods for defining mail settings is usually preferable to invoking this directly.
-  * @setting Facilitates two means of defining a setting. You can pass in a struct with a key/value pair for the setting and its value. Alternatively, you can use this to pass in the setting key, and provide the value as a second argument.
+  * @setting Facilitates two means of defining a setting. You can pass in a struct with a key/value pair for the setting and its value, for example, `{ "sandbox_mode" : { "enable" : true } }`. Alternatively, you can use this to pass in the setting key, and provide the value as a second argument.
   */
   public any function mailSetting( required any setting, any value ) {
     if ( isStruct( setting ) )
@@ -338,14 +343,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the `bcc` mail setting and setting the address
+  * @hint Convenience method for enabling the `bcc` mail setting and setting the address
   */
   public any function enableBcc( required string email ) {
     return bccSetting( true, email );
   }
 
   /**
-  * @hint convenience method for disabling the `bcc` mail setting
+  * @hint Convenience method for disabling the `bcc` mail setting
   */
   public any function disableBcc() {
     return bccSetting( false );
@@ -365,14 +370,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the `bypass_list_management` mail setting
+  * @hint Convenience method for enabling the `bypass_list_management` mail setting
   */
   public any function enableBypassListManagement() {
     return bypassListManagementSetting( true );
   }
 
   /**
-  * @hint convenience method for disabling the `bypass_list_management` mail setting
+  * @hint Convenience method for disabling the `bypass_list_management` mail setting
   */
   public any function disableBypassListManagement() {
     return bypassListManagementSetting( false );
@@ -397,22 +402,22 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the `footer` mail setting and setting the text/html
+  * @hint Convenience method for enabling the `footer` mail setting and setting the text/html
   */
   public any function enableFooter( required string text, required string html ) {
     return footerSetting( true, text, html );
   }
 
   /**
-  * @hint convenience method for disabling the `footer` mail setting
+  * @hint Convenience method for disabling the `footer` mail setting
   */
   public any function disableFooter() {
     return footerSetting( false );
   }
 
   /**
-  * https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
-  * @hint Sets the global `mail_settings.sandbox_mode` property, which allows allows you to send a test email to ensure that your request body is valid and formatted correctly. Sandbox mode is only used to validate your request. The email will never be delivered while this feature is enabled! Using the dedicated enable/disable methods is usually preferable to invoking this directly
+  * @docs https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/sandbox_mode.html
+  * @hint Sets the global `mail_settings.sandbox_mode` property, which allows allows you to send a test email to ensure that your request body is valid and formatted correctly. Sandbox mode is only used to validate your request. The email will never be delivered while this feature is enabled! Using the dedicated enable/disable methods is usually preferable to invoking this directly.
   */
   public any function sandboxModeSetting( required boolean enable ) {
     var setting = {
@@ -425,14 +430,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the `sandbox_mode` mail setting
+  * @hint Convenience method for enabling the `sandbox_mode` mail setting
   */
   public any function enableSandboxMode() {
     return sandboxModeSetting( true );
   }
 
   /**
-  * @hint convenience method for disabling the `sandbox_mode` mail setting
+  * @hint Convenience method for disabling the `sandbox_mode` mail setting
   */
   public any function disableSandboxMode() {
     return sandboxModeSetting( false );
@@ -457,21 +462,21 @@ component accessors="true" {
   }
 
   /**
-  * @hint convenience method for enabling the `spam_check` mail setting and setting the threshold and post_to_url
+  * @hint Convenience method for enabling the `spam_check` mail setting and setting the threshold and post_to_url
   */
   public any function enableSpamCheck( required numeric threshold, required string post_to_url ) {
     return spamCheckSetting( true, threshold, post_to_url );
   }
 
   /**
-  * @hint convenience method for disabling the `spam_check` mail setting
+  * @hint Convenience method for disabling the `spam_check` mail setting
   */
   public any function disableSpamCheck() {
     return spamCheckSetting( false );
   }
 
   /**
-  * @hint Adds a NEW personalization envelope, with only the specified email address. The personalization can then be further customized with later commands
+  * @hint Adds a **new** personalization envelope, with only the specified email address. The personalization can then be further customized with later commands. I found personalizations a little tricky. You can [read more here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
   */
   public any function to( required any email ) {
     addPersonalization(
@@ -498,14 +503,14 @@ component accessors="true" {
   }
 
   /**
-  * @hint Adds an additional 'cc' recipient to the **current** personalization envelope
+  * @hint Adds an additional 'cc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
   */
   public any function addCC( required any email ) {
     return addCarbonCopies( email, 'cc' );
   }
 
   /**
-  * @hint Adds an additional 'bcc' recipient to the **current** personalization envelope
+  * @hint Adds an additional 'bcc' recipient to the **current** personalization envelope. You need to add a 'to' recipient before using this.
   */
   public any function addBCC( required any email ) {
     return addCarbonCopies( email, 'bcc' );
@@ -527,7 +532,7 @@ component accessors="true" {
 
   /**
   * @hint functions like `header()`, except it adds the header to the **current** personalization envelope. You can set a header by providing the header and value, or by passing in a struct.
-  * @header Facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
+  * @header facilitates two means of setting a header. You can pass in a struct with a key/value pair for the name and value of the header. Alternatively, you can use this to pass in the name of the header, and provide the value as a second argument.
   */
   public any function withHeader( any header, any value ) {
     var count = countPersonalizations();
@@ -562,7 +567,7 @@ component accessors="true" {
   // }
 
   /**
-  * https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
+  * @docs https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/
   * @hint sets the `dynamic_template_data` property for the **current** personalization envelope. If any dynamic template data had been previously set, this method overwrites it. Note that dynamic template data is not compatible with Legacy Dynamic Templates.
   * @dynamicTemplateData An object containing key/value pairs of the dynamic template data. Basically, the Handlebars input object that provides the actual values for the dynamic template.
   */
@@ -651,10 +656,8 @@ component accessors="true" {
   }
 
   /**
-  * @hint Creates and sets a new personalization envelope
-  * Documentation about personalizations here: https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html
-  * I find the easiest way to understand this is that each personalization object is an individual email. That it, all of its properties, even if there are multiple to/cc/bcc, refer to the same email. So if you're adding a second personalization object, you're basically referring to a separate email... except that the sender/content of the email is the same
-  * Note: custom_args = internal tracking, while substitutions are for the content of the email/subject
+  * @docs https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html
+  * @hint Creates and sets a new personalization envelope. I find the easiest way to understand this is that each personalization object is an individual email. That it, all of its properties, even if there are multiple to/cc/bcc, refer to the same email. So if you're adding a second personalization object, you're basically referring to a separate email... except that the sender/content of the email is the same. Note: custom_args = internal tracking, while substitutions are for the content of the email/subject
   */
   public void function addPersonalization( required struct personalization ) {
 
@@ -664,7 +667,9 @@ component accessors="true" {
   }
 
 
-
+  /**
+  * @hint Assembles the JSON to send to the API. Generally, you shouldn't need to call this directly.
+  */
   public string function build() {
 
     var body = '';
