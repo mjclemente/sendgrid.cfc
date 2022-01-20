@@ -17,7 +17,7 @@ component accessors="true" {
     property name="oauth_client_secret" default="";
     property name="oauth_token_url" default="";
 
-  
+
     /**
     * @hint Only the URL can be set by the init.   The URL is the only required key needed to create a webhook.
     */
@@ -28,15 +28,15 @@ component accessors="true" {
 
         return this;
     }
-  
+
     /**
-    * @hint The URL that you want the event webhook to POST to.
+    * @hint Required. The URL that you want the event webhook to POST to.
     */
     public any function url( required string url ) {
       setUrl( arguments.url );
       return this;
     }
-  
+
     /**
     * @hint Sets bounce flag - Receiving server could not or would not accept message.
     */
@@ -91,7 +91,7 @@ component accessors="true" {
     public any function group_resubscribe( required boolean group_resubscribe ) {
         setGroup_resubscribe( group_resubscribe );
         return this;
-    }    
+    }
 
     /**
     * @hint Sets group_unsubscribe flag - Recipient unsubscribe from specific group, by either direct link or updating preferences. You need to enable Subscription Tracking for getting this type of event.
@@ -99,15 +99,15 @@ component accessors="true" {
     public any function group_unsubscribe( required boolean group_unsubscribe ) {
         setGroup_unsubscribe( group_unsubscribe );
         return this;
-    }    
-    
+    }
+
     /**
     * @hint Sets open flag - Recipient has opened the HTML message. You need to enable Open Tracking for getting this type of event.
     */
     public any function open( required boolean open ) {
         setOpen( open );
         return this;
-    }    
+    }
 
     /**
     * @hint Sets processed flag - Message has been received and is ready to be delivered.
@@ -115,7 +115,7 @@ component accessors="true" {
     public any function processed( required boolean processed ) {
         setProcessed( processed );
         return this;
-    }    
+    }
 
     /**
     * @hint Sets spam_report flag - Recipient marked a message as spam.
@@ -123,7 +123,7 @@ component accessors="true" {
     public any function spam_report( required boolean spam_report ) {
         setSpam_report( spam_report );
         return this;
-    }    
+    }
 
     /**
     * @hint Sets unsubscribe flag - Recipient clicked on message's subscription management link. You need to enable Subscription Tracking for getting this type of event.
@@ -131,7 +131,7 @@ component accessors="true" {
     public any function unsubscribe( required boolean unsubscribe ) {
         setUnsubscribe( unsubscribe );
         return this;
-    }    
+    }
 
     /**
     * @hint Sets the oath client id - The client ID Twilio SendGrid sends to your OAuth server or service provider to generate an OAuth access token. When passing data in this field, you must also include the oauth_token_url field.
@@ -140,7 +140,7 @@ component accessors="true" {
         setOauth_client_id( oauth_client_id );
         return this;
     }
-    
+
     /**
     * @hint Set the oath client secret - This secret is needed only once to create an access token. SendGrid will store this secret, allowing you to update your Client ID and Token URL without passing the secret to SendGrid again. When passing data in this field, you must also include the oauth_client_id and oauth_token_url fields.
     */
@@ -158,10 +158,10 @@ component accessors="true" {
     }
 
     /**
-    * @hint Because the domain is the only required field this helper builds the body based on the parameters passed in.
+    * @hint Assembles the JSON to send to the API. Generally, you shouldn't need to call this directly.
     */
     public string function build() {
-  
+
       var body = '';
       var properties = getPropertyValues();
       var count = properties.len();
@@ -217,7 +217,7 @@ component accessors="true" {
           };
         }
       );
-  
+
       return propertyValues.filter(
         function( item, index ) {
           if ( isStruct( item.value ) )
@@ -231,19 +231,19 @@ component accessors="true" {
         }
       );
     }
-  
+
     private array function getProperties() {
-  
+
       var metaData = getMetaData( this );
       var properties = [];
-  
+
       for( var prop in metaData.properties ) {
         properties.append( prop );
       }
-  
+
       return properties;
     }
-  
+
     private any function getPropertyValue( string key ){
       var method = this["get#key#"];
       var value = method();
