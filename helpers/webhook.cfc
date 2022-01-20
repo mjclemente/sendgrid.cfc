@@ -182,33 +182,10 @@ component accessors="true" {
     }
 
     /**
-    * @hint Because the domain is the only required field this helper builds the body based on the parameters passed in.
-    */
-    public string function buildTest() {
-  
-        var body = '';
-        var properties = getPropertyValues(true);
-        var count = properties.len();
-
-        properties.each(
-          function( property, index ) {
-              var value = '';
-              switch (property.key) {
-                case "url": case "oauth_client_id": case "oauth_client_secret": case "oauth_token_url": 
-                    value = serializeJSON( property.value );
-                    break;
-              }
-            body &= '"#property.key#": ' & value & '#index NEQ count ? "," : ""#';
-          }
-        );
-        return '{' & body & '}';
-      }    
-
-    /**
     * @hint converts the array of properties to an array of their keys/values, while filtering those that have not been set
     */
     private array function getPropertyValues(boolean excludeBooleanValues = false) {
-  
+
       var propertyValues = getProperties().map(
         function( item, index ) {
           return {
