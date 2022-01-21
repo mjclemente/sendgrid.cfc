@@ -63,6 +63,8 @@ property name="sendgrid" inject="sendgrid@sendgridcfc";
 property name="mail" inject="mail@sendgridcfc";
 property name="campaign" inject="campaign@sendgridcfc";
 property name="sender" inject="sender@sendgridcfc";
+property name="domain" inject="domain@sendgridcfc";
+property name="webhook" inject="webhook@sendgridcfc";
 ```
 
 ## Quick Start
