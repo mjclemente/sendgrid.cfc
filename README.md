@@ -72,9 +72,9 @@ property name="webhook" inject="webhook@sendgridcfc";
 The following is a minimal example of sending an email, using the `mail` helper object.
 
 ```cfc
-sg = new sendgrid( apiKey = 'xxx' );
+sg = new path.to.sendgridcfc.sendgrid( apiKey = 'xxx' );
 
-mail = new helpers.mail()
+mail = new path.to.sendgridcfc.helpers.mail()
   .from( 'test@example.com' )
   .subject( 'Sending with SendGrid is Fun' )
   .to( 'test@example.com' )
