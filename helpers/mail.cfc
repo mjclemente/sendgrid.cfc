@@ -741,7 +741,7 @@ component accessors="true" {
         var bracketedEmail = bracketedEmails[1];
         return {
           'email' : bracketedEmail.REReplace( '[<>]', '', 'all'),
-          'name' : email.replacenocase( bracketedEmail, '' ).trim()
+          'name' : email.replacenocase( bracketedEmail, '' ).trim().REReplace('^"','').REReplace('"$','')
         };
 
       } else {
