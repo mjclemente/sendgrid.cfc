@@ -159,6 +159,10 @@ The reference manual for all public methods in `helpers/webhook.cfc` can be foun
 
 For questions that aren't about bugs, feel free to hit me up on the [CFML Slack Channel](http://cfml-slack.herokuapp.com); I'm @mjclemente. You'll likely get a much faster response than creating an issue here.
 
+**What versions of ColdFusion are required to use this project?**
+
+Ideally, this project would work with the currently supported versions of ColdFusion - at the time I'm writing this, that's Adobe ColdFusion 2018+ and Lucee 5.3+. It may work with earlier versions, but no promises.
+
 ## Contributing
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
