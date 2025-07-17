@@ -2015,8 +2015,13 @@ component output="false" displayname="SendGrid.cfc"  {
       contactData['email'] = contact;
     }
 
+    if( isArray(listIds) ){
+      body['list_ids'] = listIds;
+    } else {
+      body['list_ids'] = listIds.listToArray();
+    }
+
     body['contacts'] = [contactData];
-    body['list_ids'] = listIds;
 
     return apiCall( 'PUT', '/marketing/contacts', {}, body );
   }
