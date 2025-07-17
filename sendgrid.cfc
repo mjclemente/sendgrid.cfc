@@ -2025,7 +2025,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/segmenting-contacts-v2/get-list-of-segments
   * @hint Retrieve all of your segments.
   */
-  public struct function listSegmentsV2() {
+  public struct function listMarketingSegments() {
     return apiCall( 'GET', '/marketing/segments/2.0' );
   }
 
@@ -2033,7 +2033,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/segmenting-contacts-v2/get-segment-by-id
   * @hint Retrieve a single segment with the given ID.
   */
-  public struct function getSegmentV2( required numeric id ) {
+  public struct function getMarketingSegment( required numeric id ) {
     return apiCall( 'GET', "/marketing/segments/2.0/#id#" );
   }
 
@@ -2041,7 +2041,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/senders/get-list-of-senders
   * @hint Retrieve a list of all sender identities that have been created for your account.
   */
-  public struct function listSendersV2() {
+  public struct function listMarketingSenders() {
     return apiCall( 'GET', '/marketing/senders' );
   }
 
@@ -2049,7 +2049,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/senders/get-specific-sender
   * @hint Retrieve a single sender identity by ID.
   */
-  public struct function getSenderV2( required numeric id ) {
+  public struct function getMarketingSender( required numeric id ) {
     return apiCall( 'GET', "/marketing/senders/#id#" );
   }
 
