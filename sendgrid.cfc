@@ -1890,6 +1890,181 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'POST', '/validations/email', {}, body, headers );
   }
 
+  /**
+  * Updated methods for New Marketing Campaigns
+  */
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/single-sends/create-single-send
+  * @hint Create a marketing single send.
+  * @singleSend should be an instance of the `helpers.singleSend` component. However, if you want to create and pass in the struct or json yourself, you can.
+  */
+  public struct function createSingleSend( required any singleSend ) {
+    var body = {};
+    if ( isValid( 'component', singleSend ) )
+      body = singleSend.build();
+    else
+      body = singleSend;
+    return apiCall( 'POST', '/marketing/singlesends', {}, body );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/add-or-update-a-contact
+  * @hint Add Marketing Campaigns contacts. Note that it also appears to update existing records, so it basically functions like a PATCH.
+  * @contacts is an array of objects, with at minimum, an `email`, 'phone_number_id', 'external_id', or 'anonymous_id' key/value
+  */
+  public struct function addContacts( required array contacts ) {
+    return upsertContacts( 'PUT', contacts );
+  }
+
+  /**
+  * @hint Convenience method for adding a single contact at a time.
+  * @contact Facilitates two means of adding a contact. You can pass in a struct with key/value pairs providing all relevant contact information. Alternatively, you can use this to simply pass in the contact's email address, which is all that is required.
+  * @customFields is a struct with keys corresponding to the custom field names, along with their assigned values
+  */
+  public struct function addContact( required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
+    return upsertContact( 'PUT', contact, first_name, last_name, customFields );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/add-or-update-a-contact
+  * @hint Update one or more Marketing Campaign contacts. Note that it will also add non-existing records.
+  * @contacts is an array of objects, with at minimum, an `email`, 'phone_number_id', 'external_id', or 'anonymous_id' key/value
+  */
+  public struct function updateContacts( required array contacts ) {
+    return upsertContacts( 'PUT', contacts );
+  }
+
+  /**
+  * @hint Convenience method for updating a single contact at a time.
+  * @contact Facilitates two means of updating a contact. You can pass in a struct with key/value pairs providing all relevant contact information. Alternatively, you can use this to simply pass in the contact's email address, which is all that is required.
+  * @customFields is a struct with keys corresponding to the custom field names, along with their assigned values
+  */
+  public struct function updateContact( required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
+    return upsertContact( 'PUT', contact, first_name, last_name, customFields );
+  }
+
+  /**
+  * @hint shared private method for handling insert/update requests for individual contacts. Deletegates to `upsertContacts()`
+  */
+  private struct function upsertContact( required string method, required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
+    var contacts = [];
+    var contactData = {};
+
+    if ( isStruct( contact ) )
+      contactData.append( contact );
+    else
+      contactData[ 'email' ] = contact;
+
+    if ( first_name.len() )
+      contactData[ 'first_name' ] = first_name;
+
+    if ( last_name.len() )
+      contactData[ 'last_name' ] = last_name;
+
+    if ( !customFields.isEmpty() )
+      contactData.append( customFields, false );
+
+    contacts.append( contactData );
+
+    return upsertContacts( method, contacts );
+  }
+
+  /**
+  * @hint shared private method for inserting/updating contacts
+  */
+  private struct function upsertContacts( required string method, required array contacts ) {
+    return apiCall( method, '/marketing/contacts', {}, contacts );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/get-a-contact-by-id
+  * @hint Retrieve a single contact by ID from your contact database.
+  * @id is the contact ID or email address (which will be automatically converted to the contact ID).
+  */
+  public struct function getContact( required string id ) {
+    return apiCall( 'GET', "/marketing/contacts/#returnContactId( id )#" );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/search-contacts
+  * @hint Perform a search on all of your Marketing Campaigns contacts.
+  * @fieldName is the name of a custom field or reserved field
+  * @search is the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
+  */
+  public struct function searchContacts( required string fieldName, any search = '' ) {
+    var params = {
+      "#fieldName#" : !isValid( 'USdate', search ) ? search : returnUnixTimestamp( search )
+    };
+    return apiCall( 'GET', "/marketing/contacts/search", params );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/add-or-update-a-contact
+  * @hint Add or update a contact and associate them with specific lists.
+  * @contact is the contact's email address or a struct containing contact details.
+  * @listIds is an array of list IDs to which the contact should be added.
+  */
+  public struct function addContactToList( required any contact, required array listIds ) {
+    var body = {};
+    var contactData = {};
+
+    if( isStruct(contact) ){
+      contactData = contact;
+    } else {
+      contactData['email'] = contact;
+    }
+
+    if( isArray(listIds) ){
+      body['list_ids'] = listIds;
+    } else {
+      body['list_ids'] = listIds.listToArray();
+    }
+
+    body['contacts'] = [contactData];
+
+    return apiCall( 'PUT', '/marketing/contacts', {}, body );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/segmenting-contacts-v2/get-list-of-segments
+  * @hint Retrieve all of your segments.
+  */
+  public struct function listMarketingSegments() {
+    return apiCall( 'GET', '/marketing/segments/2.0' );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/segmenting-contacts-v2/get-segment-by-id
+  * @hint Retrieve a single segment with the given ID.
+  */
+  public struct function getMarketingSegment( required numeric id ) {
+    return apiCall( 'GET', "/marketing/segments/2.0/#id#" );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/senders/get-list-of-senders
+  * @hint Retrieve a list of all sender identities that have been created for your account.
+  */
+  public struct function listMarketingSenders() {
+    return apiCall( 'GET', '/marketing/senders' );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/senders/get-specific-sender
+  * @hint Retrieve a single sender identity by ID.
+  */
+  public struct function getMarketingSender( required numeric id ) {
+    return apiCall( 'GET', "/marketing/senders/#id#" );
+  }
+
+  /**
+  * @hint Helper method, which allows for passing in the contact id or email address and returns the id, which is needed. The contact Id is a URL-safe base64 encoding of the contact's lower cased email address
+  */
+  private string function returnContactId( required string id ) {
+    return isValid( 'email', id ) ? toBase64( id ) : id;
+  }
+
 
   // PRIVATE FUNCTIONS
   private struct function apiCall(
