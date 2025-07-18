@@ -2004,14 +2004,14 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/search-contacts
   * @hint Perform a search on all of your Marketing Campaigns contacts.
-  * @fieldName is the name of a custom field or reserved field
-  * @search is the value to search for within the specified field. Date fields must be unix timestamps. Currently, searches that are formatted as a U.S. date in the format mm/dd/yyyy (1-2 digit days and months, 1-4 digit years) are converted automatically.
+  * @query accepts valid SGQL for searching for a contact.
   */
-  public struct function searchContacts( required string fieldName, any search = '' ) {
-    var params = {
-      "#fieldName#" : !isValid( 'USdate', search ) ? search : returnUnixTimestamp( search )
-    };
-    return apiCall( 'GET', "/marketing/contacts/search", params );
+  public struct function searchContacts( required string query ) {
+    var body = {
+      "query": query
+    }
+
+    return apiCall( 'POST', "/marketing/contacts/search", {}, body );
   }
 
   /**
