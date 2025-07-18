@@ -61,8 +61,13 @@ component accessors="true" {
   /**
   * @hint Sets the send time for the Single Send in ISO8601 timestamp format.
   */
-  public any function send_at( required string timestamp ) {
-    setSend_at( timestamp );
+  public any function send_at( required any timestamp ) {
+    if( isDate( timestamp) ){
+      setSend_at( datetimeformat(timestamp, "ISO"));
+    } else {
+      setSend_at( timestamp );
+    }
+
     return this;
   }
 
