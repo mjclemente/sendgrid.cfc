@@ -1980,10 +1980,10 @@ component output="false" displayname="SendGrid.cfc"  {
   /**
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/get-a-contact-by-id
   * @hint Retrieve a single contact by ID from your contact database.
-  * @id is the contact ID or email address (which will be automatically converted to the contact ID).
+  * @id is the contact ID
   */
   public struct function getContact( required string id ) {
-    return apiCall( 'GET', "/marketing/contacts/#returnRecipientId( id )#" );
+    return apiCall( 'GET', "/marketing/contacts/#id#" );
   }
 
     /**
