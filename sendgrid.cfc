@@ -1983,7 +1983,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @id is the contact ID or email address (which will be automatically converted to the contact ID).
   */
   public struct function getContact( required string id ) {
-    return apiCall( 'GET', "/marketing/contacts/#returnContactId( id )#" );
+    return apiCall( 'GET', "/marketing/contacts/#returnRecipientId( id )#" );
   }
 
   /**
@@ -2056,13 +2056,6 @@ component output="false" displayname="SendGrid.cfc"  {
   */
   public struct function getMarketingSender( required numeric id ) {
     return apiCall( 'GET', "/marketing/senders/#id#" );
-  }
-
-  /**
-  * @hint Helper method, which allows for passing in the contact id or email address and returns the id, which is needed. The contact Id is a URL-safe base64 encoding of the contact's lower cased email address
-  */
-  private string function returnContactId( required string id ) {
-    return isValid( 'email', id ) ? toBase64( id ) : id;
   }
 
 
