@@ -1986,6 +1986,21 @@ component output="false" displayname="SendGrid.cfc"  {
     return apiCall( 'GET', "/marketing/contacts/#returnRecipientId( id )#" );
   }
 
+    /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/get-contacts-by-emails
+  * @hint Retrieve up to 100 contacts matching the searched email address(es), including any alternate_emails.
+  */
+  public struct function listContactsByIdentifier( any emails ) {
+    var body = {};
+    if ( isArray( emails ) ) {
+      body[ 'emails' ] = emails;
+    } else {
+      body[ 'emails' ] = [ emails ];
+    }
+
+    return apiCall( 'POST', "/marketing/contacts/search/emails", {}, body );
+  }
+
   /**
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/search-contacts
   * @hint Perform a search on all of your Marketing Campaigns contacts.
