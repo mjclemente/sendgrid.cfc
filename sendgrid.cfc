@@ -1914,7 +1914,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @contacts is an array of objects, with at minimum, an `email`, 'phone_number_id', 'external_id', or 'anonymous_id' key/value
   */
   public struct function addContacts( required array contacts ) {
-    return upsertContacts( 'PUT', contacts );
+    return upsertContacts( contacts );
   }
 
   /**
@@ -1923,7 +1923,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @customFields is a struct with keys corresponding to the custom field names, along with their assigned values
   */
   public struct function addContact( required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
-    return upsertContact( 'PUT', contact, first_name, last_name, customFields );
+    return upsertContact( contact, first_name, last_name, customFields );
   }
 
   /**
@@ -1932,7 +1932,7 @@ component output="false" displayname="SendGrid.cfc"  {
   * @contacts is an array of objects, with at minimum, an `email`, 'phone_number_id', 'external_id', or 'anonymous_id' key/value
   */
   public struct function updateContacts( required array contacts ) {
-    return upsertContacts( 'PUT', contacts );
+    return upsertContacts( contacts );
   }
 
   /**
@@ -1941,13 +1941,13 @@ component output="false" displayname="SendGrid.cfc"  {
   * @customFields is a struct with keys corresponding to the custom field names, along with their assigned values
   */
   public struct function updateContact( required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
-    return upsertContact( 'PUT', contact, first_name, last_name, customFields );
+    return upsertContact( contact, first_name, last_name, customFields );
   }
 
   /**
   * @hint shared private method for handling insert/update requests for individual contacts. Deletegates to `upsertContacts()`
   */
-  private struct function upsertContact( required string method, required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
+  private struct function upsertContact( required any contact, string first_name = '', string last_name = '', struct customFields = {} ) {
     var contacts = [];
     var contactData = {};
 
@@ -1967,14 +1967,14 @@ component output="false" displayname="SendGrid.cfc"  {
 
     contacts.append( contactData );
 
-    return upsertContacts( method, contacts );
+    return upsertContacts( contacts );
   }
 
   /**
   * @hint shared private method for inserting/updating contacts
   */
-  private struct function upsertContacts( required string method, required array contacts ) {
-    return apiCall( method, '/marketing/contacts', {}, contacts );
+  private struct function upsertContacts( required array contacts ) {
+    return apiCall( 'PUT', '/marketing/contacts', {}, contacts );
   }
 
   /**
