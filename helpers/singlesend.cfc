@@ -278,7 +278,7 @@ component accessors="true" {
   /**
   * @hint Convenience method for setting a custom unsubscribe URL.
   * @url The URL allowing recipients to unsubscribe. You must provide this or the suppression_group_id.
-  */ 
+  */
   public any function customUnsubscribeUrl( required string url ) {
     variables.email_config["custom_unsubscribe_url"] = url;
     return this;
@@ -335,11 +335,11 @@ component accessors="true" {
   */
   public string function build() {
     var body = {
-      name: getName(),
-      categories: getCategories(),
-      send_at: getSend_at(),
-      sent_to: getSent_to(),
-      email_config: getEmail_config()
+      "name": getName(),
+      "categories": getCategories(),
+      "send_at": getSend_at(),
+      "sent_to": getSent_to(),
+      "email_config": getEmail_config()
     };
 
     return serializeJSON( body );
