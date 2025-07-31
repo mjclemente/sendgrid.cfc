@@ -1909,6 +1909,25 @@ component output="false" displayname="SendGrid.cfc"  {
   }
 
   /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/delete-contacts
+  * @hint Delete one or more contacts by their IDs.
+  * @ids is an array of contact IDs to delete.
+  */
+  public struct function deleteContacts( required array ids ) {
+    var body = { "ids": ids };
+    return apiCall( 'DELETE', '/marketing/contacts', {}, body );
+  }
+
+  /**
+  * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/delete-contacts
+  * @hint Convenience method for deleting a single contact by ID.
+  * @id is the contact ID to delete.
+  */
+  public struct function deleteContact( required string id ) {
+    return deleteContacts( [ id ] );
+  }
+
+  /**
   * @docs https://www.twilio.com/docs/sendgrid/api-reference/contacts/add-or-update-a-contact
   * @hint Add Marketing Campaigns contacts. Note that it also appears to update existing records, so it basically functions like a PATCH.
   * @contacts is an array of objects, with at minimum, an `email`, 'phone_number_id', 'external_id', or 'anonymous_id' key/value
